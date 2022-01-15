@@ -16,11 +16,13 @@ enum
 class CGameEntityCollider
 {
 	CAABB m_collider;
+
+	std::vector<glm::ivec3> RayCastBlocks(const glm::vec3& position, const glm::vec3& offset);
 public:
 	CGameEntityCollider(const glm::vec3& min, const glm::vec3& max);
 
 	uint8_t Move(glm::vec3& velocity, class CChunkManager* manager);
-	bool RayCast(const glm::vec3& position, const glm::vec3& offset, glm::vec3& worldpos, glm::vec3& normal, class CChunkManager* manager);
+	bool RayCast(const glm::vec3& position, const glm::vec3& offset, glm::vec3& worldpos, glm::vec3& normal, class CChunkManager* manager, float* deltaDir = nullptr);
 
 	void forceRegen(glm::ivec3 position, class CChunkManager* manager);
 	CAABB& getCollider();

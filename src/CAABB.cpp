@@ -168,109 +168,56 @@ bool CAABB::sweepCollision(CAABB& aabb, glm::vec3& velocity, bool apply)
 	SECOND BIGGEST SPAGHETTY MONSTER I'VE CREATED(first is the text), I MADE IT WORK, LIKE A GENETIC ALGORITHM, RANDOM CHANGES UNTIL IT WORKS.
 	if someone else than me sees this, I hope you don't get mad, after all 2020 was not a great year
 */
-
-#define JAVID
 bool CAABB::RayCast(const glm::vec3& position, const glm::vec3& offset, glm::vec3& normal, float& delta, bool* inside)
 {
 	glm::vec3 NearUndiv, FarUndiv;
 	NearUndiv = getMaxVector() - position;
 	FarUndiv = getMinVector() - position;
-
 	if (inside)
 		*inside = FarUndiv.x <= 0 && FarUndiv.y <= 0 && FarUndiv.z <= 0 && NearUndiv.x >= 0 && NearUndiv.y >= 0 && NearUndiv.z >= 0;
-#ifdef JAVID
-	glm::vec3 Near = NearUndiv / offset;
-	glm::vec3 Far = FarUndiv / offset;
+	int patience = 0;
+	for(int i = 0; i < 3; ++i)
+	{
+		if(NearUndiv[i] == 0)
+			if(patience++ == 1)
+				normal = glm::vec3(0, 0, 0);
+	}
+	glm::vec3 invDir = 1.f / offset;
+	glm::vec3 Near = NearUndiv * invDir;
+	glm::vec3 Far = FarUndiv * invDir;
 	normal = { 0,0,0 };
-
-	//if (glm::all(glm::isnan(Near)) || glm::all(glm::isnan(Far))) return false;
-
+	
 	if (Near.x > Far.x) std::swap(Near.x, Far.x);
 	if (Near.y > Far.y) std::swap(Near.y, Far.y);
 	if (Near.z > Far.z) std::swap(Near.z, Far.z);
 
-	if(Near.x > Far.y || Near.x > Far.z) return false;
-	if(Near.y > Far.z || Near.y > Far.x) return false;
-	if(Near.z > Far.y || Near.z > Far.x) return false;
+	if(Near.x >= Far.y || Near.x >= Far.z) return false;
+	if(Near.y >= Far.z || Near.y >= Far.x) return false;
+	if(Near.z >= Far.y || Near.z >= Far.x) return false;
 
 	delta = std::max({ Near.x, Near.y, Near.z });
 	float hitFar = std::min({ Far.x, Far.y, Far.z });
 	if (hitFar <= 0) return false;
-
 	if (delta < 0) return false;
 
 	int index = 0;
 	for (int i = 1; i < 3; ++i)
 		if (Near[i] >= Near[index])
 			index = i;
-	for (int i = 0; i < 3; ++i)
-	{
-		int num = 0;
-		for (int j = 0; j < 3; ++j)
-		{
-			if (i == j)
-				continue;
-			if (Near[i] == Near[j])
-				num++;
-		}
-		if (num == 3)
-			index = 4;
-	}
-
-	switch (index)
-	{
-	case 0:
-		if (offset.x < 0)
-			normal = glm::vec3(1, 0, 0);
-		else
-			normal = glm::vec3(-1, 0, 0);
-		break;
-	case 1:
-		if (offset.y < 0)
-			normal = glm::vec3(0, 1, 0);
-		else
-			normal = glm::vec3(0, -1, 0);
-		break;
-	case 2:
-		if (offset.z < 0)
-			normal = glm::vec3(0, 0, 1);
-		else
-			normal = glm::vec3(0, 0, -1);
-		break;
-	default:
-		normal = glm::vec3(0, 0, 0);
-		break;
-	}
-
+	normal = glm::vec3(0);
+	if(glm::abs(invDir[index]) > 0.1)
+		normal[index] = -glm::sign(invDir[index]);
 	return true;
-#else
-	double tmin = -INFINITY, tmax = INFINITY;
-
-	glm::vec3 min = getMinVector();
-	glm::vec3 max = getMaxVector();
-	for (int i = 0; i < 3; ++i) 
-	{
-		double t1 = (min[i] - position[i]) / offset[i];
-		double t2 = (max[i] - position[i]) / offset[i];
-
-		tmin = std::max(tmin, std::min(t1, t2));
-		tmax = std::min(tmax, std::max(t1, t2));
-	}
-	delta = tmin;
-
-
-	return tmax > std::max(tmin, 0.0);
-#endif
 }
 
 bool CAABB::RaySweep(CAABB& box, const glm::vec3& offset, glm::vec3& normal, float& delta, bool* inside)
 {
 	struct sizer {
 		CAABB *aabb, *t;
-		sizer(CAABB* aabb, CAABB* t) : aabb(aabb), t(t) { aabb->m_size += t->m_size; };
-		~sizer() { aabb->m_size -= t->m_size; };
-	};
-	sizer s(&box, this);	
+		glm::vec3 originalSize;
+		sizer(CAABB* aabb, CAABB* t) : aabb(aabb), t(t) { originalSize = aabb->m_size; for(int i = 0; i < 3; ++i) aabb->m_size[i] += t->m_size[i]; };
+		~sizer() { aabb->m_size = originalSize; };
+	} s(&box, this);	
 
 	if (box.RayCast(getCenterVector(), offset, normal, delta, inside))
 	//if(lineIntersection(box, getCenterVector(), offset, normal, &delta))
@@ -282,14 +229,17 @@ bool CAABB::RaySweep(CAABB& box, const glm::vec3& offset, glm::vec3& normal, flo
 }
 
 
-void CAABB::ResolveDynamicSweep(CAABB& box, glm::vec3& velocity, glm::vec3& normal)
+bool CAABB::ResolveDynamicSweep(CAABB& box, glm::vec3& velocity, glm::vec3& normal)
 {
 	float delta;
 	if (RaySweep(box, velocity, normal, delta))
 	{
 		velocity += normal * glm::abs(velocity) * (1.f - delta);
+		//std::cout << "helo";
 		//std::cout << glm::to_string(normal) + '\n';
+		return true;
 	}
+	return false;
 }
 
 

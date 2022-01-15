@@ -9,6 +9,16 @@ std::unique_ptr<blocktype[]> CChunkGenerator::generateChunk(int cx, int cy, int 
 	int downPos = cy * CHUNK_SIZE; /*botton of the chunk*/
 	int upPos = cy * CHUNK_SIZE+CHUNK_SIZE; /*top of the chunk*/
 	int top = 0;
+	static auto caveHere = [&](int x, int y, int z)
+	{
+		return OctaveSimplex(x / (float)(CHUNK_SIZE*5), y/(float)(std::max(CHUNK_SIZE*2,std::min(42, (CHUNK_SIZE*(std::abs(64-y)/30))))), z / (float)(CHUNK_SIZE * 5), 8, 0.25) < 0.25;
+	};
+
+	static auto getIndex = [](int x, int y, int z)
+	{
+		return x + CHUNK_SIZE*(y + z * CHUNK_SIZE);
+	};
+
 	for (int x = 0; x < CHUNK_SIZE; x++)
 	{
 		for (int z = 0; z < CHUNK_SIZE; z++)
@@ -23,14 +33,39 @@ std::unique_ptr<blocktype[]> CChunkGenerator::generateChunk(int cx, int cy, int 
 			{
 				int max = top - downPos;
 				for (int i = 0; i < max; i++)
-                    output[x + i * CHUNK_SIZE + z * CHUNK_SIZE * CHUNK_SIZE] = (top-5 < downPos+i) ? BLOCK_DIRT : BLOCK_STONE;
-                output[x + max * CHUNK_SIZE + z * CHUNK_SIZE * CHUNK_SIZE] = BLOCK_GRASS;
+                    output[getIndex(x, i, z)] = caveHere(gx, cy*CHUNK_SIZE+i, gz) ? BLOCK_STONE : BLOCK_AIR;
 			}
 			else if(downPos < top)
 			{
 				for (int i = 0; i < CHUNK_SIZE; i++)
+                    output[getIndex(x, i, z)] = caveHere(gx, cy*CHUNK_SIZE+i, gz) ? BLOCK_STONE : BLOCK_AIR;
+			}
+
+			for(int i = CHUNK_SIZE-1; i >= 0; --i)
+			{
+				int current = output[getIndex(x, i, z)];
+				if(current == BLOCK_STONE)
 				{
-                    output[x + i * CHUNK_SIZE + z * CHUNK_SIZE * CHUNK_SIZE] = BLOCK_STONE;
+					int gy = cy*CHUNK_SIZE + i;
+					int distTop = std::abs(top - gy);
+					bool aboveBlockMissing = distTop <= 1 || (!caveHere(gx, gy+1, gz) && distTop <= 30);
+
+					if(aboveBlockMissing)
+						output[getIndex(x, i, z)] = BLOCK_GRASS;
+					else
+					{
+						for(int j = 0; j <= 5; ++j)
+						{
+							int _gy = gy+j;
+							int _distTop = std::abs(top - _gy);
+							bool aboveBlockMissing = _distTop <= 1 || (!caveHere(gx, _gy+1, gz) && _distTop <= 30);
+							if(aboveBlockMissing)
+							{
+								output[getIndex(x, i, z)] = BLOCK_DIRT;
+								break;
+							}
+						}
+					}
 				}
 			}
 		}

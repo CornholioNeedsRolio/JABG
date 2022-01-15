@@ -9,13 +9,13 @@ normieMode = False
 compiler = "g++ "
 extension = ".out"
 link_libs = '-lSDL2 -lGL -lGLU -ldl -lfreetype'
-paramaters = '-Wall -Wno-reorder -Wno-sign-compare -O3 -Wno-unused-command-line-argument -march=native -pthread -std=c++17 -I./include -I/usr/include/freetype2/'
+paramaters = '-Wall -Wno-reorder -Wno-sign-compare -O3 -Wno-unused-command-line-argument -march=native -pthread -std=c++17 -I./include -I/usr/include/freetype2/ '
+to_executable = ""
 if("--normie" in sys.argv or "-n" in sys.argv):
     normieMode = True
     compiler = "x86_64-w64-mingw32-g++ "
     extension = ".exe"
-    link_libs = '--static libfreetype.a libSDL2.a -mwindows -lmingw32 -lstdc++ -lopengl32 -lglu32'
-paramaters = paramaters + ' ' + link_libs 
+    link_libs = '-lmingw32 -lSDL2 -lfreetype -mwindows -lstdc++ -lopengl32 -lglu32'
 outputFile = 'jabg'+extension
 
 
@@ -105,21 +105,23 @@ for file in f:
     obj_total = obj_total + 1
     obj = buildDir + '/' + os.path.basename(file).replace('.cpp', '').replace('.c', '') + '.o'
     objects += obj + ' '
-
-    time = getLastEdited(file)
-
     #if file in lastEdited:
     #    if lastEdited[file] == time and ("-b" not in sys.argv):
     #        continue
-    if time < os.path.getmtime("./"+obj) and ("-b" not in sys.argv):
-        continue
+    try:
+        time = getLastEdited(file)
+        if time < os.path.getmtime("./"+obj) and ("-b" not in sys.argv):
+            continue
+    except:
+        pass
 
     obj_builded = obj_builded + 1
     print(file + ':')
     os.system(compiler + '-c -o ' + obj + ' ' + file + ' ' + paramaters)
 
 print('Finished building object files, building executable now, builded', obj_builded, '/', obj_total)
-os.system(compiler + '-o ' + outputFile + ' ' + objects + ' ' + paramaters)
+paramaters = paramaters + ' ' + link_libs 
+os.system(compiler + '-o ' + outputFile + ' ' + paramaters + ' ' + objects)
 
 if(("-r" in sys.argv)):
     print('Running program')
@@ -131,4 +133,4 @@ if(("-r" in sys.argv)):
         else:
             os.system('./'+outputFile)
 
-print(paramaters)
+os.system('echo ' + paramaters)

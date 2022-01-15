@@ -48,7 +48,7 @@ public:
 
 	bool RayCast(const glm::vec3& position, const glm::vec3& offset, glm::vec3& normal, float& delta, bool *inside = nullptr);
 	bool RaySweep(CAABB& box, const glm::vec3& offset, glm::vec3& normal, float& delta, bool* inside = nullptr);
-	void ResolveDynamicSweep(CAABB& box, glm::vec3& velocity, glm::vec3& normal);
+	bool ResolveDynamicSweep(CAABB& box, glm::vec3& velocity, glm::vec3& normal);
 
 	bool collidesWithPoint(glm::vec3 point);
 
