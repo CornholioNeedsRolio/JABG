@@ -74,6 +74,13 @@ void CShader::SetUniform(glm::vec3 vector, std::string name)
 	glUniform3f(id, vector.x, vector.y, vector.z);
 }
 
+void CShader::SetUniform(glm::vec4 vector, std::string name)
+{
+	GLuint id = glGetUniformLocation(m_program, name.c_str());
+	Use();
+	glUniform4f(id, vector.x, vector.y, vector.z, vector.w);
+}
+
 void CShader::SetUniform(int number, std::string name)
 {
 	GLuint id = glGetUniformLocation(m_program, name.c_str());

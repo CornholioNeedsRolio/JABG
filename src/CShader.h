@@ -21,6 +21,7 @@ public:
 	void SetUniform(glm::mat4 matrix, std::string name);
 	void SetUniform(const std::vector<glm::mat4>& matrix, std::string name);
 	void SetUniform(glm::vec3 vector, std::string name);
+	void SetUniform(glm::vec4 vector, std::string name);
 	void SetUniform(int number, std::string name);
 
 	~CShader();

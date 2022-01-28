@@ -3,18 +3,38 @@
 
 void CInputManager::pressKey()
 {
-	m_keystates = (Uint8*)SDL_GetKeyboardState(0);
+	m_keystates = (Uint8*)SDL_GetKeyboardState(&m_numKeys);
 }
 
 void CInputManager::releaseKey()
 {
-	m_keystates = (Uint8*)SDL_GetKeyboardState(0);
+	if(m_numKeys)
+	{	
+		if(!m_oldKeystates) 
+			m_oldKeystates = std::make_unique<Uint8[]>(m_numKeys);
+
+		for(int i = 0; i < m_numKeys; ++i)
+			m_oldKeystates[i] = m_keystates[i];
+	}
+}
+
+bool CInputManager::keyPressed(SDL_Scancode key)
+{
+	if(!m_keystates || !m_oldKeystates) return false;
+	return !m_oldKeystates[key] && m_keystates[key];
+}
+
+bool CInputManager::keyReleased(SDL_Scancode key)
+{
+	if(!m_keystates || !m_oldKeystates) return false;
+	return m_oldKeystates[key] && !m_keystates[key];
 }
 
 bool CInputManager::Update(SDL_Window* _window)
 {
 	SDL_Event event;
 	m_mouserel *= 0;
+	releaseKey();
 	while (SDL_PollEvent(&event))
 	{
 		switch (event.type)
@@ -26,7 +46,7 @@ bool CInputManager::Update(SDL_Window* _window)
 			pressKey();
 			break;
 		case SDL_KEYUP:
-			releaseKey();
+			pressKey();
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			switch (event.button.button)

@@ -17,6 +17,7 @@ uint8_t CGameEntityCollider::Move(glm::vec3& velocity, CChunkManager* manager)
 
 	glm::vec3 min = m_collider.getMinVector();
 	glm::vec3 max = m_collider.getMaxVector();
+	std::vector<glm::ivec3> NormalZero{};
 	for(int x = min.x-1; x <= max.x+1; ++x)
 	{
 		for(int y = min.y-1; y <= max.y+1; ++y)
@@ -34,8 +35,8 @@ uint8_t CGameEntityCollider::Move(glm::vec3& velocity, CChunkManager* manager)
 						collision = true;
 					else
 					{
-						blocktype block = chunk->GetBlock(std::get<0>(pos.second), std::get<1>(pos.second), std::get<2>(pos.second));
-						if(BLOCK_DATABASE::getBlock(block)->getCollision() == BLOCKCOLLIDER_FULL)
+						CBlock* block = chunk->getVoxelComponent().getBlock(std::get<0>(pos.second), std::get<1>(pos.second), std::get<2>(pos.second)).getBlock();
+						if(block->getCollision() == BLOCKCOLLIDER_FULL)
 							collision = true;
 					}
 
@@ -45,18 +46,33 @@ uint8_t CGameEntityCollider::Move(glm::vec3& velocity, CChunkManager* manager)
 						glm::vec3 normal(0);
 						if(m_collider.ResolveDynamicSweep(normalBox, velocity, normal))
 						{
+							if(normal.x == 0 && normal.y == 0 && normal.z == 0)
+							{
+								NormalZero.push_back(blocks[i]);
+								continue;
+							}
+
 							if (normal.x > 0) output |= EntityC_Right;
-							if (normal.x < 0) output |= EntityC_Left;
+							else if (normal.x < 0) output |= EntityC_Left;
 
-							if (normal.y > 0) output |= EntityC_Up;
-							if (normal.y < 0) output |= EntityC_Down;
+							else if (normal.y > 0) output |= EntityC_Up;
+							else if (normal.y < 0) output |= EntityC_Down;
 
-							if (normal.z > 0) output |= EntityC_Front;
-							if (normal.z < 0) output |= EntityC_Back;
+							else if (normal.z > 0) output |= EntityC_Front;
+							else if (normal.z < 0) output |= EntityC_Back;
 						}
 					}
 				}
 			}
+		}
+	}
+	if(!(output & EntityC_Up))
+	{
+		for(int i = 0; i < NormalZero.size(); ++i)
+		{
+			CAABB normalBox(glm::vec3{NormalZero[i].x, NormalZero[i].y, NormalZero[i].z}, glm::vec3{NormalZero[i].x+1, NormalZero[i].y+1, NormalZero[i].z+1});
+			glm::vec3 normal(0);
+			m_collider.ResolveDynamicSweep(normalBox, velocity, normal, true);
 		}
 	}
 
@@ -124,8 +140,8 @@ bool CGameEntityCollider::RayCast(const glm::vec3& position, const glm::vec3& of
 		}
 		else
 		{
-			blocktype block = chunk->GetBlock(std::get<0>(pos.second), std::get<1>(pos.second), std::get<2>(pos.second));
-			if(BLOCK_DATABASE::getBlock(block)->getCollision() == BLOCKCOLLIDER_FULL)
+			CBlock* block = chunk->getVoxelComponent().getBlock(std::get<0>(pos.second), std::get<1>(pos.second), std::get<2>(pos.second)).getBlock();
+			if(block->getCollision() == BLOCKCOLLIDER_FULL)
 			{
 				stop = true;
 				break;
@@ -262,7 +278,7 @@ std::vector<glm::ivec3> CGameEntityCollider::RayCastBlocks(const glm::vec3& posi
 
 void CGameEntityCollider::forceRegen(glm::ivec3 position, class CChunkManager* manager)
 {
-	for (auto it = manager->getBeginIterator(); it != manager->getEndIterator(); it++)
+	/*for (auto it = manager->getBeginIterator(); it != manager->getEndIterator(); it++)
 		for (auto chunk = it->second.getBeginIterator(); chunk != it->second.getEndIterator(); chunk++)
 		{
 			if (chunk->second->getChunkPosition() == position)
@@ -270,7 +286,7 @@ void CGameEntityCollider::forceRegen(glm::ivec3 position, class CChunkManager* m
 				chunk->second->generateCollider();
 				return;
 			}
-		}
+		}*/
 }
 
 CAABB& CGameEntityCollider::getCollider()

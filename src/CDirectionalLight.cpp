@@ -62,7 +62,7 @@ void CDirectionalLight::renderToMe(CRenderManager& manager, const SDrawInfo& inf
 void CDirectionalLight::configureShader(CShader* shader)
 {
 	shader->SetUniform(getLightMatrix(), "DirLightMatrix");
-	glm::mat4 map = glm::inverse(m_lightCamera.getModelMatrix());
+	glm::mat4 map = glm::inverse(m_lightCamera.getModelMatrix(nullptr));
 	shader->SetUniform((glm::vec3(map[2]) * glm::vec3(1, 1, -1)), "lightDirection");
 	bindDepthBuffer();
 }
@@ -75,7 +75,7 @@ void CDirectionalLight::setAngle(float pitch, float yaw, float roll)
 
 glm::mat4 CDirectionalLight::getLightMatrix()
 {
-	return m_lightCamera.getProjection() * m_lightCamera.getView();
+	return m_lightCamera.getProjection() * m_lightCamera.getView(false);
 }
 
 void CDirectionalLight::bindDepthBuffer()

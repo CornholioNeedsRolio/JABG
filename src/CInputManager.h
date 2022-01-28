@@ -1,7 +1,8 @@
 #ifndef CINPUTMANAGER_HEADER
 #define CINPUTMANAGER_HEADER
-#include <SDL2/SDL.h>
 #include <glm/glm.hpp>
+#include <SDL2/SDL.h>
+#include <memory>
 #include <array>
 
 enum Input_Mouse
@@ -14,7 +15,9 @@ class CInputManager
 {
 	void pressKey();
 	void releaseKey();
+	int m_numKeys = 0;
 	Uint8* m_keystates = nullptr;
+	std::unique_ptr<Uint8[]> m_oldKeystates = nullptr;
 	glm::ivec2 m_mousepos, m_mouserel;
 	std::array<bool, LEFT_MOUSE+1> m_mouseButtons;
 	bool shouldCenter = false;
@@ -28,6 +31,8 @@ public:
 	void centerMouse();
 
 	bool keyDown(SDL_Scancode key);
+	bool keyPressed(SDL_Scancode key);
+	bool keyReleased(SDL_Scancode key);
 };
 
 #endif

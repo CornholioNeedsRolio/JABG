@@ -1,3 +1,4 @@
+#include "ChunkComponents/CChunkMeshComponent.h"
 #include "CChunkPart.h"
 #include "CWorld.h"
 #include <array>
@@ -5,7 +6,7 @@
 #include <cmath>
 
 CChunkPart::CChunkPart(CWorld* world, glm::ivec2 position) : 
-	 m_world(world), m_position(position)
+	 m_world(world), m_position(position), m_chunks{}
 {
 
 }
@@ -38,7 +39,7 @@ CChunk* CChunkPart::getChunkNew(int y)
 CChunk* CChunkPart::getChunkInRange(int closeToY, bool fuckingClean, int* pos)
 {
 	for (auto it = m_chunks.begin(); it != m_chunks.end(); it++)
-		if (it->second->isChunkDirty())
+		if (it->second->getMeshComponent().isDirty())
 		{
 			if (pos) *pos = it->first;
 			return it->second.get();
@@ -56,14 +57,13 @@ CChunk* CChunkPart::addChunk(std::shared_ptr<CChunk> chunk)
 void CChunkPart::MakeDirty()
 {
 	for (auto it = m_chunks.begin(); it != m_chunks.end(); it++)
-		it->second->MakeDirty();
+		it->second->getMeshComponent().makeDirty();
 }
 
 bool CChunkPart::destroyable()
 {
 	for (auto it = m_chunks.begin(); it != m_chunks.end(); it++)
-		if (!it->second->canDestroy())
-			return false;
+		return false;
 	return true;
 }
 
@@ -71,16 +71,16 @@ void CChunkPart::Draw(const SDrawInfo& info)
 {
 	for (auto it = m_chunks.begin(); it != m_chunks.end(); it++)
 	{
-		it->second->setTextureAndShader(m_world->getAtlas(), m_world->getShader());
+		it->second->getMeshComponent().setTextureAndShader(m_world->getAtlas(), m_world->getShader());
 		it->second->Draw(info);
 	}
 }
 
 void CChunkPart::BulkDraw(class CBulkRenderer* renderer)
 {
-	for (auto it = m_chunks.begin(); it != m_chunks.end(); it++)
+	for (auto it = m_chunks.begin(); it != m_chunks.end(); ++it)
 	{
-		it->second->setTextureAndShader(m_world->getAtlas(), m_world->getShader());
+		it->second->getMeshComponent().setTextureAndShader(m_world->getAtlas(), m_world->getShader());
 		it->second->BulkDraw(renderer);
 	}
 }

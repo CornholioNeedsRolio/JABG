@@ -175,13 +175,6 @@ bool CAABB::RayCast(const glm::vec3& position, const glm::vec3& offset, glm::vec
 	FarUndiv = getMinVector() - position;
 	if (inside)
 		*inside = FarUndiv.x <= 0 && FarUndiv.y <= 0 && FarUndiv.z <= 0 && NearUndiv.x >= 0 && NearUndiv.y >= 0 && NearUndiv.z >= 0;
-	int patience = 0;
-	for(int i = 0; i < 3; ++i)
-	{
-		if(NearUndiv[i] == 0)
-			if(patience++ == 1)
-				normal = glm::vec3(0, 0, 0);
-	}
 	glm::vec3 invDir = 1.f / offset;
 	glm::vec3 Near = NearUndiv * invDir;
 	glm::vec3 Far = FarUndiv * invDir;
@@ -205,8 +198,17 @@ bool CAABB::RayCast(const glm::vec3& position, const glm::vec3& offset, glm::vec
 		if (Near[i] >= Near[index])
 			index = i;
 	normal = glm::vec3(0);
+	
 	if(glm::abs(invDir[index]) > 0.1)
 		normal[index] = -glm::sign(invDir[index]);
+
+	int patience = 0;
+	for(int i = 0; i < 3; ++i)
+	{
+		if(NearUndiv[i] == 0)
+			if(patience++ >= 1)
+				normal = glm::vec3(0);
+	}
 	return true;
 }
 
@@ -229,11 +231,13 @@ bool CAABB::RaySweep(CAABB& box, const glm::vec3& offset, glm::vec3& normal, flo
 }
 
 
-bool CAABB::ResolveDynamicSweep(CAABB& box, glm::vec3& velocity, glm::vec3& normal)
+bool CAABB::ResolveDynamicSweep(CAABB& box, glm::vec3& velocity, glm::vec3& normal, bool forceNormalUp)
 {
 	float delta;
 	if (RaySweep(box, velocity, normal, delta))
 	{
+		if(forceNormalUp)
+			normal.y = 1;
 		velocity += normal * glm::abs(velocity) * (1.f - delta);
 		//std::cout << "helo";
 		//std::cout << glm::to_string(normal) + '\n';

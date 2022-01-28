@@ -17,6 +17,7 @@ public:
     CChunkLoader(int threadNum, CWorld* world);
     ~CChunkLoader();
 
+    CWorld* getWorld();
     void requestChunk(int x, int y, int z);
     void addToList(std::shared_ptr<CChunk> chunk);
     void emptyListAllThreads();

@@ -3,19 +3,21 @@
 import os
 import pickle
 import sys
+from threading import Thread
 
+#-ggdb -g3 
 buildDir = 'build'
 normieMode = False
 compiler = "g++ "
 extension = ".out"
 link_libs = '-lSDL2 -lGL -lGLU -ldl -lfreetype'
-paramaters = '-Wall -Wno-reorder -Wno-sign-compare -O3 -Wno-unused-command-line-argument -march=native -pthread -std=c++17 -I./include -I/usr/include/freetype2/ '
-to_executable = ""
+paramaters = '-ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native -pthread -std=c++17 -I./include -I/usr/include/freetype2/'
 if("--normie" in sys.argv or "-n" in sys.argv):
     normieMode = True
     compiler = "x86_64-w64-mingw32-g++ "
     extension = ".exe"
-    link_libs = '-lmingw32 -lSDL2 -lfreetype -mwindows -lstdc++ -lopengl32 -lglu32'
+    paramaters = '-g -Wall -Wno-reorder -Wno-sign-compare -O3 -Wno-unused-command-line-argument -pthread -std=c++17 -I./include -I/usr/include/freetype2 -L/usr/x86_64-w64-mingw32/lib -os=windows'
+    link_libs = '-mwindows -lstdc++ -lopengl32 -lglu32 -lSDL2 libfreetype.a'
 outputFile = 'jabg'+extension
 
 
@@ -86,7 +88,7 @@ def getLastEdited(file):
 f = []
 for path, subdirs, files in os.walk("./"):
     for name in files:
-        if ('.cpp' in name) or ('.c' in name):
+        if name.endswith('.cpp') or name.endswith('.c'):
             f.append(os.path.join(path, name).replace('./', ''))
 
 try:
@@ -101,7 +103,12 @@ objects = ""
 shell_command = ""
 obj_builded = 0
 obj_total = 0
-for file in f:
+
+def compObj(file):
+    global objects
+    global obj_total
+    global obj_builded
+
     obj_total = obj_total + 1
     obj = buildDir + '/' + os.path.basename(file).replace('.cpp', '').replace('.c', '') + '.o'
     objects += obj + ' '
@@ -111,13 +118,21 @@ for file in f:
     try:
         time = getLastEdited(file)
         if time < os.path.getmtime("./"+obj) and ("-b" not in sys.argv):
-            continue
+            return
     except:
         pass
 
     obj_builded = obj_builded + 1
-    print(file + ':')
-    os.system(compiler + '-c -o ' + obj + ' ' + file + ' ' + paramaters)
+    print(file + ':' + os.popen(compiler + '-c -o ' + obj + ' ' + file + ' ' + paramaters).read())
+
+threads = []
+for file in f:
+    process = Thread(target=compObj, args=[file])
+    process.start()
+    threads.append(process)
+
+for process in threads:
+    process.join()
 
 print('Finished building object files, building executable now, builded', obj_builded, '/', obj_total)
 paramaters = paramaters + ' ' + link_libs 

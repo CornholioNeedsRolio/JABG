@@ -3,6 +3,8 @@
 #include <iostream>
 #include <algorithm>
 #include <cmath>
+#include <fstream>
+#include <filesystem>
 #include "../CFileManager.h"
 
 template<class T>
@@ -27,9 +29,14 @@ CFPPlayer::CFPPlayer(SVector3 _pos, SVector3 _rot, class CWorld* world) :
 	m_camera.MakePerspective(90.f, 4.f / 3.f, 0.1f, 500.f);
 
 	m_flags = 0;
-
+	m_holdingBlock = BLOCK_DIRT;
 	m_collider.getCollider().SetPosition(_pos);
 	Attach(&m_collider.getCollider());
+}
+
+CFPPlayer::~CFPPlayer()
+{
+	save(m_world->getFilePath());
 }
 
 bool CFPPlayer::checkFlag(const uint8_t& flag) const
@@ -70,14 +77,14 @@ void CFPPlayer::Move(bool forward, bool back, bool top, bool bottom, bool left, 
 {
 	if (!m_world) return;
 
-	glm::mat4 matrix = getModelMatrix();
+	glm::mat4 matrix = getModelMatrix(nullptr);
 
 	glm::vec3 vforward = -glm::normalize(matrix[2]);
 	glm::vec3 vright = glm::normalize(matrix[0]);
 	glm::vec3 vtop = glm::vec3(0, 1, 0);
 
 
-	glm::mat4 invcam = glm::inverse(m_camera.getModelMatrix());
+	glm::mat4 invcam = glm::inverse(m_camera.getModelMatrix(nullptr));
 	glm::vec3 ray = glm::vec3(invcam[2]) * glm::vec3(1, 1, -1), position, normal;
 	ray *= 6.f;
 	if (m_collider.RayCast(m_camera.GetGlobalPosition(), ray, position, normal, &m_world->getManager()))
@@ -103,6 +110,7 @@ void CFPPlayer::Move(bool forward, bool back, bool top, bool bottom, bool left, 
 		if (normal.y > 0)
 			m_pointing.y--;
 
+		m_targetPlace = m_pointing + normal;
 
 		//m_targetBlock.SetPosition({ 0, -100000, 0 });
 		m_targetBlock.SetPosition(glm::vec3(0.5)+ m_pointing);
@@ -205,35 +213,33 @@ CCamera& CFPPlayer::getCamera()
 	return m_camera;
 }
 
+
+void CFPPlayer::placeBlock(int block)
+{
+	CAABB box(m_targetPlace, m_targetPlace+glm::ivec3(1));
+	if(m_collider.getCollider().checkIntersetion(box) == AABB_NotIntersected)
+	{
+		m_world->setBlock(m_targetPlace.x, m_targetPlace.y, m_targetPlace.z, block);
+	}
+}
+
 #include "../CFrustumCollider.h"
 void CFPPlayer::Tick(CInputManager& _manager, float deltaTime)
 {
-	RotateCamera(-_manager.getMouseRelative(), 0.2f, deltaTime * 1000*m_sensivity);
+	RotateCamera(-_manager.getMouseRelative(), 0.2f, deltaTime * 1000 * m_sensivity);
 
 	if (_manager.keyDown(SDL_SCANCODE_Q))
 		m_speed = 500;
 	else
 		m_speed = 5;
-	static bool key1Down = false;
-	if(_manager.keyDown(SDL_SCANCODE_1))
+	if(_manager.keyPressed(SDL_SCANCODE_1))
 	{
-		if(!key1Down)
-			setFlags(IS_HOVERING, !checkFlag(IS_HOVERING));
-		key1Down = true;
+		setFlags(IS_HOVERING, !checkFlag(IS_HOVERING));
 	}
-	else
-		key1Down = false;
-
-	static bool key2Down = false;
-	if(_manager.keyDown(SDL_SCANCODE_2))
+	if(_manager.keyPressed(SDL_SCANCODE_2))
 	{
-		if(!key2Down)
-			setFlags(IS_NOCLIPPING, !checkFlag(IS_NOCLIPPING));
-			//m_noclip = !m_noclip;
-		key2Down = true;
+		setFlags(IS_NOCLIPPING, !checkFlag(IS_NOCLIPPING));
 	}
-	else
-		key2Down = false;
 
 	static int pressed = false;
 	if (_manager.mouseButtonDown(LEFT_MOUSE))
@@ -247,14 +253,38 @@ void CFPPlayer::Tick(CInputManager& _manager, float deltaTime)
 		}
 	}
 	else pressed = false;
+	
+	static int pressed1 = false;
+	if (_manager.mouseButtonDown(RIGHT_MOUSE))
+	{
+		if (!pressed1)
+		{
+			pressed1 = true;
+			placeBlock(m_holdingBlock);
+		}
+	}
+	else pressed1 = false;
 
-	static int pressed2 = false;
+	bool left_arrow = _manager.keyPressed(SDL_SCANCODE_LEFT);
+	bool right_arrow = _manager.keyPressed(SDL_SCANCODE_RIGHT);
+	if (left_arrow || right_arrow)
+	{
+		m_holdingBlock = right_arrow ? (m_holdingBlock + 1) % (BLOCK_TOTAL-1)+1 : (m_holdingBlock - 1 < 1 ? 1 : m_holdingBlock - 1);
+		if(m_holdingBlockMesh)
+		{
+			m_holdingBlockMesh->Clear();
+			bool faces[6]{1,1,1,1,1,1};
+			m_holdingBlockMesh->Init(BLOCK_DATABASE::getBlock(m_holdingBlock)->getBlockMeshVertices(faces, m_world->getAtlas()));
+		}
+	}
+
+	/*static int pressed4 = false;
 	if (_manager.keyDown(SDL_SCANCODE_C))
 	{
 		//std::cout << (int)m_world->setBlock(m_pointing.x, m_pointing.y, m_pointing.z, BLOCK_AIR);
-		if (!pressed2)
+		if (!pressed4)
 		{
-			pressed2 = true;
+			pressed4 = true;
 			glm::vec3 pos = glm::floor(GetGlobalPosition()/(float)CHUNK_SIZE);
 			CChunkPart* part = m_world->getManager().getChunkPart(pos.x, pos.z);
 			if (part)
@@ -264,7 +294,7 @@ void CFPPlayer::Tick(CInputManager& _manager, float deltaTime)
 			}
 		}
 	}
-	else pressed2 = false;
+	else pressed4 = false;
 
 
 	static int pressed3 = false;
@@ -283,7 +313,7 @@ void CFPPlayer::Tick(CInputManager& _manager, float deltaTime)
 			}
 		}
 	}
-	else pressed3 = false;
+	else pressed3 = false;*/
 
 	//if (_manager.keyDown(SDL_SCANCODE_C))
 	//	m_collider.forceRegen(m_collider.getCollider().GetPosition() / 16.f, m_manager);
@@ -335,4 +365,42 @@ bool CFPPlayer::isJumping()
 bool CFPPlayer::canJump()
 {
 	return false;
+}
+
+void CFPPlayer::save(const std::string& path)
+{
+	if (!std::filesystem::is_directory(path) || !std::filesystem::exists(path)) { 
+        std::filesystem::create_directory(path);
+    }
+	std::string pth = path + "/player.data";
+	std::ofstream file(pth, std::ios::binary | std::ofstream::trunc);
+	SVector3 position = m_collider.getCollider().GetPosition(), rotation = m_collider.getCollider().GetRotation();
+	file.write((char*)&position, sizeof(position));
+	file.write((char*)&rotation, sizeof(rotation));
+	file.close();
+}
+
+void CFPPlayer::load(const std::string& path)
+{
+	if (!std::filesystem::is_directory(path) || !std::filesystem::exists(path)) { 
+        return;
+    }
+	std::string pth = path + "/player.data";
+	std::ifstream file(pth, std::ios::binary);
+	if(!file.is_open())
+		return;
+	SVector3 position, rotation;
+	file.read((char*)&position, sizeof(SVector3));
+	file.read((char*)&rotation, sizeof(SVector3));
+	m_collider.getCollider().SetPosition(position);
+	m_collider.getCollider().SetRotation(rotation);
+	file.close();
+}
+
+void CFPPlayer::setHoldingBlockMesh(CMesh* mesh)
+{
+	m_holdingBlockMesh = mesh;
+	bool faces[6]{1,1,1,1,1,1};
+	m_holdingBlockMesh->Init(BLOCK_DATABASE::getBlock(m_holdingBlock)->getBlockMeshVertices(faces, m_world->getAtlas()));
+	m_holdingBlockMesh->SetTexture(m_world->getAtlas());
 }

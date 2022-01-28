@@ -25,7 +25,7 @@ public:
 	void Draw(const SDrawInfo& info) override;
 
 	SMat4 getProjection() const;
-	SMat4 getView() const;
+	SMat4 getView(bool coordZero) const;
 	glm::vec3 getMiddle() const;
 	bool isOrtho() const;
 
