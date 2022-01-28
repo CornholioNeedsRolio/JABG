@@ -13,8 +13,12 @@ CDebugLevel::CDebugLevel() : m_width(640), m_height(480)
 
 void CDebugLevel::Run(CInputManager& _inputmanager, const float& deltaTime)
 {
-	m_player->Tick(_inputmanager, deltaTime);
-	m_world->Tick(_inputmanager, deltaTime);
+	m_pauseMenu.Tick(&_inputmanager);
+	if(!m_pauseMenu.gamePaused())
+	{
+		m_player->Tick(_inputmanager, deltaTime);
+		m_world->Tick(_inputmanager, deltaTime);
+	}
 
 	for (int i = m_fpscounter.size() - 2; i >= 0; --i)
 		m_fpscounter[i + 1] = m_fpscounter[i];
@@ -22,11 +26,7 @@ void CDebugLevel::Run(CInputManager& _inputmanager, const float& deltaTime)
 	m_fpscounter[0] = 1.f / deltaTime;
 	int sum = 0;
 	for (size_t i = 0; i != m_fpscounter.size(); ++i)
-	{
 		sum += m_fpscounter[i];
-		//std::cout << m_fpscounter[i] << ' ';
-	}
-	//std::cout << '\n';
 	m_text.setString("FPS: " + std::to_string(sum/ m_fpscounter.size()) + '\n' + glm::to_string(m_player->GetGlobalPosition()));
 }
 
@@ -36,36 +36,22 @@ void CDebugLevel::Draw()
 	SDrawInfo ortho = m_info;
 	ortho.camera = &m_ortho;
 	ortho.testlight = nullptr;
+
+	glViewport(0, 0, m_width, m_height);
 	
-
-	//m_light.PrepareShadowMaps(m_renderlist);
-
-	//glViewport(0, 0, 1920, 1080);
-	/*drawCamera.getCollider()->updatePlanes();
-	for (auto& object : m_renderlist)
-		object->Draw(m_info);
-	m_text.Draw(ortho);*/
-
-	
-	//m_testLight.renderToMe(m_renderManager, m_info, drawCamera);
-	//drawCamera.getCollider().updatePlanes();
-	//m_renderManager.Draw(m_info, m_width, m_height);
-
-	//m_testLight.Draw(m_info);
-    //std::cout << 69 << std::endl;
-	//std::cout << "cc8" << std::endl;
 	m_renderer.setActiveCamera(&drawCamera);
+	
 	m_world->BulkDraw(&m_renderer);
 	m_player->BulkDraw(&m_renderer);
 	m_renderer.RenderAll();
-	//m_world->Draw(m_info);
-	//m_player->Draw(m_info);
 
-	//drawCamera.Draw(m_info);
-	glViewport(0, 0, m_width, m_height);
-	m_text.Draw(ortho);
-	//ortho.defaultShader = CFileManager::getShader("./res/DefaultShader/DepthDebugView");
-	//m_depthView.Draw(ortho);
+	m_renderer.setActiveCamera(&m_ortho);
+	m_text.BulkDraw(&m_renderer);
+	m_pauseMenu.BulkDraw(&m_renderer, m_width, m_height);
+	if(m_holdingBlock.isInit())
+		m_holdingBlock.BulkDraw(&m_renderer);
+	m_renderer.RenderAll();
+
 }
 
 void CDebugLevel::Load(CGame* game)
@@ -85,9 +71,9 @@ void CDebugLevel::Load(CGame* game)
 	m_renderManager.addObjectToRender(m_world.get());
 	m_renderManager.addObjectToRender(m_player.get());
 
-	m_text.setFont("./res/EmotionEngine.ttf", 30);
-	m_text.SetPosition({ 0, 0, 0 });
-	m_ortho.MakeOrtho(0, m_width, m_height, 0, -10, 10);
+	m_text.setFont("./res/Pixolletta8px.ttf", 25);
+	m_text.SetPosition({ 0, 0, -5 });
+	m_ortho.MakeOrtho(0, m_width, m_height, 0, -100, 100);
 
 	m_info.camera = &m_player->getCamera();
 	m_info.camera->makeMesh();
@@ -97,10 +83,13 @@ void CDebugLevel::Load(CGame* game)
 	m_testLight.Init(1024*2, 1024*2);
 	m_testLight.setAngle(-45, 0, 0);
 	m_info.testlight = &m_testLight;
-
-
 	m_depthView.InitRect(0,300 , 1, 600, 900, 1);
 
+	m_pauseMenu.Init();
+	m_holdingBlock.SetPosition({50, 120, -5});
+	m_holdingBlock.setSize({45,45,45});
+	m_holdingBlock.SetRotation({10, 45, 180});
+	m_player->setHoldingBlockMesh(&m_holdingBlock);
 	//m_depthTexture = std::shared_ptr<CTexture>(&m_testLight.getTexture());
 	//m_depthView.SetTexture(m_depthTexture);
 }

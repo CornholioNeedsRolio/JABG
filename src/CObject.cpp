@@ -1,4 +1,5 @@
 #include "CObject.h"
+#include "CCamera.h"
 #include <glm/gtc/matrix_transform.hpp>
 
 CObject::CObject(SVector3 _position, SVector3 _rotation) : 
@@ -81,10 +82,17 @@ void CObject::Move(glm::vec3 velocity)
 	m_positon += velocity;
 }
 
-
-SMat4 CObject::getModelMatrix()
+void CObject::setIgnoreCamera(bool value)
 {
-	glm::mat4 transform = glm::translate(glm::mat4(1), GetGlobalPosition());
+	m_ignoreCamera = value;
+}
+
+SMat4 CObject::getModelMatrix(CCamera* camera)
+{
+	glm::vec3 position = GetGlobalPosition();
+	if(camera && !m_ignoreCamera)
+		position -= camera->GetGlobalPosition();
+	glm::mat4 transform = glm::translate(glm::mat4(1), position);
 	glm::mat4 rotation = glm::mat4(1);
 	rotation *= glm::rotate(glm::mat4(1), glm::radians(GetGlobalRotation().x), { 1, 0, 0 }); //pitch
 	rotation *= glm::rotate(glm::mat4(1), glm::radians(GetGlobalRotation().y), { 0, 1, 0 }); //yaw

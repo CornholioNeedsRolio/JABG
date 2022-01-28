@@ -26,6 +26,11 @@ CChunkManager::CChunkManager(CWorld* world) :
 
 }
 
+CWorld* CChunkManager::getWorld()
+{
+	return m_world;
+}
+
 CChunkPart* CChunkManager::getChunkPart(int x, int z)
 {
 	auto it = m_chunks.find(std::make_pair(x, z));
@@ -35,18 +40,14 @@ CChunkPart* CChunkManager::getChunkPart(int x, int z)
 
 CChunkPart* CChunkManager::createChunkIfNone(int x, int z, bool* existed)
 {
-	auto it = m_chunks.find(std::make_pair(x, z));
-	if (existed != 0x0)
-		*existed = true;
-
-	if (it != m_chunks.end()) 
-		return &it->second;
-	else {
-		if (existed != 0x0)
-			*existed = false;
-
-		return &m_chunks.emplace(UChunkPartPos(x, z), CChunkPart(m_world, { x, z })).first->second;
+	auto it = m_chunks.find(UChunkPartPos(x, z));
+	if(it == m_chunks.end())
+	{
+		m_chunks.insert(std::make_pair<UChunkPartPos, CChunkPart>(UChunkPartPos(x, z), CChunkPart(m_world, {x, z})));
+		it = m_chunks.find(UChunkPartPos(x, z));
 	}
+
+	return &it->second;
 }
 
 CChunkPart* CChunkManager::createChunkIfNoneGenerated(int x, int z)

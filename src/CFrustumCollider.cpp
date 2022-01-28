@@ -4,7 +4,7 @@
 
 void CFrustumCollider::updatePlanes()
 {
-	glm::mat4 matrix = m_parent->getProjection() * m_parent->getView();
+	glm::mat4 matrix = m_parent->getProjection() * m_parent->getView(false);
 	
 	//CAMERA HAS PERSPECTIVE 
 	if(!m_parent->isOrtho())

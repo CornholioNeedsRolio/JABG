@@ -25,7 +25,6 @@ class CWorld : public CObject
 {
     CChunkManager m_manager;
     CChunkMeshThreadManager m_threadManager;
-    //CTerrainGenerator m_terrainGenerator; //todo remove this
     CChunkLoader m_loader;
 
 
@@ -33,7 +32,7 @@ class CWorld : public CObject
 
     std::shared_ptr<CTextureAtlas> m_texture = 0x0;
     std::shared_ptr<CShader> m_shader = 0x0;
-
+    std::string m_filePath = "./world/";
     CFPPlayer* m_player = nullptr;
 
     char m_flags;
@@ -45,11 +44,11 @@ public:
     CWorld(std::shared_ptr<CTextureAtlas> texture, CFPPlayer& player);
     ~CWorld();
 
-    uint8_t setBlock(int x, int y, int z, int id);
+    void setBlock(int x, int y, int z, int id);
     int getBlock(int x, int y, int z);
 
     CChunkManager& getManager();
-    //CTerrainGenerator& getGenerator();
+    const std::string& getFilePath() const;
 
     int getDrawDistance();
     std::shared_ptr<CTextureAtlas> getAtlas();

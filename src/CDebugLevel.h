@@ -8,6 +8,7 @@
 #include "COctree.h"
 #include "BulkRenderer/CBulkRenderer.h"
 #include "CDirectionalLight.h"
+#include "CPauseMenu.h"
 #include <array>
 
 class CDebugLevel : public CLevel
@@ -16,10 +17,12 @@ class CDebugLevel : public CLevel
 	std::array<float, 100> m_fpscounter;
 	CDrawableText m_text;
 	SDrawInfo m_info;
+	CPauseMenu m_pauseMenu;
 
 	CCamera m_ortho;
 	CBulkRenderer m_renderer;
 	CMesh m_depthView;
+	CMesh m_holdingBlock;
 	std::shared_ptr<CTexture> m_depthTexture = nullptr;
 
 	std::unique_ptr<CWorld> m_world;

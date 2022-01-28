@@ -3,7 +3,7 @@
 out vec4 color_output;
 
 in vec2 out_texcoord;
-in vec3 out_color;
+in vec4 out_color;
 in vec3 out_normal;
 
 in vec4 shadow_position;
@@ -34,9 +34,9 @@ float shadow()
 void main()
 {
 	if(doesHaveTexture != 0)
-		color_output = texture2D(texture0, out_texcoord)*vec4(out_color, 1);
+		color_output = texture2D(texture0, out_texcoord)*out_color;
 	else
-		color_output = vec4(out_color, 1);
+		color_output = out_color;
 
 	/*float crs = min(1.0, max(min(shadow(), -dot(out_normal, lightDirection)), 0.0));
 	//float crs = min(shadow(), -dot(out_normal, lightDirection));

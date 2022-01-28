@@ -4,7 +4,7 @@ layout(location=1) in vec2 texCoords;
 layout(location=2) in vec3 normal;
 
 out vec2 out_texcoord;
-out vec3 out_color;
+out vec4 out_color;
 out vec3 out_normal;
 out vec4 out_fragpos;
 //out vec3 out_dirLight;
@@ -16,7 +16,7 @@ uniform mat4 ViewMatrix;
 uniform mat4 ModelMatrix;
 uniform mat4 DirLightMatrix;
 
-uniform vec3 color;
+uniform vec4 color;
 
 void main()
 {

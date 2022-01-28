@@ -51,7 +51,7 @@ void CChunkLoaderInstance::Run()
             m_targetChunks.erase(m_targetChunks.begin());
             m_chunkNum = m_targetChunks.size();
         }
-        m_parent->addToList(m_parent->getGenerator().getChunk(std::get<0>(current), std::get<1>(current), std::get<2>(current)));
+        m_parent->addToList(m_parent->getGenerator().getChunk(std::get<0>(current), std::get<1>(current), std::get<2>(current), m_parent->getWorld()));
     }
 }
 

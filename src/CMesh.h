@@ -38,11 +38,12 @@ class CMesh : public CObject
 	GLenum m_type;
 	std::shared_ptr<CShader> m_shader = nullptr;
 	std::shared_ptr<CTexture> m_texture = nullptr;
-	glm::vec3 m_color;
+	glm::vec4 m_color;
 public:
 	void Init(const std::vector<SVertex>& _data, GLenum type = GL_TRIANGLES);
 	void InitCube(float size);
 	void InitGrid(int sizeX, int sizeY);
+	void Init2DRect(float x1, float y1, float x2, float y2);
 	void InitRect(float x1, float y1, float z1, float x2, float y2, float z2);
 	void InitDebugRect(float x1, float y1, float z1, float x2, float y2, float z2);
 	void InitLine(float x1, float y1, float z1, float x2, float y2, float z2);
@@ -52,11 +53,12 @@ public:
 	void SetWireframe(bool value);
 	std::shared_ptr<CTexture> GetTexture() const;
 	std::shared_ptr<CShader> GetShader() const;
-	const glm::vec3& getColor() const;
+	const glm::vec4& getColor() const;
 	bool isWireframeMode() const;
 
 	const bool& isInit();
 
+	void setColor(glm::vec4 color);
 	void setColor(glm::vec3 color);
 	
 	void Clear();

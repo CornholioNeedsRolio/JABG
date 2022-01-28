@@ -36,7 +36,7 @@ void CDrawableText::setFont(std::string path, int i)
 	}
 	FT_Set_Pixel_Sizes(m_face, i, i);
 
-	std::shared_ptr<CShader> shader = CFileManager::getShader("./res/DefaultShader/TextShader");
+	//std::shared_ptr<CShader> shader = CFileManager::getShader("./res/DefaultShader/TextShader");
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	for (unsigned char i = 0; i < 128; i++)
 	{
@@ -61,6 +61,64 @@ void CDrawableText::setFont(std::string path, int i)
 		else
 			m_chars[i] = chara;
 	}
+}
+
+
+//bulk renderer has showed me a big flaw in this code, so I'm thankful for that
+void CDrawableText::BulkDraw(class CBulkRenderer* renderer)
+{
+	glm::vec3 pos = GetPosition();
+	float firsty = 0;
+	bool needupdate = true;
+	for (int i = 0; (size_t)i < m_string.length(); i++)
+	{
+		if (m_chars.count(m_string[i]) == 0)
+			continue;
+
+		glm::vec3 position = GetPosition();
+		SChar& chr = m_chars.at(m_string[i]);
+
+		float h = chr.size.y * m_scale;
+
+		if (m_string[i] == '\n')
+		{
+			glm::vec3 position = GetPosition();
+			position.x = pos.x;
+			position.y += h + m_rowpadding * m_scale;
+			SetPosition(position);
+			needupdate = true;
+			continue;
+		}
+
+		if (!i)
+		{
+			firsty = h;
+			position.y += h;
+			SetPosition(position);
+		}
+
+		if (needupdate)
+			firsty = position.y;
+
+		float ypos = firsty - chr.bearing.y * m_scale;
+
+		float xpos = position.x + chr.bearing.x * m_scale;
+		float w = chr.size.x * m_scale;
+
+		if (chr.mesh == nullptr)
+		{
+			chr.mesh = std::make_shared<CMesh>();
+
+			chr.mesh->Init2DRect(0, 0, w, h);
+			chr.mesh->SetShader(m_shader);
+			chr.mesh->SetTexture(chr.tex);
+		}
+		chr.mesh->SetPosition({xpos, ypos, pos.z});
+		chr.mesh->BulkDraw(renderer);
+
+		SetPosition(GetPosition() + glm::vec3{ (chr.advance >> 6)* m_scale, 0, 0 });
+	}
+	SetPosition(pos);
 }
 
 void CDrawableText::setRowPadding(float value)
@@ -117,18 +175,7 @@ void CDrawableText::Draw(const SDrawInfo& info)
 		{
 			chr.mesh = std::make_shared<CMesh>();
 
-			std::vector<SVertex> m =
-			{
-				{{xpos, ypos, position.z},{0, 0}},
-				{{xpos, ypos + h, position.z	},{0,1}},
-				{{xpos + w, ypos + h, position.z},{1, 1}},
-
-				{{xpos + w, ypos + h, position.z},{1, 1}},
-				{{xpos + w, ypos, position.z},{1, 0}},
-				{{xpos, ypos, position.z},{0, 0}},
-			};
-
-			chr.mesh->Init(m);
+			chr.mesh->Init2DRect(xpos, ypos, xpos+w, ypos+h);
 			chr.mesh->SetShader(m_shader);
 			chr.mesh->SetTexture(chr.tex);
 		}

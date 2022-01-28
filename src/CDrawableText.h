@@ -36,6 +36,7 @@ public:
 	void setRowPadding(float value);
 	void setString(const std::string& text);
 	void Draw(const SDrawInfo& info) override;
+	void BulkDraw(class CBulkRenderer* renderer);
 };
 
 #endif

@@ -17,6 +17,8 @@ public:
 	CChunkManager(class CWorld* world);
 	CChunkPart* getChunkPart(int x, int z);
 
+	CWorld* getWorld();
+
 	CChunkPart* createChunkIfNone(int x, int z, bool* existed = 0x0);
 	CChunkPart* createChunkIfNoneGenerated(int x, int z);
 

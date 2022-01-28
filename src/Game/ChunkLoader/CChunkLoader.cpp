@@ -36,6 +36,11 @@ void CChunkLoader::addToList(std::shared_ptr<CChunk> chunk)
     m_chunks.push_back(chunk);
 }
 
+CWorld* CChunkLoader::getWorld()
+{
+    return m_world;
+}
+
 void CChunkLoader::onPlayerMove(std::tuple<int, int, int> playerPos, int distance, CChunkManager* world)
 {
     emptyListAllThreads();
@@ -81,6 +86,7 @@ void CChunkLoader::Tick(CChunkManager* world)
         //empty array
         m_chunks.clear();
     }
+    m_generator.consumeCache(world);
 }
 
 CChunkGenerator& CChunkLoader::getGenerator()

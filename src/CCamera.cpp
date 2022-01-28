@@ -33,14 +33,14 @@ SMat4 CCamera::getProjection() const
 	return m_projection;
 }
 
-SMat4 CCamera::getView() const
+SMat4 CCamera::getView(bool coordZero) const
 {
 	glm::mat4 output = glm::mat4(1);
 	output *= glm::rotate(glm::mat4(1), glm::radians(-GetGlobalRotation().x), { 1, 0, 0 }); //pitch
 	output *= glm::rotate(glm::mat4(1), glm::radians(-GetGlobalRotation().y), { 0, 1, 0 }); //yaw
 	output *= glm::rotate(glm::mat4(1), glm::radians(-GetGlobalRotation().z), { 0, 0, 1 }); //roll
-
-	output *= glm::translate(glm::mat4(1), -GetGlobalPosition());
+	if(!coordZero)
+		output *= glm::translate(glm::mat4(1), -GetGlobalPosition());
 
 	return output;
 }
@@ -120,7 +120,7 @@ glm::vec3 CCamera::getMiddle() const
 
 	//printf("%f %f %f %f %f %f \n", minx, miny, minz, maxx, maxy, maxz);
 	glm::vec4 output(minx+maxx, miny+maxy, minz+maxz, 1.0);
-	output = output * 0.5f * getView();
+	output = output * 0.5f * getView(false);
 	return output;
 }
 

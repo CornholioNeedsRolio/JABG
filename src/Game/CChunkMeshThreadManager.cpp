@@ -28,13 +28,7 @@ void CChunkMeshThreadManager::threadMain()
 			m_flags |= BUILDING_MESH;
 			if (m_selectedChunk)
 			{
-				for (auto neigh : m_neighbors)
-					if (neigh) neigh->setDestroyable(false);
-
-				m_selectedChunk->BuildMesh(m_neighbors, m_world->getAtlas());
-
-				for (auto neigh : m_neighbors)
-					if (neigh) neigh->setDestroyable(true);
+				m_selectedChunk->getMeshComponent().BuildMeshData(m_neighbors, m_world->getAtlas());
 			}
 			m_selectedChunk = nullptr;
 			m_neighbors.fill(nullptr);
@@ -72,7 +66,7 @@ void CChunkMeshThreadManager::ChooseChunk()
 				if (!chunk)
 					continue;
 					
-				if (!chunk->isChunkDirty())
+				if (!chunk->getMeshComponent().isDirty())
 					continue;
 
 				m_neighbors.fill(nullptr);
@@ -82,6 +76,8 @@ void CChunkMeshThreadManager::ChooseChunk()
 				CChunkPart* N = m_world->getManager().getChunkPart(x, z+1);
 				CChunkPart* W = m_world->getManager().getChunkPart(x-1, z);
 				CChunkPart* E = m_world->getManager().getChunkPart(x+1, z);
+				
+				//if(!S || !N || !W || !E) continue;
 
 				m_neighbors[CHUNKFACE_TOP] = part->getChunk(pos+1);
 				m_neighbors[CHUNKFACE_BOT] = part->getChunk(pos-1);

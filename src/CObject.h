@@ -27,6 +27,7 @@ class CObject
 	SVector3 m_rotation;
 	SVector3 m_size;
 	CObject* m_attachment = nullptr;
+	bool m_ignoreCamera = false;
 public:
 	CObject(SVector3 _position = SVector3(0), SVector3 _rotation = SVector3(0));
 	virtual ~CObject(){};
@@ -56,8 +57,8 @@ public:
 	void setSize(const SVector3& size);
 
 	void Move(glm::vec3 velocity);
-
-	SMat4 getModelMatrix();
+	void setIgnoreCamera(bool value);
+	SMat4 getModelMatrix(class CCamera* camera);
 };
 
 #endif

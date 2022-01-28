@@ -33,15 +33,11 @@ float CTerrainGenerator::OctaveSimplex(float x, float y, float z, int octaves, f
 
 	return total;
 }
-
-
-
+//DEPRECATED
 void CTerrainGenerator::makeChunk(int cx, int cy, int cz, CChunk* chunk)
 {
-	chunk->setChunkGenerating(true);
-
-	int downPos = cy * CHUNK_SIZE; /*botton of the chunk*/
-	int upPos = cy * CHUNK_SIZE+CHUNK_SIZE; /*top of the chunk*/
+	/*int downPos = cy * CHUNK_SIZE; //botton of the chunk
+	int upPos = cy * CHUNK_SIZE+CHUNK_SIZE; //top of the chunk
 	int top = 0;
 	for (int x = 0; x < CHUNK_SIZE; x++)
 	{
@@ -58,7 +54,7 @@ void CTerrainGenerator::makeChunk(int cx, int cy, int cz, CChunk* chunk)
 				m_heightMap.emplace(pos, 64 + OctaveSimplex(gx / (float)(CHUNK_SIZE*5), 0, gz / (float)(CHUNK_SIZE * 5), 8, 0.25) * 16);
 			top = m_heightMap[pos];
 
-			m_maxy = std::max(m_maxy, top / CHUNK_SIZE); /*set max chunk pos*/
+			m_maxy = std::max(m_maxy, top / CHUNK_SIZE); //set max chunk pos
 
 
 			if (downPos <= top && top < upPos)
@@ -80,9 +76,7 @@ void CTerrainGenerator::makeChunk(int cx, int cy, int cz, CChunk* chunk)
 				}
 			}
 		}
-	}
-	chunk->setChunkGenerating(false);
-
+	}*/
 }
 
 void CTerrainGenerator::makeChunkPart(int cx, int cz, CChunkPart* part)
@@ -148,7 +142,7 @@ void CTerrainGenerator::consumeCache(CChunkManager* world)
 		CChunk *chunk = part->getChunkNew(std::get<1>(it->first));
 
 		for (auto it2 = it->second.begin(); it2 != it->second.end(); ++it2)
-			chunk->SetBlock(std::get<0>(it2->first), std::get<1>(it2->first), std::get<2>(it2->first), it2->second);
+			chunk->getVoxelComponent().setBlock(std::get<0>(it2->first), std::get<1>(it2->first), std::get<2>(it2->first), it2->second);
 		it = m_cache.erase(it);
 	}
 }

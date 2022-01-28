@@ -9,7 +9,7 @@ void CMesh::Init(const std::vector<SVertex>& _data, GLenum type)
 {
 	if (!_data.size() || m_init)
 		return;
-	m_color = glm::vec3(1);
+	m_color = glm::vec4(1);
 	m_type = type;
 
 	m_init = 1;
@@ -32,6 +32,21 @@ void CMesh::Init(const std::vector<SVertex>& _data, GLenum type)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	m_indices = (GLuint)_data.size();
+}
+
+
+void CMesh::Init2DRect(float x1, float y1, float x2, float y2)
+{
+	std::vector<SVertex> _temp = {
+		{{x1, y1, 0},{0, 0}},
+		{{x1, y2, 0},{0, 1}},
+		{{x2, y2, 0},{1, 1}},
+
+		{{x2, y2, 0},{1, 1}},
+		{{x2, y1, 0},{1, 0}},
+		{{x1, y1, 0},{0, 0}}
+	};
+	Init(_temp);
 }
 
 void CMesh::InitCube(float size)
@@ -276,9 +291,14 @@ const bool& CMesh::isInit()
 	return m_init;
 }
 
-void CMesh::setColor(glm::vec3 color)
+void CMesh::setColor(glm::vec4 color)
 {
 	m_color = color;
+}
+
+void CMesh::setColor(glm::vec3 color)
+{
+	m_color = glm::vec4(color, 1);
 }
 
 void CMesh::Clear()
@@ -302,8 +322,8 @@ void CMesh::Draw(const SDrawInfo& info)
 		if (info.camera) 
 		{
 			m_shader->SetUniform(info.camera->getProjection(), "ProjectionMatrix");
-			m_shader->SetUniform(getModelMatrix(), "ModelMatrix");
-			m_shader->SetUniform(info.camera->getView(), "ViewMatrix");
+			m_shader->SetUniform(getModelMatrix(nullptr), "ModelMatrix");
+			m_shader->SetUniform(info.camera->getView(false), "ViewMatrix");
 		}
 		
 		if (m_texture) m_texture->Bind();
@@ -342,7 +362,7 @@ bool CMesh::isWireframeMode() const
 	return m_wireframe;
 }
 
-const glm::vec3& CMesh::getColor() const
+const glm::vec4& CMesh::getColor() const
 {
 	return m_color;
 }

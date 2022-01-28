@@ -13,7 +13,7 @@ class CFPPlayer : public CObject
 	void RotateCamera(glm::ivec2 pos, float sensivity, float delta);
 	void Move(bool forward, bool back, bool top, bool bottom, bool left, bool right, float delta, float gravity);
 	float m_camerayrot;
-	float m_sensivity = 0.4;
+	float m_sensivity = 0.7;
 	float m_speed = 5;
 	float m_gravity = -9.81;
 	float m_aceel = 0;
@@ -28,6 +28,9 @@ class CFPPlayer : public CObject
 	glm::vec3 m_velocity;
 	glm::vec3 m_accel;
 	glm::vec3 m_pointing;
+	glm::ivec3 m_targetPlace;
+
+	int m_holdingBlock;
 
 	class CWorld* m_world = 0x0;
 	CGameEntityCollider m_collider;
@@ -35,7 +38,7 @@ class CFPPlayer : public CObject
 	float jumpHyperbola(float value);
 	CMesh m_targetBlock;
 	CMesh m_debugTarget;
-
+	CMesh* m_holdingBlockMesh = nullptr;
 	//FLAGS
 	uint8_t m_flags;
 	enum
@@ -47,8 +50,11 @@ class CFPPlayer : public CObject
 	};
 	bool checkFlag(const uint8_t& flag) const;
 	void setFlags(const uint8_t& flag, const bool& set);
+
+	void placeBlock(int block);
 public:
 	CFPPlayer(SVector3 _pos = SVector3(0), SVector3 _rot = SVector3(0), class CWorld* world = 0x0);
+	~CFPPlayer();
 
 	CCamera& getCamera();
 	
@@ -57,7 +63,12 @@ public:
 	void BulkDraw(class CBulkRenderer* renderer) override;
 	void setWorld(class CWorld* world);
 
+	void save(const std::string& path);
+	void load(const std::string& path);
+
 	void Hover(bool value);
+
+	void setHoldingBlockMesh(CMesh* mesh);
 
 	bool isJumping();
 	bool canJump();
