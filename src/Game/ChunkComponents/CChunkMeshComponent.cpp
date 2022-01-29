@@ -106,12 +106,12 @@ void CChunkMeshComponent::BuildMeshData(std::array<CChunk*, 6> neighbors, std::s
 
                 bool temp[6] = {};
 
-                temp[CBlock::BLOCK_BACK]   = !getBlock(x, y, z-1).getBlock()->isVisible();
-				temp[CBlock::BLOCK_FRONT]  = !getBlock(x, y, z+1).getBlock()->isVisible();
-				temp[CBlock::BLOCK_RIGHT]  = !getBlock(x+1, y, z).getBlock()->isVisible();
-				temp[CBlock::BLOCK_LEFT]   = !getBlock(x-1, y, z).getBlock()->isVisible();
-				temp[CBlock::BLOCK_TOP]    = !getBlock(x, y+1, z).getBlock()->isVisible();
-				temp[CBlock::BLOCK_BOTTOM] = !getBlock(x, y-1, z).getBlock()->isVisible();
+                temp[CBlock::BLOCK_BACK]   = getBlock(x, y, z-1).getBlock()->isTransparent();
+				temp[CBlock::BLOCK_FRONT]  = getBlock(x, y, z+1).getBlock()->isTransparent();
+				temp[CBlock::BLOCK_RIGHT]  = getBlock(x+1, y, z).getBlock()->isTransparent();
+				temp[CBlock::BLOCK_LEFT]   = getBlock(x-1, y, z).getBlock()->isTransparent();
+				temp[CBlock::BLOCK_TOP]    = getBlock(x, y+1, z).getBlock()->isTransparent();
+				temp[CBlock::BLOCK_BOTTOM] = getBlock(x, y-1, z).getBlock()->isTransparent();
 
 				auto blockmeshinfo = self->getBlockMeshVertices(temp, atlas, {x, y, z});
 

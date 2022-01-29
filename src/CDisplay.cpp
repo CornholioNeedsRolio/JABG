@@ -22,8 +22,6 @@ void CDisplay::Init(std::string title, int width, int height)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	glEnable(GL_ALPHA_TEST);
-	glAlphaFunc(GL_GREATER,0.0f);
 	SDL_GL_SetSwapInterval(0);
 	
 	m_running = true;

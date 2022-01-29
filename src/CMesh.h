@@ -14,6 +14,16 @@ struct SVertex
 		float x;
 		float y;
 		float z;
+		float& operator[](int i)
+		{
+			switch(i)
+			{
+				case 0: return x;
+				case 1: return y;
+				case 2: return z;
+			}
+			return x;
+		}
 	}position;
 	
 	struct __tex

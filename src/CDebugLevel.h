@@ -7,6 +7,7 @@
 #include "CRenderManager.h"
 #include "COctree.h"
 #include "BulkRenderer/CBulkRenderer.h"
+#include "CSkyBox.h"
 #include "CDirectionalLight.h"
 #include "CPauseMenu.h"
 #include <array>
@@ -23,6 +24,9 @@ class CDebugLevel : public CLevel
 	CBulkRenderer m_renderer;
 	CMesh m_depthView;
 	CMesh m_holdingBlock;
+	CMesh m_crosshair;
+	CSkyBox m_skybox;
+
 	std::shared_ptr<CTexture> m_depthTexture = nullptr;
 
 	std::unique_ptr<CWorld> m_world;

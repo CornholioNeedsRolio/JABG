@@ -11,9 +11,10 @@ class CBlock
 	enum
 	{
 		IS_SOLID,
-		IS_VISIBLE
+		IS_VISIBLE,
+		IS_TRANSPARENT
 	};
-	std::bitset<2> m_flags;
+	std::bitset<3> m_flags;
 	//uint8_t m_solid;
 	//uint8_t m_visible;
 	ColliderType m_type = BLOCKCOLLIDER_FULL;
@@ -29,10 +30,12 @@ public:
 	};
 	bool isVisible() { return m_flags[IS_VISIBLE]; };
 	bool isSolid() { return m_flags[IS_SOLID]; };
+	bool isTransparent() { return m_flags[IS_TRANSPARENT]; };
 	const ColliderType& getCollision();
 
 	void setVisible(bool visible) { m_flags[IS_VISIBLE] = visible; };
 	void setSolid(bool solid) { m_flags[IS_SOLID] = solid; };
+	void setTransparent(bool transparent) { m_flags[IS_TRANSPARENT] = transparent; };
 	void setCollisionType(ColliderType type);
 
 	int getFaceAtlasIndex(uint8_t face) { return m_faceatlasindex[face]; };
@@ -48,6 +51,13 @@ enum
 	BLOCK_STONE,
 	BLOCK_LOG,
 	BLOCK_LEAVES,
+	BLOCK_PLANKS,
+	BLOCK_BRICKS,
+	BLOCK_BROKENSTONE,
+	BLOCK_STONEBRICK,
+	BLOCK_GLASS,
+	BLOCK_SAND,
+	BLOCK_OLDSTONE,
 	BLOCK_TOTAL
 };
 
@@ -57,6 +67,7 @@ namespace BLOCK_DATABASE
 	{
 		std::vector<std::unique_ptr<CBlock>> m_blocks;
 	public:
+
 		void Init();
 		CBlock* getBlock(int id);
 	};

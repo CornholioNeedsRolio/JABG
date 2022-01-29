@@ -43,6 +43,7 @@ void CDebugLevel::Draw()
 	
 	m_world->BulkDraw(&m_renderer);
 	m_player->BulkDraw(&m_renderer);
+	m_skybox.Draw(&m_renderer);
 	m_renderer.RenderAll();
 
 	m_renderer.setActiveCamera(&m_ortho);
@@ -50,6 +51,7 @@ void CDebugLevel::Draw()
 	m_pauseMenu.BulkDraw(&m_renderer, m_width, m_height);
 	if(m_holdingBlock.isInit())
 		m_holdingBlock.BulkDraw(&m_renderer);
+	m_crosshair.BulkDraw(&m_renderer);
 	m_renderer.RenderAll();
 
 }
@@ -90,8 +92,10 @@ void CDebugLevel::Load(CGame* game)
 	m_holdingBlock.setSize({45,45,45});
 	m_holdingBlock.SetRotation({10, 45, 180});
 	m_player->setHoldingBlockMesh(&m_holdingBlock);
-	//m_depthTexture = std::shared_ptr<CTexture>(&m_testLight.getTexture());
-	//m_depthView.SetTexture(m_depthTexture);
+	m_crosshair.Init2DRect(-10, -10, 10, 10);
+	m_crosshair.SetTexture(CFileManager::getTexture("./res/crosshair.png"));
+	m_crosshair.SetPosition({m_width*0.5f, m_height*0.5f, 2});
+	m_skybox.Init(CFileManager::getTexture("./res/skybox.png"));
 }
 
 void CDebugLevel::UnLoad()

@@ -26,7 +26,7 @@ void CGame::Run()
 		std::chrono::duration<float> elapsedTime = end - begin;
 		begin = end;
 		m_deltaTime = elapsedTime.count();
-		if (m_currentLevel && m_deltaTime <= 2)
+		if (m_currentLevel && m_deltaTime > 0 && m_deltaTime <= 1)
 		{
 			m_currentLevel->Run(m_inputmanager, m_deltaTime);
 			m_currentLevel->Draw();

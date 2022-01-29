@@ -73,18 +73,20 @@ void CChunkLoader::onPlayerMove(std::tuple<int, int, int> playerPos, int distanc
 
 void CChunkLoader::Tick(CChunkManager* world)
 {
-    const std::lock_guard<std::mutex> lock(m_mutex);
-    if(!m_chunks.empty())
     {
-        //add chunks to world
-        for(auto& chunk : m_chunks)
+        const std::lock_guard<std::mutex> lock(m_mutex);
+        if(!m_chunks.empty())
         {
-            glm::ivec3 position = chunk->getChunkPosition();
-            CChunkPart* part = world->createChunkIfNone(position.x, position.z);
-            part->addChunk(chunk);
+            //add chunks to world
+            for(auto& chunk : m_chunks)
+            {
+                glm::ivec3 position = chunk->getChunkPosition();
+                CChunkPart* part = world->createChunkIfNone(position.x, position.z);
+                part->addChunk(chunk);
+            }
+            //empty array
+            m_chunks.clear();
         }
-        //empty array
-        m_chunks.clear();
     }
     m_generator.consumeCache(world);
 }

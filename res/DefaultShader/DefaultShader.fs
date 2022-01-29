@@ -37,6 +37,8 @@ void main()
 		color_output = texture2D(texture0, out_texcoord)*out_color;
 	else
 		color_output = out_color;
+	
+	if(color_output.w <=0.1) discard;
 
 	/*float crs = min(1.0, max(min(shadow(), -dot(out_normal, lightDirection)), 0.0));
 	//float crs = min(shadow(), -dot(out_normal, lightDirection));

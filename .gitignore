@@ -1,6 +1,7 @@
 /DEADJOE
 /build
 /world
+/winbuild
 libbrotlicommon.dll
 libbrotlidec.dll
 libbz2-1.dll

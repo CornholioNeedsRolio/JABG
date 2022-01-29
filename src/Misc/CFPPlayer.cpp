@@ -269,7 +269,16 @@ void CFPPlayer::Tick(CInputManager& _manager, float deltaTime)
 	bool right_arrow = _manager.keyPressed(SDL_SCANCODE_RIGHT);
 	if (left_arrow || right_arrow)
 	{
-		m_holdingBlock = right_arrow ? (m_holdingBlock + 1) % (BLOCK_TOTAL-1)+1 : (m_holdingBlock - 1 < 1 ? 1 : m_holdingBlock - 1);
+		if(right_arrow)
+			++m_holdingBlock;
+		else
+			--m_holdingBlock;
+		if(m_holdingBlock >= BLOCK_TOTAL)
+			m_holdingBlock %= BLOCK_TOTAL;
+		if(m_holdingBlock <= 0)
+			m_holdingBlock = BLOCK_TOTAL-1;
+
+		//m_holdingBlock = right_arrow ? (m_holdingBlock + 1) % (BLOCK_TOTAL-1)+1 : (m_holdingBlock - 1 <= 0 ? 1 : m_holdingBlock - 1);
 		if(m_holdingBlockMesh)
 		{
 			m_holdingBlockMesh->Clear();
@@ -342,9 +351,9 @@ void CFPPlayer::Draw(const SDrawInfo& info)
 
 void CFPPlayer::BulkDraw(class CBulkRenderer* renderer)
 {
-	m_collider.getCollider().BulkDraw(renderer);
+	//m_collider.getCollider().BulkDraw(renderer);
 	m_targetBlock.BulkDraw(renderer);
-	m_debugTarget.BulkDraw(renderer);
+	//m_debugTarget.BulkDraw(renderer);
 }
 
 void CFPPlayer::setWorld(class CWorld* world)

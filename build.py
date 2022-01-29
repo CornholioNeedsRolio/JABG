@@ -14,10 +14,11 @@ link_libs = '-lSDL2 -lGL -lGLU -ldl -lfreetype'
 paramaters = '-ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native -pthread -std=c++17 -I./include -I/usr/include/freetype2/'
 if("--normie" in sys.argv or "-n" in sys.argv):
     normieMode = True
-    compiler = "x86_64-w64-mingw32-g++ "
+    buildDir = 'winbuild'
+    compiler = "/opt/msvc/bin/x64/cl "
     extension = ".exe"
-    paramaters = '-g -Wall -Wno-reorder -Wno-sign-compare -O3 -Wno-unused-command-line-argument -pthread -std=c++17 -I./include -I/usr/include/freetype2 -L/usr/x86_64-w64-mingw32/lib -os=windows'
-    link_libs = '-mwindows -lstdc++ -lopengl32 -lglu32 -lSDL2 libfreetype.a'
+    #paramaters = '-g -Wall -Wno-reorder -Wno-sign-compare -O3 -Wno-unused-command-line-argument -pthread -std=c++17 -I./include -I/usr/include/freetype2 -L/usr/x86_64-w64-mingw32/lib -os=windows'
+    #link_libs = '-mwindows -lstdc++ -lopengl32 -lglu32 -lSDL2 libfreetype.a'
 outputFile = 'jabg'+extension
 
 
@@ -104,13 +105,19 @@ shell_command = ""
 obj_builded = 0
 obj_total = 0
 
+
+workingDirWindows = os.getcwd().replace('/', '\\\\')
 def compObj(file):
     global objects
     global obj_total
     global obj_builded
 
     obj_total = obj_total + 1
-    obj = buildDir + '/' + os.path.basename(file).replace('.cpp', '').replace('.c', '') + '.o'
+    obj = buildDir + '/' + os.path.basename(file).replace('.cpp', '').replace('.c', '')
+    if(normieMode):
+        obj += '.obj'
+    else:
+        obj += '.o'
     objects += obj + ' '
     #if file in lastEdited:
     #    if lastEdited[file] == time and ("-b" not in sys.argv):
@@ -123,7 +130,16 @@ def compObj(file):
         pass
 
     obj_builded = obj_builded + 1
-    print(file + ':' + os.popen(compiler + '-c -o ' + obj + ' ' + file + ' ' + paramaters).read())
+    output = ""
+    if(normieMode):
+        output = os.popen(compiler+" /O12x /EHsc /experimental:module /std:c++latest /I "+workingDirWindows+"\\\\libraries\\\\include /Fo /c " + workingDirWindows +"\\\\{}".format(file.replace('/', '\\\\'))).read()
+        try:
+            os.replace(os.getcwd()+'/'+os.path.basename(obj), obj)
+        except:
+            pass
+    else:
+        output = os.popen(compiler + '-c -o ' + obj + ' ' + file + ' ' + paramaters).read()
+    print(file + ':' + output)
 
 threads = []
 for file in f:
@@ -136,12 +152,15 @@ for process in threads:
 
 print('Finished building object files, building executable now, builded', obj_builded, '/', obj_total)
 paramaters = paramaters + ' ' + link_libs 
-os.system(compiler + '-o ' + outputFile + ' ' + paramaters + ' ' + objects)
+if(normieMode):
+    os.system(compiler+" /Otxdiy /std:c++latest {} /o{} /link /LIBPATH:{}\\\\libraries\\\\lib\\\\ /SUBSYSTEM:CONSOLE /DEFAULTLIB:SDL2.lib /DEFAULTLIB:SDL2main.lib /DEFAULTLIB:opengl32.lib /DEFAULTLIB:freetype.lib".format(objects, outputFile, workingDirWindows))
+else:
+    os.system(compiler + '-o ' + outputFile + ' ' + paramaters + ' ' + objects)
 
 if(("-r" in sys.argv)):
     print('Running program')
     if(normieMode):
-        os.system('wine '+outputFile)
+        os.system("wine ./" + outputFile)
     else:
         if("-d" in sys.argv):
             os.system('gdb '+outputFile)
