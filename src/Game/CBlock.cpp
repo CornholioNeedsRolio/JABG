@@ -1,5 +1,6 @@
-#include "CBlock.h"
+#include "SpecialBlocks/CPable.h"
 #include "../CTextureAtlas.h"
+#include "CBlock.h"
 #include <iostream>
 
 
@@ -106,15 +107,16 @@ namespace BLOCK_DATABASE
 	{
 		m_blocks.push_back(std::make_unique<CBlock>());
 		m_blocks[BLOCK_AIR]->setSolid(false);
+		m_blocks[BLOCK_AIR]->setTargetable(false);
 		m_blocks[BLOCK_AIR]->setVisible(false);
 		m_blocks[BLOCK_AIR]->setCollisionType(BLOCKCOLLIDER_NONE);
 		m_blocks[BLOCK_AIR]->setTransparent(true);
-
 
 		//GRASS
 		m_blocks.push_back(std::make_unique<CBlock>());
 		m_blocks[BLOCK_GRASS]->setSolid(true);
 		m_blocks[BLOCK_GRASS]->setVisible(true);
+		m_blocks[BLOCK_GRASS]->setTargetable(true);
 		m_blocks[BLOCK_GRASS]->setFaceAtlasIndex(CBlock::BLOCK_BOTTOM, 2);
 		m_blocks[BLOCK_GRASS]->setFaceAtlasIndex(CBlock::BLOCK_TOP, 0);
 		m_blocks[BLOCK_GRASS]->setFaceAtlasIndex(CBlock::BLOCK_LEFT, 1);
@@ -126,6 +128,7 @@ namespace BLOCK_DATABASE
 		m_blocks.push_back(std::make_unique<CBlock>());
 		m_blocks[BLOCK_DIRT]->setSolid(true);
 		m_blocks[BLOCK_DIRT]->setVisible(true);
+		m_blocks[BLOCK_DIRT]->setTargetable(true);
 		for(uint8_t i = 0; i < 6; i++)
 			m_blocks[BLOCK_DIRT]->setFaceAtlasIndex(i, 2);
 
@@ -133,6 +136,7 @@ namespace BLOCK_DATABASE
 		m_blocks.push_back(std::make_unique<CBlock>());
 		m_blocks[BLOCK_STONE]->setSolid(true);
 		m_blocks[BLOCK_STONE]->setVisible(true);
+		m_blocks[BLOCK_STONE]->setTargetable(true);
 		for (uint8_t i = 0; i < 6; i++)
 			m_blocks[BLOCK_STONE]->setFaceAtlasIndex(i, 3);
 
@@ -140,6 +144,7 @@ namespace BLOCK_DATABASE
 		m_blocks.push_back(std::make_unique<CBlock>());
 		m_blocks[BLOCK_LOG]->setSolid(true);
 		m_blocks[BLOCK_LOG]->setVisible(true);
+		m_blocks[BLOCK_LOG]->setTargetable(true);
 		for (uint8_t i = 0; i < 4; i++)
 			m_blocks[BLOCK_LOG]->setFaceAtlasIndex(i, 4);
 		m_blocks[BLOCK_LOG]->setFaceAtlasIndex(CBlock::BLOCK_TOP, 6);
@@ -149,6 +154,7 @@ namespace BLOCK_DATABASE
 		m_blocks.push_back(std::make_unique<CBlock>());
 		m_blocks[BLOCK_LEAVES]->setSolid(true);
 		m_blocks[BLOCK_LEAVES]->setVisible(true);
+		m_blocks[BLOCK_LEAVES]->setTargetable(true);
 		for (uint8_t i = 0; i < 6; i++)
 			m_blocks[BLOCK_LEAVES]->setFaceAtlasIndex(i, 5);
 
@@ -156,6 +162,7 @@ namespace BLOCK_DATABASE
 		m_blocks.push_back(std::make_unique<CBlock>());
 		m_blocks[BLOCK_PLANKS]->setSolid(true);
 		m_blocks[BLOCK_PLANKS]->setVisible(true);
+		m_blocks[BLOCK_PLANKS]->setTargetable(true);
 		m_blocks[BLOCK_PLANKS]->setFaceAtlasIndex(CBlock::BLOCK_TOP, 9);
 		m_blocks[BLOCK_PLANKS]->setFaceAtlasIndex(CBlock::BLOCK_BOTTOM, 9);
 		m_blocks[BLOCK_PLANKS]->setFaceAtlasIndex(CBlock::BLOCK_FRONT, 8);
@@ -167,6 +174,7 @@ namespace BLOCK_DATABASE
 		m_blocks.push_back(std::make_unique<CBlock>());
 		m_blocks[BLOCK_BRICKS]->setSolid(true);
 		m_blocks[BLOCK_BRICKS]->setVisible(true);
+		m_blocks[BLOCK_BRICKS]->setTargetable(true);
 		m_blocks[BLOCK_BRICKS]->setFaceAtlasIndex(CBlock::BLOCK_TOP, 11);
 		m_blocks[BLOCK_BRICKS]->setFaceAtlasIndex(CBlock::BLOCK_BOTTOM, 11);
 		m_blocks[BLOCK_BRICKS]->setFaceAtlasIndex(CBlock::BLOCK_FRONT, 11);
@@ -178,6 +186,7 @@ namespace BLOCK_DATABASE
 		m_blocks.push_back(std::make_unique<CBlock>());
 		m_blocks[BLOCK_BROKENSTONE]->setSolid(true);
 		m_blocks[BLOCK_BROKENSTONE]->setVisible(true);
+		m_blocks[BLOCK_BROKENSTONE]->setTargetable(true);
 		m_blocks[BLOCK_BROKENSTONE]->setFaceAtlasIndex(CBlock::BLOCK_TOP, 12);
 		m_blocks[BLOCK_BROKENSTONE]->setFaceAtlasIndex(CBlock::BLOCK_BOTTOM, 12);
 		m_blocks[BLOCK_BROKENSTONE]->setFaceAtlasIndex(CBlock::BLOCK_FRONT, 12);
@@ -189,6 +198,7 @@ namespace BLOCK_DATABASE
 		m_blocks.push_back(std::make_unique<CBlock>());
 		m_blocks[BLOCK_STONEBRICK]->setSolid(true);
 		m_blocks[BLOCK_STONEBRICK]->setVisible(true);
+		m_blocks[BLOCK_STONEBRICK]->setTargetable(true);
 		m_blocks[BLOCK_STONEBRICK]->setFaceAtlasIndex(CBlock::BLOCK_TOP, 13);
 		m_blocks[BLOCK_STONEBRICK]->setFaceAtlasIndex(CBlock::BLOCK_BOTTOM, 13);
 		m_blocks[BLOCK_STONEBRICK]->setFaceAtlasIndex(CBlock::BLOCK_FRONT, 13);
@@ -201,6 +211,7 @@ namespace BLOCK_DATABASE
 		m_blocks[BLOCK_GLASS]->setSolid(true);
 		m_blocks[BLOCK_GLASS]->setVisible(true);
 		m_blocks[BLOCK_GLASS]->setTransparent(true);
+		m_blocks[BLOCK_GLASS]->setTargetable(true);
 		m_blocks[BLOCK_GLASS]->setFaceAtlasIndex(CBlock::BLOCK_TOP, 14);
 		m_blocks[BLOCK_GLASS]->setFaceAtlasIndex(CBlock::BLOCK_BOTTOM, 14);
 		m_blocks[BLOCK_GLASS]->setFaceAtlasIndex(CBlock::BLOCK_FRONT, 14);
@@ -212,7 +223,7 @@ namespace BLOCK_DATABASE
 		m_blocks.push_back(std::make_unique<CBlock>());
 		m_blocks[BLOCK_SAND]->setSolid(true);
 		m_blocks[BLOCK_SAND]->setVisible(true);
-		m_blocks[BLOCK_SAND]->setTransparent(true);
+		m_blocks[BLOCK_SAND]->setTargetable(true);
 		m_blocks[BLOCK_SAND]->setFaceAtlasIndex(CBlock::BLOCK_TOP, 15);
 		m_blocks[BLOCK_SAND]->setFaceAtlasIndex(CBlock::BLOCK_BOTTOM, 15);
 		m_blocks[BLOCK_SAND]->setFaceAtlasIndex(CBlock::BLOCK_FRONT, 15);
@@ -224,13 +235,16 @@ namespace BLOCK_DATABASE
 		m_blocks.push_back(std::make_unique<CBlock>());
 		m_blocks[BLOCK_OLDSTONE]->setSolid(true);
 		m_blocks[BLOCK_OLDSTONE]->setVisible(true);
-		m_blocks[BLOCK_OLDSTONE]->setTransparent(true);
+		m_blocks[BLOCK_OLDSTONE]->setTargetable(true);
 		m_blocks[BLOCK_OLDSTONE]->setFaceAtlasIndex(CBlock::BLOCK_TOP, 16);
 		m_blocks[BLOCK_OLDSTONE]->setFaceAtlasIndex(CBlock::BLOCK_BOTTOM, 16);
 		m_blocks[BLOCK_OLDSTONE]->setFaceAtlasIndex(CBlock::BLOCK_FRONT, 16);
 		m_blocks[BLOCK_OLDSTONE]->setFaceAtlasIndex(CBlock::BLOCK_BACK, 16);
 		m_blocks[BLOCK_OLDSTONE]->setFaceAtlasIndex(CBlock::BLOCK_RIGHT, 16);
 		m_blocks[BLOCK_OLDSTONE]->setFaceAtlasIndex(CBlock::BLOCK_LEFT, 16);
+
+		//PEBLE
+		m_blocks.push_back(std::make_unique<CPable>());
 	}
 
 	CBlock* Blocks::getBlock(int id)

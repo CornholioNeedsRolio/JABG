@@ -4,13 +4,16 @@
 
 
 CWorld::CWorld(std::shared_ptr<CTextureAtlas> texture, CFPPlayer& player) :
-	m_manager(this), m_texture(texture), m_threadManager(this), m_player(&player), m_playerPos(0,0,0), m_loader(1, this)
+	m_manager(new CChunkManager(this)), m_texture(texture), m_threadManager(this), m_player(&player), m_playerPos(0,0,0), m_loader(1, this)
 {
 	m_shader = CFileManager::getShader("./res/DefaultShader/DefaultShader");
 	player.load(getFilePath());
 }
 
-CWorld::~CWorld(){}
+CWorld::~CWorld(){
+	m_player->save(getFilePath());
+	delete m_manager;
+}
 
 void CWorld::setBlock(int x, int y, int z, int id)
 {	
@@ -19,7 +22,7 @@ void CWorld::setBlock(int x, int y, int z, int id)
 	int cy = std::get<1>(position.first);
 	int cz = std::get<2>(position.first);
 
-	CChunkPart* part = m_manager.getChunkPart(cx, cz);
+	CChunkPart* part = m_manager->getChunkPart(cx, cz);
 	if (!part)
 		return;
 	CChunk* chunk = part->getChunk(cy);
@@ -41,7 +44,7 @@ const std::string& CWorld::getFilePath() const
 int CWorld::getBlock(int x, int y, int z)
 {
 	auto position = CChunkManager::getLocal(x, y, z);
-	CChunkPart* part = m_manager.getChunkPart(std::get<0>(position.first), std::get<2>(position.first));
+	CChunkPart* part = m_manager->getChunkPart(std::get<0>(position.first), std::get<2>(position.first));
 	if (!part)
 		return 0;
 
@@ -54,7 +57,7 @@ int CWorld::getBlock(int x, int y, int z)
 
 CChunkManager& CWorld::getManager()
 {
-	return m_manager;
+	return *m_manager;
 }
 
 /*CTerrainGenerator& CWorld::getGenerator()
@@ -64,13 +67,13 @@ CChunkManager& CWorld::getManager()
 
 void CWorld::Draw(const SDrawInfo& info)
 {
-	m_manager.Draw(info);
+	m_manager->Draw(info);
 }
 
 void CWorld::BulkDraw(class CBulkRenderer* renderer)
 {
 	m_threadManager.ChooseChunk();
-	m_manager.BulkDraw(renderer);
+	m_manager->BulkDraw(renderer);
 }
 
 void CWorld::Tick(CInputManager& _manager, float deltaTime)
@@ -78,16 +81,16 @@ void CWorld::Tick(CInputManager& _manager, float deltaTime)
 	glm::ivec3 playerPos = m_player->GetGlobalPosition();
 	auto position = CChunkManager::getLocal(playerPos.x, playerPos.y, playerPos.z);
 	if((m_flags & NOT_FIRST_RUN))
-		m_loader.Tick(&m_manager);
+		m_loader.Tick(m_manager);
 	if (position.first != m_playerPos || !(m_flags & NOT_FIRST_RUN))
 	{
 		m_playerPos = position.first;
 		m_flags |= NOT_FIRST_RUN;
 
 		m_threadManager.setPlayerPos(m_playerPos, getDrawDistance());
-		m_loader.onPlayerMove(m_playerPos, getDrawDistance(), &m_manager);
+		m_loader.onPlayerMove(m_playerPos, getDrawDistance(), m_manager);
 
-		m_manager.Clear(m_playerPos);
+		m_manager->Clear(m_playerPos);
 	}
 }
 

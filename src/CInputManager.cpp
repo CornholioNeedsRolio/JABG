@@ -1,6 +1,12 @@
 #include "CInputManager.h"
 #include <iostream>
 
+CInputManager::CInputManager()
+{
+	for(int i = 0; i < m_mouseButtons.size(); ++i)
+		m_mouseButtons[i] = false;
+}
+
 void CInputManager::pressKey()
 {
 	m_keystates = (Uint8*)SDL_GetKeyboardState(&m_numKeys);

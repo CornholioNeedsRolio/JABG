@@ -25,6 +25,9 @@ class CFPPlayer : public CObject
 	float m_jumpCoolDownMax = 0.15;
 	float m_rampUp = 0;
 
+
+	float m_lastPlaced;
+
 	glm::vec3 m_velocity;
 	glm::vec3 m_accel;
 	glm::vec3 m_pointing;

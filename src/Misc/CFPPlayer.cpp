@@ -1,11 +1,12 @@
-#include "CFPPlayer.h"
-#include "../Game/CWorld.h"
-#include <iostream>
-#include <algorithm>
-#include <cmath>
-#include <fstream>
-#include <filesystem>
+#include "../CFrustumCollider.h"
 #include "../CFileManager.h"
+#include "../Game/CWorld.h"
+#include "CFPPlayer.h"
+#include <filesystem>
+#include <algorithm>
+#include <iostream>
+#include <fstream>
+#include <cmath>
 
 template<class T>
 constexpr const T& clamp(const T& v, const T& lo, const T& hi)
@@ -13,7 +14,6 @@ constexpr const T& clamp(const T& v, const T& lo, const T& hi)
 	assert(!(hi < lo));
 	return (v < lo) ? lo : (hi < v) ? hi : v;
 }
-
 
 float CFPPlayer::jumpHyperbola(float value)
 {
@@ -28,7 +28,7 @@ CFPPlayer::CFPPlayer(SVector3 _pos, SVector3 _rot, class CWorld* world) :
 	m_camera.SetPosition({ 0, 1.65, 0 });
 	m_camera.MakePerspective(90.f, 4.f / 3.f, 0.1f, 500.f);
 
-	m_flags = 0;
+	m_flags = IS_HOVERING;
 	m_holdingBlock = BLOCK_DIRT;
 	m_collider.getCollider().SetPosition(_pos);
 	Attach(&m_collider.getCollider());
@@ -76,7 +76,6 @@ template <typename T> int sgn(T val) {
 void CFPPlayer::Move(bool forward, bool back, bool top, bool bottom, bool left, bool right, float delta, float gravity)
 {
 	if (!m_world) return;
-
 	glm::mat4 matrix = getModelMatrix(nullptr);
 
 	glm::vec3 vforward = -glm::normalize(matrix[2]);
@@ -223,7 +222,6 @@ void CFPPlayer::placeBlock(int block)
 	}
 }
 
-#include "../CFrustumCollider.h"
 void CFPPlayer::Tick(CInputManager& _manager, float deltaTime)
 {
 	RotateCamera(-_manager.getMouseRelative(), 0.2f, deltaTime * 1000 * m_sensivity);
@@ -240,30 +238,20 @@ void CFPPlayer::Tick(CInputManager& _manager, float deltaTime)
 	{
 		setFlags(IS_NOCLIPPING, !checkFlag(IS_NOCLIPPING));
 	}
+	m_lastPlaced += deltaTime;
 
-	static int pressed = false;
-	if (_manager.mouseButtonDown(LEFT_MOUSE))
+	if (_manager.mouseButtonDown(LEFT_MOUSE) && m_lastPlaced > 0.2)
 	{
-		//std::cout << (int)m_world->setBlock(m_pointing.x, m_pointing.y, m_pointing.z, BLOCK_AIR);
-		if (!pressed)
-		{
-			pressed = true;
-			glm::vec3 pos = glm::floor(m_pointing);
-			m_world->setBlock(pos.x, pos.y, pos.z, BLOCK_AIR);
-		}
+		m_lastPlaced = 0;
+		glm::vec3 pos = glm::floor(m_pointing);
+		m_world->setBlock(pos.x, pos.y, pos.z, BLOCK_AIR);
 	}
-	else pressed = false;
 	
-	static int pressed1 = false;
-	if (_manager.mouseButtonDown(RIGHT_MOUSE))
+	if (_manager.mouseButtonDown(RIGHT_MOUSE) && m_lastPlaced > 0.2)
 	{
-		if (!pressed1)
-		{
-			pressed1 = true;
-			placeBlock(m_holdingBlock);
-		}
+		m_lastPlaced = 0;
+		placeBlock(m_holdingBlock);
 	}
-	else pressed1 = false;
 
 	bool left_arrow = _manager.keyPressed(SDL_SCANCODE_LEFT);
 	bool right_arrow = _manager.keyPressed(SDL_SCANCODE_RIGHT);
@@ -286,46 +274,6 @@ void CFPPlayer::Tick(CInputManager& _manager, float deltaTime)
 			m_holdingBlockMesh->Init(BLOCK_DATABASE::getBlock(m_holdingBlock)->getBlockMeshVertices(faces, m_world->getAtlas()));
 		}
 	}
-
-	/*static int pressed4 = false;
-	if (_manager.keyDown(SDL_SCANCODE_C))
-	{
-		//std::cout << (int)m_world->setBlock(m_pointing.x, m_pointing.y, m_pointing.z, BLOCK_AIR);
-		if (!pressed4)
-		{
-			pressed4 = true;
-			glm::vec3 pos = glm::floor(GetGlobalPosition()/(float)CHUNK_SIZE);
-			CChunkPart* part = m_world->getManager().getChunkPart(pos.x, pos.z);
-			if (part)
-			{
-				CChunk* chunk = part->getChunk(pos.y);
-				chunk->generateCollider(true);
-			}
-		}
-	}
-	else pressed4 = false;
-
-
-	static int pressed3 = false;
-	if (_manager.keyDown(SDL_SCANCODE_V))
-	{
-		//std::cout << (int)m_world->setBlock(m_pointing.x, m_pointing.y, m_pointing.z, BLOCK_AIR);
-		if (!pressed3)
-		{
-			pressed2 = true;
-			glm::vec3 pos = glm::floor(GetGlobalPosition() / (float)CHUNK_SIZE);
-			CChunkPart* part = m_world->getManager().getChunkPart(pos.x, pos.z);
-			if (part)
-			{
-				CChunk* chunk = part->getChunk(pos.y);
-				chunk->emptyCollider();
-			}
-		}
-	}
-	else pressed3 = false;*/
-
-	//if (_manager.keyDown(SDL_SCANCODE_C))
-	//	m_collider.forceRegen(m_collider.getCollider().GetPosition() / 16.f, m_manager);
 
 	Move(_manager.keyDown(SDL_SCANCODE_W),
 		 _manager.keyDown(SDL_SCANCODE_S),

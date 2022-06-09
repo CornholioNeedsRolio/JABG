@@ -22,6 +22,7 @@ class CInputManager
 	std::array<bool, LEFT_MOUSE+1> m_mouseButtons;
 	bool shouldCenter = false;
 public:
+	CInputManager();
 	bool Update(SDL_Window* _window);
 
 	bool mouseButtonDown(Input_Mouse key);

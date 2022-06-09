@@ -6,6 +6,7 @@
 
 using blocktype = unsigned short;
 #define CHUNK_SIZE 16
+#define HALF_CHUNK CHUNK_SIZE*0.5
 
 struct SBlockInfo
 {

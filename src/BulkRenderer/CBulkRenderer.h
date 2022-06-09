@@ -7,6 +7,11 @@
 
 using RenderOrder = std::vector<std::pair<class CShader*, std::vector<std::pair<class CMesh*, std::pair<glm::mat4, glm::vec4>>>>>;
 
+struct SRenderOrder
+{
+    int priority = 0;
+};
+
 class CBulkRenderer
 {
     std::vector<std::pair<class CMesh*, std::pair<glm::mat4, glm::vec4>>> m_renderingList;

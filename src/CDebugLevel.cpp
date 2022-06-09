@@ -6,7 +6,7 @@
 #include "CFrustumCollider.h"
 #include <iostream>
 
-CDebugLevel::CDebugLevel() : m_width(640), m_height(480)
+CDebugLevel::CDebugLevel() : m_width(1920), m_height(1080)
 {
 	
 }

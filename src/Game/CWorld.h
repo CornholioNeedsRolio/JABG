@@ -23,7 +23,7 @@ enum
 
 class CWorld : public CObject
 {
-    CChunkManager m_manager;
+    CChunkManager* m_manager;
     CChunkMeshThreadManager m_threadManager;
     CChunkLoader m_loader;
 

@@ -6,15 +6,17 @@
 #include <bitset>
 class CBlock
 {
+protected:
 	std::array<unsigned short, 6> m_faceatlasindex;
 	//FLAGS
 	enum
 	{
 		IS_SOLID,
 		IS_VISIBLE,
-		IS_TRANSPARENT
+		IS_TRANSPARENT,
+		IS_TARGETABLE
 	};
-	std::bitset<3> m_flags;
+	std::bitset<4> m_flags;
 	//uint8_t m_solid;
 	//uint8_t m_visible;
 	ColliderType m_type = BLOCKCOLLIDER_FULL;
@@ -31,16 +33,18 @@ public:
 	bool isVisible() { return m_flags[IS_VISIBLE]; };
 	bool isSolid() { return m_flags[IS_SOLID]; };
 	bool isTransparent() { return m_flags[IS_TRANSPARENT]; };
+	bool isTargetable() { return m_flags[IS_TARGETABLE]; };
 	const ColliderType& getCollision();
 
 	void setVisible(bool visible) { m_flags[IS_VISIBLE] = visible; };
 	void setSolid(bool solid) { m_flags[IS_SOLID] = solid; };
 	void setTransparent(bool transparent) { m_flags[IS_TRANSPARENT] = transparent; };
+	void setTargetable(bool targetable) { m_flags[IS_TARGETABLE] = targetable; };
 	void setCollisionType(ColliderType type);
 
 	int getFaceAtlasIndex(uint8_t face) { return m_faceatlasindex[face]; };
 	void setFaceAtlasIndex(uint8_t face, int index) { m_faceatlasindex[face] = index; };
-	std::vector<SVertex> getBlockMeshVertices(bool faces[6], std::shared_ptr<class CTextureAtlas> texture, glm::ivec3 position = glm::ivec3(0));
+	virtual std::vector<SVertex> getBlockMeshVertices(bool faces[6], std::shared_ptr<class CTextureAtlas> texture, glm::ivec3 position = glm::ivec3(0));
 };
 
 enum
@@ -58,6 +62,7 @@ enum
 	BLOCK_GLASS,
 	BLOCK_SAND,
 	BLOCK_OLDSTONE,
+	BLOCK_PEBBLE,
 	BLOCK_TOTAL
 };
 

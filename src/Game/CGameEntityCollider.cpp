@@ -36,7 +36,7 @@ uint8_t CGameEntityCollider::Move(glm::vec3& velocity, CChunkManager* manager)
 					else
 					{
 						CBlock* block = chunk->getVoxelComponent().getBlock(std::get<0>(pos.second), std::get<1>(pos.second), std::get<2>(pos.second)).getBlock();
-						if(block->getCollision() == BLOCKCOLLIDER_FULL)
+						if(block->getCollision() == BLOCKCOLLIDER_FULL && block->isSolid())
 							collision = true;
 					}
 
@@ -75,7 +75,7 @@ uint8_t CGameEntityCollider::Move(glm::vec3& velocity, CChunkManager* manager)
 			m_collider.ResolveDynamicSweep(normalBox, velocity, normal, true);
 		}
 	}
-
+	
 	m_collider.Move(velocity);
 
 	return output;
@@ -141,7 +141,7 @@ bool CGameEntityCollider::RayCast(const glm::vec3& position, const glm::vec3& of
 		else
 		{
 			CBlock* block = chunk->getVoxelComponent().getBlock(std::get<0>(pos.second), std::get<1>(pos.second), std::get<2>(pos.second)).getBlock();
-			if(block->getCollision() == BLOCKCOLLIDER_FULL)
+			if(block->getCollision() == BLOCKCOLLIDER_FULL && block->isTargetable())
 			{
 				stop = true;
 				break;
