@@ -3,10 +3,11 @@
 #include "src/CGame.h"
 #include "src/CDebugLevel.h"
 #include "src/CCamera.h"
-
+#include <fenv.h>
 
 int main()
 {
+//	feenableexcept(FE_INVALID);
 	CDebugLevel level;
 	CGame game;
 	game.Init();

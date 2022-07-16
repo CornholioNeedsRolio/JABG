@@ -1,19 +1,18 @@
-./build.py should only work on linux, I'm not sure if I can get it the securityRiskOS(aka windows) to run, but if you feel like it go for it
+Dependencies are SDL2, freetype and glm. In order to build this make sure you have cmake and gdb and then run the following scripts:
 
-params:
-
-  -b rebuilds everything
-
-  -r run after compiling
-
-  -n build for windows, and run under wine
-
-This is a game I'm working on at the moment, I don't expect it to be comercial, after all this is a learning project.
-Also don't yoink my code without crediting me, it hurts to not get credit :P
+For release:        ./scripts/make.sh release
+For debugging: ./scripts/make.sh debug
 
 
-Dependencies:
--SDL2(pacman -S sdl2)
--GLM(pacman -S glm)
--GLU
--opengl
+
+What is the aim of this project?
+For me it started as making a clone to a notorious game we all know. Eventually I've started to get attached, and I'm going to keep making this. And I'm also developing an engine around it.
+
+Why play this?
+As it is right, it's boring, but eventually I will make it more compelling to play.
+
+Can I fork/branch this?
+Sure, just don't forget to credit me and contribute to this project. I'm open to pulling, only if I approve the quality of code.
+
+Can I take parts of your code and use it?
+Only if you credit this project in an easily accessible manner such as your README.

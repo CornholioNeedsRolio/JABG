@@ -3,5 +3,7 @@
 /world
 /.vscode
 /winbuild
+/Binary
+CMakeCache.txt
 jabg.exe
 jabg.out

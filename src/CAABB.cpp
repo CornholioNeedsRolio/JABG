@@ -170,9 +170,9 @@ bool CAABB::sweepCollision(CAABB& aabb, glm::vec3& velocity, bool apply)
 */
 bool CAABB::RayCast(const glm::vec3& position, const glm::vec3& offset, glm::vec3& normal, float& delta, bool* inside)
 {
-	glm::vec3 NearUndiv, FarUndiv;
-	NearUndiv = getMaxVector() - position;
-	FarUndiv = getMinVector() - position;
+glm::vec3 NearUndiv, FarUndiv, aabbMin = getMinVector() , aabbMax =  getMaxVector() ;
+	NearUndiv = aabbMax - position;
+	FarUndiv = aabbMin - position;
 	if (inside)
 		*inside = FarUndiv.x <= 0 && FarUndiv.y <= 0 && FarUndiv.z <= 0 && NearUndiv.x >= 0 && NearUndiv.y >= 0 && NearUndiv.z >= 0;
 	glm::vec3 invDir = 1.f / offset;
@@ -193,7 +193,27 @@ bool CAABB::RayCast(const glm::vec3& position, const glm::vec3& offset, glm::vec
 	if (hitFar <= 0) return false;
 	if (delta < 0) return false;
 
-	int index = 0;
+	const glm::vec3 hitPoint = position + offset * delta;
+
+	int normals = 0;
+	for(int i = 0; i < 3; ++i)
+	{
+		if(glm::abs(hitPoint[i] - aabbMin[i] ) == 0)
+		{
+			normal[i] = -1;
+			++normals;
+			continue;
+		}
+		if(glm::abs(hitPoint[i] - aabbMax[i]) == 0)
+		{
+			normal[i] = 1;
+			++normals;
+		}
+	}
+
+	if(normals > 1) normal = glm::vec3(0);
+
+	/*int index = 0;
 	for (int i = 1; i < 3; ++i)
 		if (Near[i] >= Near[index])
 			index = i;
@@ -208,7 +228,7 @@ bool CAABB::RayCast(const glm::vec3& position, const glm::vec3& offset, glm::vec
 		if(NearUndiv[i] == 0)
 			if(patience++ >= 1)
 				normal = glm::vec3(0);
-	}
+	}*/
 	return true;
 }
 
