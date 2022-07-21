@@ -6,11 +6,6 @@
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/main.cpp.o -c /home/rellik/JABG/main.cpp",
-  "file": "/home/rellik/JABG/main.cpp"
-},
-{
-  "directory": "/home/rellik/JABG/build",
   "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/BulkRenderer/CBulkRenderer.cpp.o -c /home/rellik/JABG/src/BulkRenderer/CBulkRenderer.cpp",
   "file": "/home/rellik/JABG/src/BulkRenderer/CBulkRenderer.cpp"
 },
@@ -223,5 +218,10 @@
   "directory": "/home/rellik/JABG/build",
   "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Misc/CFPPlayer.cpp.o -c /home/rellik/JABG/src/Misc/CFPPlayer.cpp",
   "file": "/home/rellik/JABG/src/Misc/CFPPlayer.cpp"
+},
+{
+  "directory": "/home/rellik/JABG/build",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/main.cpp.o -c /home/rellik/JABG/src/main.cpp",
+  "file": "/home/rellik/JABG/src/main.cpp"
 }
 ]

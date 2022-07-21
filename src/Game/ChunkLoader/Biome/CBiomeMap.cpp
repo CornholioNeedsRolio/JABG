@@ -6,9 +6,9 @@ CBiomeMap::CBiomeMap(int biome_seed, int biomeNum) : m_biomeSeed{biome_seed}, m_
 
 }
 
-int CBiomeMap::getBiome(int x, int z) const
+int CBiomeMap::getBiome(int x, int z, float scale) const
 {
-    glm::vec2 pos = glm::vec2(x, z) / 16.f;
+    glm::vec2 pos = glm::vec2(x, z) * scale;
     glm::vec2 f_pos = glm::fract(pos);
     glm::vec2 g_pos = glm::floor(pos);
 

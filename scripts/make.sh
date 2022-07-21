@@ -16,13 +16,16 @@ elif [[ $1 = release ]]; then
     make
 fi
 
-mkdir -p bin
-mv -f ./JABG ./bin/JABG
-cp  -R --copy-contents ../../res ./bin/res
-cd bin
+if [[ $2 == run ]]; then
+    mkdir -p bin
+    mv -f ./JABG ./bin/JABG
+    rm -f -r ./bin/res
+    cp  -R --copy-contents ../../res ./bin/res
+    cd bin
 
-if [[ $1 == debug ]]; then
-    gdb ./JABG
-else
-    ./JABG
+    if [[ $1 == debug ]]; then
+        gdb ./JABG
+    else
+        ./JABG
+    fi
 fi

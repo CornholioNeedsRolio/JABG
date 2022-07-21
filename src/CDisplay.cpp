@@ -5,7 +5,7 @@ void CDisplay::Init(std::string title, int width, int height)
 {
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
-	m_window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED_DISPLAY(1), SDL_WINDOWPOS_CENTERED_DISPLAY(1), width, height, SDL_WINDOW_OPENGL);
+	m_window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
 
 	if (!m_window)
 		throw "Could not create window";
@@ -31,8 +31,8 @@ void CDisplay::setResolution(int width, int height)
 {
 	SDL_SetWindowSize(m_window, width, height);
 	SDL_DisplayMode DM;
-	SDL_GetCurrentDisplayMode(0, &DM);
-	SDL_SetWindowPosition(m_window, (DM.w-width)*0.5, (DM.h-height)*0.5);
+	SDL_GetCurrentDisplayMode(SDL_GetWindowDisplayIndex(m_window), &DM);
+	SDL_SetWindowPosition(m_window, (DM.w - width)*0.5, (DM.h - height)*0.5);
 }
 
 bool CDisplay::Run(CInputManager& _inputmanager)

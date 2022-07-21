@@ -6,7 +6,7 @@
 CWorld::CWorld(std::shared_ptr<CTextureAtlas> texture, CFPPlayer& player) :
 	m_manager(new CChunkManager(this)), m_texture(texture), m_threadManager(this), m_player(&player), m_playerPos(0,0,0), m_loader(1, this)
 {
-	m_shader = CFileManager::getShader("./res/DefaultShader/DefaultShader");
+	m_shader = CFileManager::getShader("./res/DefaultShader/ChunkShader");
 	player.load(getFilePath());
 }
 

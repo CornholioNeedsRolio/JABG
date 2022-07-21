@@ -9,7 +9,7 @@ class CBiomeMap
     int randomBiome(glm::vec3 position) const;
 public:
     CBiomeMap(int biome_seed, int biomeNum);
-    int getBiome(int x, int z) const;
+    int getBiome(int x, int z, float scale) const;
 };
 
 #endif
