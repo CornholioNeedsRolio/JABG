@@ -14,9 +14,42 @@ void CBlock::setCollisionType(ColliderType type)
 	m_type = type;
 }
 
-std::vector<SVertex> CBlock::getBlockMeshVertices(bool faces[6], std::shared_ptr<class CTextureAtlas> texture, glm::ivec3 position)
+const std::vector<SVertex>& CBlock::GetDefaultBlock() const
 {
-	std::vector<SVertex> _temp = {
+	return DefaultBlock;
+}
+
+std::vector<SVertex> CBlock::getBlockMeshVertices(CBlock* neighbors[6],std::shared_ptr<class CTextureAtlas> texture, glm::ivec3 position)
+{
+	const std::vector<SVertex>& _temp = GetDefaultBlock();
+
+	std::vector<SVertex> output = {};
+	for(int i = 0; i < 6; i++)
+	{
+		if(neighbors[i]) if(!neighbors[i]->isTransparent()) continue;
+		std::vector<SVertex> face = {};
+		face.insert(face.end(), _temp.begin()+i*6, _temp.begin()+i*6+6);
+		for (int i = 0; i < face.size(); i++)
+		{
+			face[i].position.x += position.x;
+			face[i].position.y += position.y;
+			face[i].position.z += position.z;
+		}
+
+		auto tex = texture->GetFromIndex(getFaceAtlasIndex((block_faces)i));
+		for(short i = 0; i < 6; i++)
+		{
+			face[i].texture.u = tex[i*2];
+			face[i].texture.v = tex[i*2+1];
+		}
+		
+		output.insert(output.end(), face.begin(), face.end());
+	}
+
+	return output;
+}
+
+std::vector<SVertex> CBlock::DefaultBlock =  {
 
 		//FRONT
 		{{1, 1, 1},{0, 0}, {0, 0, 1}},
@@ -74,31 +107,6 @@ std::vector<SVertex> CBlock::getBlockMeshVertices(bool faces[6], std::shared_ptr
 
 	};
 
-	std::vector<SVertex> output = {};
-	for(int i = 0; i < 6; i++)
-	{
-		if(!faces[i]) continue;
-		std::vector<SVertex> face = {};
-		face.insert(face.end(), _temp.begin()+i*6, _temp.begin()+i*6+6);
-		for (int i = 0; i < face.size(); i++)
-		{
-			face[i].position.x += position.x;
-			face[i].position.y += position.y;
-			face[i].position.z += position.z;
-		}
-
-		auto tex = texture->GetFromIndex(getFaceAtlasIndex((block_faces)i));
-		for(short i = 0; i < 6; i++)
-		{
-			face[i].texture.u = tex[i*2];
-			face[i].texture.v = tex[i*2+1];
-		}
-		
-		output.insert(output.end(), face.begin(), face.end());
-	}
-
-	return output;
-}
 
 
 namespace BLOCK_DATABASE
@@ -245,6 +253,18 @@ namespace BLOCK_DATABASE
 
 		//PEBLE
 		m_blocks.push_back(std::make_unique<CPable>());
+		//WATER
+		m_blocks.push_back(std::make_unique<CBlock>());
+		m_blocks[BLOCK_WATER]->setSolid(false);
+		m_blocks[BLOCK_WATER]->setVisible(true);
+		m_blocks[BLOCK_WATER]->setTargetable(false);
+		m_blocks[BLOCK_WATER]->setFaceAtlasIndex(CBlock::BLOCK_TOP, 17);
+		m_blocks[BLOCK_WATER]->setFaceAtlasIndex(CBlock::BLOCK_BOTTOM, 17);
+		m_blocks[BLOCK_WATER]->setFaceAtlasIndex(CBlock::BLOCK_FRONT, 17);
+		m_blocks[BLOCK_WATER]->setFaceAtlasIndex(CBlock::BLOCK_BACK, 17);
+		m_blocks[BLOCK_WATER]->setFaceAtlasIndex(CBlock::BLOCK_RIGHT, 17);
+		m_blocks[BLOCK_WATER]->setFaceAtlasIndex(CBlock::BLOCK_LEFT, 17);
+		m_blocks[BLOCK_WATER]->setTransparent(false);
 	}
 
 	CBlock* Blocks::getBlock(int id)

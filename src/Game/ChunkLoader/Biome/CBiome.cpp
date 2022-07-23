@@ -10,7 +10,7 @@
 
 float CBiome::simplexPlains(float x, float z) const
 {
-    return m_level+OctaveSimplex(x/ (float)(CHUNK_SIZE*5), 0, z/ (float)(CHUNK_SIZE*5), 8, 0.25)*m_intesity;
+    return getTopBlock()+OctaveSimplex(x/ (float)(CHUNK_SIZE*5), 0, z/ (float)(CHUNK_SIZE*5), 8, 0.25)*m_intesity;
 }
 float CBiome::simplexCave(float x, float y, float z) const
 {
@@ -60,7 +60,9 @@ CBiome* CBiome::setMinCave(float minCave)
 
 int CBiome::getVegetationBlock(int x, int y, int z) const
 {
-	srand((int)(x+y*z/x));
+	if(m_vegetations.size() == 0) return 0;
+	if(x) srand((int)(x+y*z/x));
+	else srand(69);
 	return m_vegetations[rand()%m_vegetations.size()];
 }
 

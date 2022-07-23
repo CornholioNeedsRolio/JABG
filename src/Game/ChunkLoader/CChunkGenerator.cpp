@@ -31,24 +31,24 @@ std::unique_ptr<SBlockInfo[]> CChunkGenerator::generateChunk(int cx, int cy, int
 	int downPos = cy * CHUNK_SIZE; /*botton of the chunk*/
 	int upPos = cy * CHUNK_SIZE+CHUNK_SIZE; /*top of the chunk*/
 	int top = 0;
-    const int transition_scale = CHUNK_SIZE*0.5f;
 
 	static auto getIndex = [](int x, int y, int z)
 	{
 		return x + CHUNK_SIZE*(y + z * CHUNK_SIZE);
 	};
 
+	CBiome *NW, *SW, *NE, *SE;
 	int gx = cx*CHUNK_SIZE, gz=cz*CHUNK_SIZE;
-	int NW_y = Generator->getBiome(gx, gz)->simplexPlains(gx, gz);
+	int NW_y = (NW = Generator->getBiome(gx, gz))->simplexPlains(gx, gz);
 
 	gx = cx*CHUNK_SIZE; gz=cz*CHUNK_SIZE+CHUNK_SIZE-1;
-	int SW_y = Generator->getBiome(gx, gz)->simplexPlains(gx, gz);
+	int SW_y = (SW = Generator->getBiome(gx, gz))->simplexPlains(gx, gz);
 
 	gx = cx*CHUNK_SIZE+CHUNK_SIZE-1; gz=cz*CHUNK_SIZE;
-	int NE_y = Generator->getBiome(gx, gz)->simplexPlains(gx, gz);
+	int NE_y = (NE = Generator->getBiome(gx, gz))->simplexPlains(gx, gz);
 
 	gx = cx*CHUNK_SIZE+CHUNK_SIZE-1; gz=cz*CHUNK_SIZE+CHUNK_SIZE-1;
-	int SE_y = Generator->getBiome(gx, gz)->simplexPlains(gx, gz);
+	int SE_y = (SE = Generator->getBiome(gx, gz))->simplexPlains(gx, gz);
 
 	for (int x = 0; x < CHUNK_SIZE; x++)
 	{
@@ -60,8 +60,10 @@ std::unique_ptr<SBlockInfo[]> CChunkGenerator::generateChunk(int cx, int cy, int
 			/////////////FIND Y POS ON HEIGHTMAP//////////////////
 			CBiome* currentBiome = Generator->getBiome(gx, gz);
 			//top = currentBiome->simplexPlains(gx, gz);
-			top = BilinearInterpolation(SW_y, NW_y, SE_y, NE_y, 0, CHUNK_SIZE-1, CHUNK_SIZE-1, 0, x, z);
 
+			if(NW == SW && NW == NE && NW == SE && NW == currentBiome) top = currentBiome->simplexPlains(gx, gz);
+			else top = BilinearInterpolation(SW_y, NW_y, SE_y, NE_y, 0, CHUNK_SIZE-1, CHUNK_SIZE-1, 0, x, z);
+			//top += currentBiome->getTopBlock();
 			if (downPos <= top && top < upPos)
 			{
 				int max = top - downPos;
@@ -77,6 +79,7 @@ std::unique_ptr<SBlockInfo[]> CChunkGenerator::generateChunk(int cx, int cy, int
 			for(int i = CHUNK_SIZE-1; i >= 0; --i)
 			{
 				int current = output[getIndex(x, i, z)].id;
+				int gy = cy*CHUNK_SIZE+i;
 				if(current == BLOCK_STONE)
 				{
 					int gy = cy*CHUNK_SIZE + i;
@@ -120,7 +123,7 @@ std::shared_ptr<class CChunk> CChunkGenerator::getChunk(int x, int y, int z, CWo
     std::shared_ptr<CChunk> chunk = std::make_shared<CChunk>(glm::ivec3(x,y,z));
 	//if(!chunk->getSaveComponent().load(world->getFilePath()))
 	{
-		int biome = m_map.getBiome(x, z,  0.01f);
+		//int biome = m_map.getBiome(x, z,  0.01f);
     	chunk->getVoxelComponent().setAllBlocks(generateChunk(x, y, z, this));
 	}
     return chunk;
@@ -160,7 +163,7 @@ CChunkGenerator::CChunkGenerator() : m_map(0, TOTAL_BIOMES)
 {
 	m_biomes[BIOME_PLAINS] = std::unique_ptr<CBiome>((new CBiome(this, BIOME_PLAINS))->addStructure(new CStructureTree())->addVegetation(BLOCK_PEBBLE));
 	m_biomes[BIOME_DESERT] = std::unique_ptr<CBiome>((new CBiome(this, BIOME_DESERT))->setTopBlock(BLOCK_SAND)->setUnderBlock(BLOCK_SAND)->addVegetation(BLOCK_PEBBLE));
-	m_biomes[BIOME_OCEAN] = std::unique_ptr<CBiome>((new CBiome(this, BIOME_OCEAN))->setTopBlock(BLOCK_SAND)->setUnderBlock(BLOCK_SAND)->setLevel(16)->setIntensity(30)->setMinCave(-1));
+	m_biomes[BIOME_OCEAN] = std::unique_ptr<CBiome>((new CBiome(this, BIOME_OCEAN))->setTopBlock(BLOCK_SAND)->setUnderBlock(BLOCK_SAND)->setLevel(16)->setIntensity(30));
 	m_biomes[BIOME_MOUNTAINS] = std::unique_ptr<CBiome>((new CBiome(this, BIOME_MOUNTAINS))->setLevel(64)->setIntensity(80)->addVegetation(BLOCK_PEBBLE));
 }
 

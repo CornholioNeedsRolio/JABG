@@ -16,7 +16,7 @@ class CBiome
     int m_intesity = 16;
     int m_topBlock = BLOCK_GRASS;
     int m_underBlock = BLOCK_DIRT;
-    int m_waterLevel = 64;
+    int m_waterLevel = 30;
     float m_minForCave = 0.25f;
 
     float OctaveSimplex(float x, float y, float z, int octaves, float persistence) const;
