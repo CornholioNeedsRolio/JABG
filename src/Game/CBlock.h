@@ -49,9 +49,10 @@ public:
 	void setTargetable(bool targetable) { m_flags[IS_TARGETABLE] = targetable; };
 	void setCollisionType(ColliderType type);
 
-	int getFaceAtlasIndex(uint8_t face) { return m_faceatlasindex[face]; };
+	int getFaceAtlasIndex(uint8_t face) const { return m_faceatlasindex[face]; };
 	void setFaceAtlasIndex(uint8_t face, int index) { m_faceatlasindex[face] = index; };
 
+	virtual uint8_t getFaceAt(CBlock* neighbors[27], uint8_t face) const;
 	virtual const bool IsNeightborNeeded(int index) const { return m_neededNeighbors[index]; };
 	virtual std::vector<SVertex> getBlockMeshVertices(CBlock* neighbors[27], std::shared_ptr<class CTextureAtlas> texture, glm::ivec3 position = glm::ivec3(0));
 };
