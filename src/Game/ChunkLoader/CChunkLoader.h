@@ -23,6 +23,7 @@ public:
     void emptyListAllThreads();
     void onPlayerMove(std::tuple<int, int, int> playerPos, int distance, CChunkManager* world);
     void Tick(CChunkManager* world);
+    void joinThreads();
     CChunkGenerator& getGenerator();
 };
 

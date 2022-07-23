@@ -14,7 +14,7 @@ class CChunkMeshThreadManager
 	std::tuple<int, int, int> m_playerPos;
 	int m_renderDistance;
 	class CChunk* m_selectedChunk = nullptr;
-	std::array<class CChunk*, 6> m_neighbors = { nullptr };
+	std::array<class CChunk*, 27> m_neighbors = { nullptr };
 	std::atomic_char m_flags = 0;
 	int m_current_x, m_current_y;
 	enum

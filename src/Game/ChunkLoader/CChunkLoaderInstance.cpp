@@ -11,9 +11,7 @@ CChunkLoaderInstance::CChunkLoaderInstance(CChunkLoader* parent) : m_parent(pare
 
 CChunkLoaderInstance::~CChunkLoaderInstance()
 {
-    markDeath();
-    if(m_thread.joinable())
-        m_thread.join();
+
 }
 
 void CChunkLoaderInstance::addTargetChunk(int x, int y, int z)
@@ -24,6 +22,13 @@ void CChunkLoaderInstance::addTargetChunk(int x, int y, int z)
             return;
     m_targetChunks.push_back(std::make_tuple(x, y, z));
     m_chunkNum = m_targetChunks.size();
+}
+
+void CChunkLoaderInstance::joinThreads()
+{
+    markDeath();
+    if(m_thread.joinable())
+        m_thread.join();
 }
 
 int CChunkLoaderInstance::getChunkNum()

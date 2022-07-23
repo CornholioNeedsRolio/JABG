@@ -270,7 +270,7 @@ void CFPPlayer::Tick(CInputManager& _manager, float deltaTime)
 		if(m_holdingBlockMesh)
 		{
 			m_holdingBlockMesh->Clear();
-			CBlock* faces[6]{nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
+			CBlock* faces[27]{nullptr};
 			m_holdingBlockMesh->Init(BLOCK_DATABASE::getBlock(m_holdingBlock)->getBlockMeshVertices(faces, m_world->getAtlas()));
 		}
 	}
@@ -357,7 +357,7 @@ void CFPPlayer::load(const std::string& path)
 void CFPPlayer::setHoldingBlockMesh(CMesh* mesh)
 {
 	m_holdingBlockMesh = mesh;
-	CBlock* faces[6]{nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
+	CBlock* faces[27]{nullptr};
 	m_holdingBlockMesh->Init(BLOCK_DATABASE::getBlock(m_holdingBlock)->getBlockMeshVertices(faces, m_world->getAtlas()));
 	m_holdingBlockMesh->SetTexture(m_world->getAtlas());
 }

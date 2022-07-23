@@ -53,7 +53,7 @@ bool CChunkMeshComponent::isDirty() const
     return m_currentDirty >= m_lastDirty;
 }
 
-void CChunkMeshComponent::BuildMeshData(std::array<CChunk*, 6> neighbors, std::shared_ptr<CTextureAtlas> atlas)
+void CChunkMeshComponent::BuildMeshData(std::array<CChunk*, 27> neighbors, std::shared_ptr<CTextureAtlas> atlas)
 {
     struct s{
         CChunkMeshComponent* m_parent = nullptr;
@@ -63,30 +63,34 @@ void CChunkMeshComponent::BuildMeshData(std::array<CChunk*, 6> neighbors, std::s
 
     auto getBlock = [&](int x, int y, int z)->SBlockInfo
 	{
-		if (z == -1 && neighbors[CHUNKFACE_BACK])
-			return neighbors[CHUNKFACE_BACK]->getVoxelComponent().getBlock(x, y, CHUNK_SIZE-1);
-		if (z == CHUNK_SIZE && neighbors[CHUNKFACE_FRONT])
-			return neighbors[CHUNKFACE_FRONT]->getVoxelComponent().getBlock(x, y, 0);
+		int chunk_x = 1, chunk_y = 1, chunk_z = 1;
+		int local_x = x, local_y = y, local_z = z;
+		if(z <= -1) {
+			--chunk_z; 	local_z = CHUNK_SIZE-1;
+		}else if(z >= CHUNK_SIZE) {
+			++chunk_z; local_z = 0;
+		}
 
-		if (x == -1 && neighbors[CHUNKFACE_LEFT])
-			return neighbors[CHUNKFACE_LEFT]->getVoxelComponent().getBlock(CHUNK_SIZE - 1, y, z);
-		if (x == CHUNK_SIZE && neighbors[CHUNKFACE_RIGHT])
-			return neighbors[CHUNKFACE_RIGHT]->getVoxelComponent().getBlock(0, y, z);
+		if(x <= -1) {
+			--chunk_x;  local_x = CHUNK_SIZE-1;
+		} else if(x >= CHUNK_SIZE) {
+			++chunk_x; local_x = 0;
+		}
 
-		if (y == -1 && neighbors[CHUNKFACE_BOT])
-			return neighbors[CHUNKFACE_BOT]->getVoxelComponent().getBlock(x, CHUNK_SIZE - 1, z);
-		if (y == CHUNK_SIZE && neighbors[CHUNKFACE_TOP])
-			return neighbors[CHUNKFACE_TOP]->getVoxelComponent().getBlock(x, 0, z);
+		if(y <= -1) {
+			--chunk_y;  local_y = CHUNK_SIZE-1;
+		} else if(y >= CHUNK_SIZE) {
+			++chunk_y; local_y = 0;
+		}
 
-		/*
-			*TODO: make it fetch from neighbors, in a safe manner 
-            WELL NOW IT'S DONE
-		*/
-		if (z == -1 && neighbors[CHUNKFACE_BACK])
-			return neighbors[CHUNKFACE_BACK]->getVoxelComponent().getBlock(x ,y, z);
-		
-		if (x >= 0 && y >= 0 && z >= 0 && x < CHUNK_SIZE && y < CHUNK_SIZE && z < CHUNK_SIZE)
+		int index = chunk_x + 3*(chunk_y+chunk_z*3);
+		if(index == 13) 
 			return m_parent->getVoxelComponent().getBlock(x, y, z);
+		if(neighbors[index]) 
+			return neighbors[index]->getVoxelComponent().getBlock(local_x, local_y, local_z);
+		
+		//if (x >= 0 && y >= 0 && z >= 0 && x < CHUNK_SIZE && y < CHUNK_SIZE && z < CHUNK_SIZE)
+		//	return m_parent->getVoxelComponent().getBlock(x, y, z);
 		return {0};
 	};
 
@@ -104,14 +108,31 @@ void CChunkMeshComponent::BuildMeshData(std::array<CChunk*, 6> neighbors, std::s
                 if(!self->isVisible())
                     continue;
 
-                CBlock* temp[6] = {};
+                CBlock* temp[27] = {};
+				for(int xx = -1; xx <= 1; ++xx)
+				{
+					for(int yy = -1; yy <= 1; ++yy)
+					{
+						for(int zz = -1; zz <= 1; ++zz)
+						{
+							int index = (xx+1)+3*((yy+1) + ((zz+1)*3));
 
-                temp[CBlock::BLOCK_BACK]   = getBlock(x, y, z-1).getBlock();
+							if(self->IsNeightborNeeded(index)) 
+							{
+								if(getBlock(xx+x, yy+y, zz+z).getBlock() == nullptr) throw;
+								temp[index] = getBlock(xx+x, yy+y, zz+z).getBlock();
+							}
+							else 
+								temp[index] = nullptr;
+						}
+					}
+				}
+                /*temp[CBlock::BLOCK_BACK]   = getBlock(x, y, z-1).getBlock();
 				temp[CBlock::BLOCK_FRONT]  = getBlock(x, y, z+1).getBlock();
 				temp[CBlock::BLOCK_RIGHT]  = getBlock(x+1, y, z).getBlock();
 				temp[CBlock::BLOCK_LEFT]   = getBlock(x-1, y, z).getBlock();
 				temp[CBlock::BLOCK_TOP]    = getBlock(x, y+1, z).getBlock();
-				temp[CBlock::BLOCK_BOTTOM] = getBlock(x, y-1, z).getBlock();
+				temp[CBlock::BLOCK_BOTTOM] = getBlock(x, y-1, z).getBlock();*/
 
 				auto blockmeshinfo = self->getBlockMeshVertices(temp, atlas, {x, y, z});
 

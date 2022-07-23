@@ -43,7 +43,7 @@ void CChunkMeshThreadManager::ChooseChunk()
 		return;
 	m_flags |= SELECTING_SHIT;
 	std::tuple<int, int, int> playerPos = m_playerPos;
-
+	int y;
 	int rd = m_renderDistance;
 	int px = std::get<0>(playerPos);
 	int py = std::get<1>(playerPos);
@@ -60,48 +60,34 @@ void CChunkMeshThreadManager::ChooseChunk()
 
 				if (!part)
 					continue;
-				int pos;
-				CChunk* chunk = part->getChunkInRange(py, false, &pos);
-
-				if (!chunk)
-					continue;
-					
-				if (!chunk->getMeshComponent().isDirty())
-					continue;
+				CChunk* chunk = part->getChunkInRange(py, false, &y);
+				
+				if (!chunk) continue;
+				if (!chunk->getMeshComponent().isDirty()) continue;
 
 				m_neighbors.fill(nullptr);
 
-
-				CChunkPart* S = m_world->getManager().getChunkPart(x, z-1);
-				CChunkPart* N = m_world->getManager().getChunkPart(x, z+1);
-				CChunkPart* W = m_world->getManager().getChunkPart(x-1, z);
-				CChunkPart* E = m_world->getManager().getChunkPart(x+1, z);
-				
-				//if(!S || !N || !W || !E) continue;
-
-				m_neighbors[CHUNKFACE_TOP] = part->getChunk(pos+1);
-				m_neighbors[CHUNKFACE_BOT] = part->getChunk(pos-1);
-				
-				if(W) m_neighbors[CHUNKFACE_LEFT] = W->getChunk(pos);
-				//if (!m_neighbors[CHUNKFACE_LEFT]) continue;
-
-				if(E) m_neighbors[CHUNKFACE_RIGHT] = E->getChunk(pos);
-				//if (!m_neighbors[CHUNKFACE_RIGHT]) continue;
-
-				if(N) m_neighbors[CHUNKFACE_FRONT] = N->getChunk(pos);
-				//if (!m_neighbors[CHUNKFACE_FRONT]) continue;
-
-				if(S) m_neighbors[CHUNKFACE_BACK] = S->getChunk(pos);
-				//if (!m_neighbors[CHUNKFACE_BACK]) continue;
+				for(int xx = -1; xx <= 1; ++xx )
+				{
+					for(int yy = -1; yy <= 1; ++yy )
+					{
+						for(int zz = -1; zz <= 1; ++zz )
+						{
+							if(!xx && !yy && !zz) continue;
+							CChunkPart* part =  m_world->getManager().getChunkPart(x+xx, z+zz);
+							if(!part) continue;
+							CChunk* chunk = part->getChunk(y+yy);
+							if(chunk) m_neighbors[(xx+1) + 3 * (yy+1 + (zz+1)*3)] = chunk; 
+						}
+					}
+				}
 
 				m_selectedChunk = chunk;
-				//printf("%i %i %i\n", x, pos, z);
 				m_flags &= ~SELECTING_SHIT;
 				return;
 			}
 		}
 	}
-	//printf("looking");
 	m_flags &= ~SELECTING_SHIT;
 }
 

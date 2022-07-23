@@ -26,6 +26,7 @@ public:
     void clearTargetChunks();
     void markDeath();
     int getChunkNum();
+    void joinThreads();
     void Run();
 };
 

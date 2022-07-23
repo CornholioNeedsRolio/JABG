@@ -17,6 +17,8 @@ class CBiome
     int m_topBlock = BLOCK_GRASS;
     int m_underBlock = BLOCK_DIRT;
     int m_waterLevel = 30;
+    int m_dirtLevel = -1;
+    float m_frequency = 1;
     float m_minForCave = 0.25f;
 
     float OctaveSimplex(float x, float y, float z, int octaves, float persistence) const;
@@ -31,6 +33,8 @@ public:
     CBiome* setIntensity(int intensity);
     CBiome* addVegetation(int BlockID);
     CBiome* setMinCave(float minCave);
+    CBiome* setDirtLevel(int level);
+    CBiome* setFrequency(float level);
 
     int getVegetationBlock(int x, int y, int z) const;
     int getTopBlock() const;
@@ -38,6 +42,7 @@ public:
     int getWaterLevel() const;
     int getLevel() const;
     int getIntensity() const;
+    int getDirtLevel() const;
 
     float simplexPlains(float x, float z) const;
     float simplexCave(float x, float y, float z) const;

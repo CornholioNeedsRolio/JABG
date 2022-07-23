@@ -25,7 +25,7 @@ bool CBiome::caveHere(int x, int y, int z) const
 float CBiome::OctaveSimplex(float x, float y, float z, int octaves, float persistence) const
 {
     float total = 0.f;
-	float frequency = 1.f;
+	float frequency = m_frequency;
 	float amplitude = 1.f;
 	float maxValue = 0.f;
 
@@ -38,6 +38,12 @@ float CBiome::OctaveSimplex(float x, float y, float z, int octaves, float persis
 	}
 
 	return total;
+}
+
+CBiome* CBiome::setFrequency(float level)
+{
+	m_frequency = level;
+	return this;
 }
 void CBiome::AddStructure(int gx, int gy, int gz, StructureInfo& info, std::mutex& mutex)
 {
@@ -131,6 +137,17 @@ int CBiome::getLevel() const
 int CBiome::getIntensity() const
 {
 	return m_intesity;
+}
+
+int CBiome::getDirtLevel() const
+{
+	return m_dirtLevel;
+}
+
+CBiome* CBiome::setDirtLevel(int level)
+{
+	m_dirtLevel = level;
+	return this;
 }
 
 

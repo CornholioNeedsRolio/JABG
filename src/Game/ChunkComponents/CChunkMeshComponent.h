@@ -23,7 +23,7 @@ public:
 
     void Draw(class CBulkRenderer* renderer);
     void setTextureAndShader(std::shared_ptr<class CTextureAtlas> texture, std::shared_ptr<class CShader> shader);
-    void BuildMeshData(std::array<CChunk*, 6> neighbors, std::shared_ptr<class CTextureAtlas> atlas);
+    void BuildMeshData(std::array<CChunk*, 27> neighbors, std::shared_ptr<class CTextureAtlas> atlas);
     void makeDirty();
     bool isDirty() const;
 };

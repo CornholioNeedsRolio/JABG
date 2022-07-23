@@ -6,222 +6,222 @@
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/BulkRenderer/CBulkRenderer.cpp.o -c /home/rellik/JABG/src/BulkRenderer/CBulkRenderer.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/BulkRenderer/CBulkRenderer.cpp.o -c /home/rellik/JABG/src/BulkRenderer/CBulkRenderer.cpp",
   "file": "/home/rellik/JABG/src/BulkRenderer/CBulkRenderer.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CAABB.cpp.o -c /home/rellik/JABG/src/CAABB.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CAABB.cpp.o -c /home/rellik/JABG/src/CAABB.cpp",
   "file": "/home/rellik/JABG/src/CAABB.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CCamera.cpp.o -c /home/rellik/JABG/src/CCamera.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CCamera.cpp.o -c /home/rellik/JABG/src/CCamera.cpp",
   "file": "/home/rellik/JABG/src/CCamera.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CDebugLevel.cpp.o -c /home/rellik/JABG/src/CDebugLevel.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CDebugLevel.cpp.o -c /home/rellik/JABG/src/CDebugLevel.cpp",
   "file": "/home/rellik/JABG/src/CDebugLevel.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CDirectionalLight.cpp.o -c /home/rellik/JABG/src/CDirectionalLight.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CDirectionalLight.cpp.o -c /home/rellik/JABG/src/CDirectionalLight.cpp",
   "file": "/home/rellik/JABG/src/CDirectionalLight.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CDisplay.cpp.o -c /home/rellik/JABG/src/CDisplay.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CDisplay.cpp.o -c /home/rellik/JABG/src/CDisplay.cpp",
   "file": "/home/rellik/JABG/src/CDisplay.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CDrawableText.cpp.o -c /home/rellik/JABG/src/CDrawableText.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CDrawableText.cpp.o -c /home/rellik/JABG/src/CDrawableText.cpp",
   "file": "/home/rellik/JABG/src/CDrawableText.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CFileManager.cpp.o -c /home/rellik/JABG/src/CFileManager.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CFileManager.cpp.o -c /home/rellik/JABG/src/CFileManager.cpp",
   "file": "/home/rellik/JABG/src/CFileManager.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CFrustumCollider.cpp.o -c /home/rellik/JABG/src/CFrustumCollider.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CFrustumCollider.cpp.o -c /home/rellik/JABG/src/CFrustumCollider.cpp",
   "file": "/home/rellik/JABG/src/CFrustumCollider.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CGame.cpp.o -c /home/rellik/JABG/src/CGame.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CGame.cpp.o -c /home/rellik/JABG/src/CGame.cpp",
   "file": "/home/rellik/JABG/src/CGame.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CInputManager.cpp.o -c /home/rellik/JABG/src/CInputManager.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CInputManager.cpp.o -c /home/rellik/JABG/src/CInputManager.cpp",
   "file": "/home/rellik/JABG/src/CInputManager.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CLevel.cpp.o -c /home/rellik/JABG/src/CLevel.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CLevel.cpp.o -c /home/rellik/JABG/src/CLevel.cpp",
   "file": "/home/rellik/JABG/src/CLevel.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CMesh.cpp.o -c /home/rellik/JABG/src/CMesh.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CMesh.cpp.o -c /home/rellik/JABG/src/CMesh.cpp",
   "file": "/home/rellik/JABG/src/CMesh.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CObject.cpp.o -c /home/rellik/JABG/src/CObject.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CObject.cpp.o -c /home/rellik/JABG/src/CObject.cpp",
   "file": "/home/rellik/JABG/src/CObject.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/COctree.cpp.o -c /home/rellik/JABG/src/COctree.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/COctree.cpp.o -c /home/rellik/JABG/src/COctree.cpp",
   "file": "/home/rellik/JABG/src/COctree.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CPauseMenu.cpp.o -c /home/rellik/JABG/src/CPauseMenu.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CPauseMenu.cpp.o -c /home/rellik/JABG/src/CPauseMenu.cpp",
   "file": "/home/rellik/JABG/src/CPauseMenu.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CRenderManager.cpp.o -c /home/rellik/JABG/src/CRenderManager.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CRenderManager.cpp.o -c /home/rellik/JABG/src/CRenderManager.cpp",
   "file": "/home/rellik/JABG/src/CRenderManager.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CShader.cpp.o -c /home/rellik/JABG/src/CShader.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CShader.cpp.o -c /home/rellik/JABG/src/CShader.cpp",
   "file": "/home/rellik/JABG/src/CShader.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CSkyBox.cpp.o -c /home/rellik/JABG/src/CSkyBox.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CSkyBox.cpp.o -c /home/rellik/JABG/src/CSkyBox.cpp",
   "file": "/home/rellik/JABG/src/CSkyBox.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CSprite.cpp.o -c /home/rellik/JABG/src/CSprite.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CSprite.cpp.o -c /home/rellik/JABG/src/CSprite.cpp",
   "file": "/home/rellik/JABG/src/CSprite.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CTexture.cpp.o -c /home/rellik/JABG/src/CTexture.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CTexture.cpp.o -c /home/rellik/JABG/src/CTexture.cpp",
   "file": "/home/rellik/JABG/src/CTexture.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CTextureAtlas.cpp.o -c /home/rellik/JABG/src/CTextureAtlas.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/CTextureAtlas.cpp.o -c /home/rellik/JABG/src/CTextureAtlas.cpp",
   "file": "/home/rellik/JABG/src/CTextureAtlas.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CBlock.cpp.o -c /home/rellik/JABG/src/Game/CBlock.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CBlock.cpp.o -c /home/rellik/JABG/src/Game/CBlock.cpp",
   "file": "/home/rellik/JABG/src/Game/CBlock.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CChunk.cpp.o -c /home/rellik/JABG/src/Game/CChunk.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CChunk.cpp.o -c /home/rellik/JABG/src/Game/CChunk.cpp",
   "file": "/home/rellik/JABG/src/Game/CChunk.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CChunkCollider.cpp.o -c /home/rellik/JABG/src/Game/CChunkCollider.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CChunkCollider.cpp.o -c /home/rellik/JABG/src/Game/CChunkCollider.cpp",
   "file": "/home/rellik/JABG/src/Game/CChunkCollider.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CChunkManager.cpp.o -c /home/rellik/JABG/src/Game/CChunkManager.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CChunkManager.cpp.o -c /home/rellik/JABG/src/Game/CChunkManager.cpp",
   "file": "/home/rellik/JABG/src/Game/CChunkManager.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CChunkMeshThreadManager.cpp.o -c /home/rellik/JABG/src/Game/CChunkMeshThreadManager.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CChunkMeshThreadManager.cpp.o -c /home/rellik/JABG/src/Game/CChunkMeshThreadManager.cpp",
   "file": "/home/rellik/JABG/src/Game/CChunkMeshThreadManager.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CChunkPart.cpp.o -c /home/rellik/JABG/src/Game/CChunkPart.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CChunkPart.cpp.o -c /home/rellik/JABG/src/Game/CChunkPart.cpp",
   "file": "/home/rellik/JABG/src/Game/CChunkPart.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CGameEntityCollider.cpp.o -c /home/rellik/JABG/src/Game/CGameEntityCollider.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CGameEntityCollider.cpp.o -c /home/rellik/JABG/src/Game/CGameEntityCollider.cpp",
   "file": "/home/rellik/JABG/src/Game/CGameEntityCollider.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CStructure.cpp.o -c /home/rellik/JABG/src/Game/CStructure.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CStructure.cpp.o -c /home/rellik/JABG/src/Game/CStructure.cpp",
   "file": "/home/rellik/JABG/src/Game/CStructure.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CStructureTree.cpp.o -c /home/rellik/JABG/src/Game/CStructureTree.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CStructureTree.cpp.o -c /home/rellik/JABG/src/Game/CStructureTree.cpp",
   "file": "/home/rellik/JABG/src/Game/CStructureTree.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CTerrainGenerator.cpp.o -c /home/rellik/JABG/src/Game/CTerrainGenerator.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CTerrainGenerator.cpp.o -c /home/rellik/JABG/src/Game/CTerrainGenerator.cpp",
   "file": "/home/rellik/JABG/src/Game/CTerrainGenerator.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CWorld.cpp.o -c /home/rellik/JABG/src/Game/CWorld.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/CWorld.cpp.o -c /home/rellik/JABG/src/Game/CWorld.cpp",
   "file": "/home/rellik/JABG/src/Game/CWorld.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/ChunkComponents/CChunkMeshComponent.cpp.o -c /home/rellik/JABG/src/Game/ChunkComponents/CChunkMeshComponent.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/ChunkComponents/CChunkMeshComponent.cpp.o -c /home/rellik/JABG/src/Game/ChunkComponents/CChunkMeshComponent.cpp",
   "file": "/home/rellik/JABG/src/Game/ChunkComponents/CChunkMeshComponent.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/ChunkComponents/CChunkSaveComponent.cpp.o -c /home/rellik/JABG/src/Game/ChunkComponents/CChunkSaveComponent.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/ChunkComponents/CChunkSaveComponent.cpp.o -c /home/rellik/JABG/src/Game/ChunkComponents/CChunkSaveComponent.cpp",
   "file": "/home/rellik/JABG/src/Game/ChunkComponents/CChunkSaveComponent.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/ChunkComponents/CChunkVoxelComponent.cpp.o -c /home/rellik/JABG/src/Game/ChunkComponents/CChunkVoxelComponent.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/ChunkComponents/CChunkVoxelComponent.cpp.o -c /home/rellik/JABG/src/Game/ChunkComponents/CChunkVoxelComponent.cpp",
   "file": "/home/rellik/JABG/src/Game/ChunkComponents/CChunkVoxelComponent.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/ChunkLoader/Biome/CBiome.cpp.o -c /home/rellik/JABG/src/Game/ChunkLoader/Biome/CBiome.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/ChunkLoader/Biome/CBiome.cpp.o -c /home/rellik/JABG/src/Game/ChunkLoader/Biome/CBiome.cpp",
   "file": "/home/rellik/JABG/src/Game/ChunkLoader/Biome/CBiome.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/ChunkLoader/Biome/CBiomeMap.cpp.o -c /home/rellik/JABG/src/Game/ChunkLoader/Biome/CBiomeMap.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/ChunkLoader/Biome/CBiomeMap.cpp.o -c /home/rellik/JABG/src/Game/ChunkLoader/Biome/CBiomeMap.cpp",
   "file": "/home/rellik/JABG/src/Game/ChunkLoader/Biome/CBiomeMap.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/ChunkLoader/CChunkGenerator.cpp.o -c /home/rellik/JABG/src/Game/ChunkLoader/CChunkGenerator.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/ChunkLoader/CChunkGenerator.cpp.o -c /home/rellik/JABG/src/Game/ChunkLoader/CChunkGenerator.cpp",
   "file": "/home/rellik/JABG/src/Game/ChunkLoader/CChunkGenerator.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/ChunkLoader/CChunkLoader.cpp.o -c /home/rellik/JABG/src/Game/ChunkLoader/CChunkLoader.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/ChunkLoader/CChunkLoader.cpp.o -c /home/rellik/JABG/src/Game/ChunkLoader/CChunkLoader.cpp",
   "file": "/home/rellik/JABG/src/Game/ChunkLoader/CChunkLoader.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/ChunkLoader/CChunkLoaderInstance.cpp.o -c /home/rellik/JABG/src/Game/ChunkLoader/CChunkLoaderInstance.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/ChunkLoader/CChunkLoaderInstance.cpp.o -c /home/rellik/JABG/src/Game/ChunkLoader/CChunkLoaderInstance.cpp",
   "file": "/home/rellik/JABG/src/Game/ChunkLoader/CChunkLoaderInstance.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CPable.cpp.o -c /home/rellik/JABG/src/Game/SpecialBlocks/CPable.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CPable.cpp.o -c /home/rellik/JABG/src/Game/SpecialBlocks/CPable.cpp",
   "file": "/home/rellik/JABG/src/Game/SpecialBlocks/CPable.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Misc/CFPPlayer.cpp.o -c /home/rellik/JABG/src/Misc/CFPPlayer.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Misc/CFPPlayer.cpp.o -c /home/rellik/JABG/src/Misc/CFPPlayer.cpp",
   "file": "/home/rellik/JABG/src/Misc/CFPPlayer.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",
-  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -g3 -O3 -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/main.cpp.o -c /home/rellik/JABG/src/main.cpp",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/main.cpp.o -c /home/rellik/JABG/src/main.cpp",
   "file": "/home/rellik/JABG/src/main.cpp"
 }
 ]

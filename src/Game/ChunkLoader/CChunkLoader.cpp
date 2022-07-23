@@ -71,6 +71,12 @@ void CChunkLoader::onPlayerMove(std::tuple<int, int, int> playerPos, int distanc
     }
 }
 
+void CChunkLoader::joinThreads()
+{
+    for(auto& instance : m_instances)
+        instance->joinThreads();
+}
+
 void CChunkLoader::Tick(CChunkManager* world)
 {
     {

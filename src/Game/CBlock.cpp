@@ -1,6 +1,8 @@
 #include "SpecialBlocks/CPable.h"
 #include "../CTextureAtlas.h"
 #include "CBlock.h"
+#include "SpecialBlocks/CDirt.h"
+#include "SpecialBlocks/CGrass.h"
 #include <iostream>
 
 
@@ -19,14 +21,22 @@ const std::vector<SVertex>& CBlock::GetDefaultBlock() const
 	return DefaultBlock;
 }
 
-std::vector<SVertex> CBlock::getBlockMeshVertices(CBlock* neighbors[6],std::shared_ptr<class CTextureAtlas> texture, glm::ivec3 position)
+constexpr int visibleSides[] = {22, 4, 14, 12, 16, 10};
+CBlock::CBlock()
+{
+	m_neededNeighbors.reset();
+	for(int i = 0; i < 6; ++i)
+		m_neededNeighbors[visibleSides[i]] = 1;
+}
+
+std::vector<SVertex> CBlock::getBlockMeshVertices(CBlock* neighbors[27], std::shared_ptr<class CTextureAtlas> texture, glm::ivec3 position)
 {
 	const std::vector<SVertex>& _temp = GetDefaultBlock();
 
 	std::vector<SVertex> output = {};
 	for(int i = 0; i < 6; i++)
 	{
-		if(neighbors[i]) if(!neighbors[i]->isTransparent()) continue;
+		if(neighbors[visibleSides[i]]) if(!neighbors[visibleSides[i]]->isTransparent()) continue;
 		std::vector<SVertex> face = {};
 		face.insert(face.end(), _temp.begin()+i*6, _temp.begin()+i*6+6);
 		for (int i = 0; i < face.size(); i++)
@@ -48,6 +58,24 @@ std::vector<SVertex> CBlock::getBlockMeshVertices(CBlock* neighbors[6],std::shar
 
 	return output;
 }
+
+
+
+class CBlock* BlockAir = nullptr;
+class CGrass* BlockGrass = nullptr;
+class CDirt* BlockDirt = nullptr;
+class CBlock* BlockStone = nullptr;
+class CBlock* BlockLog = nullptr;
+class CBlock* BlockPlanks = nullptr;
+class CBlock* BlockBricks = nullptr;
+class CBlock* BlockBrokenStone = nullptr;
+class CBlock* BlockStoneBrick= nullptr;
+class CBlock* BlockGlass = nullptr;
+class CBlock* BlockSand = nullptr;
+class CBlock* BlockOldstone = nullptr;
+class CPable* BlockPebble = nullptr;
+class CBlock* BlockWater = nullptr;
+class CBlock* BlockLeaves = nullptr;
 
 std::vector<SVertex> CBlock::DefaultBlock =  {
 
@@ -109,11 +137,18 @@ std::vector<SVertex> CBlock::DefaultBlock =  {
 
 
 
+
+
+
+
+
+
 namespace BLOCK_DATABASE
 {
 	void Blocks::Init()
 	{
 		m_blocks.push_back(std::make_unique<CBlock>());
+		BlockAir = m_blocks[BLOCK_AIR].get();
 		m_blocks[BLOCK_AIR]->setSolid(false);
 		m_blocks[BLOCK_AIR]->setTargetable(false);
 		m_blocks[BLOCK_AIR]->setVisible(false);
@@ -121,7 +156,8 @@ namespace BLOCK_DATABASE
 		m_blocks[BLOCK_AIR]->setTransparent(true);
 
 		//GRASS
-		m_blocks.push_back(std::make_unique<CBlock>());
+		m_blocks.push_back(std::make_unique<CGrass>());
+		BlockGrass = (CGrass*)m_blocks[BLOCK_GRASS].get();
 		m_blocks[BLOCK_GRASS]->setSolid(true);
 		m_blocks[BLOCK_GRASS]->setVisible(true);
 		m_blocks[BLOCK_GRASS]->setTargetable(true);
@@ -133,15 +169,17 @@ namespace BLOCK_DATABASE
 		m_blocks[BLOCK_GRASS]->setFaceAtlasIndex(CBlock::BLOCK_BACK, 1);
 		
 		//DIRT
-		m_blocks.push_back(std::make_unique<CBlock>());
-		m_blocks[BLOCK_DIRT]->setSolid(true);
-		m_blocks[BLOCK_DIRT]->setVisible(true);
-		m_blocks[BLOCK_DIRT]->setTargetable(true);
-		for(uint8_t i = 0; i < 6; i++)
-			m_blocks[BLOCK_DIRT]->setFaceAtlasIndex(i, 2);
+		m_blocks.push_back(std::make_unique<CDirt>());
+		BlockDirt = (CDirt*)m_blocks[BLOCK_DIRT].get();
+		BlockDirt->setSolid(true);
+		BlockDirt->setVisible(true);
+		BlockDirt->setTargetable(true);
+		for(uint8_t i = 0; i < 6; ++i) BlockDirt->setFaceAtlasIndex(i, 2);
+		for(uint8_t i = 0; i < 4; ++i) BlockDirt->SetGrassFace(1, i);
 
 		//STONE
 		m_blocks.push_back(std::make_unique<CBlock>());
+		BlockStone = m_blocks[BLOCK_STONE].get();
 		m_blocks[BLOCK_STONE]->setSolid(true);
 		m_blocks[BLOCK_STONE]->setVisible(true);
 		m_blocks[BLOCK_STONE]->setTargetable(true);
@@ -150,6 +188,7 @@ namespace BLOCK_DATABASE
 
 		//BLOCK_LOG
 		m_blocks.push_back(std::make_unique<CBlock>());
+		BlockLog = m_blocks[BLOCK_LOG].get();
 		m_blocks[BLOCK_LOG]->setSolid(true);
 		m_blocks[BLOCK_LOG]->setVisible(true);
 		m_blocks[BLOCK_LOG]->setTargetable(true);
@@ -160,6 +199,7 @@ namespace BLOCK_DATABASE
 
 		//LEAVES
 		m_blocks.push_back(std::make_unique<CBlock>());
+		BlockLeaves = m_blocks[BLOCK_LOG].get();
 		m_blocks[BLOCK_LEAVES]->setSolid(true);
 		m_blocks[BLOCK_LEAVES]->setVisible(true);
 		m_blocks[BLOCK_LEAVES]->setTargetable(true);
@@ -168,6 +208,7 @@ namespace BLOCK_DATABASE
 
 		//PLANKS
 		m_blocks.push_back(std::make_unique<CBlock>());
+		BlockPlanks = m_blocks[BLOCK_PLANKS].get();
 		m_blocks[BLOCK_PLANKS]->setSolid(true);
 		m_blocks[BLOCK_PLANKS]->setVisible(true);
 		m_blocks[BLOCK_PLANKS]->setTargetable(true);
@@ -180,6 +221,7 @@ namespace BLOCK_DATABASE
 
 		//BRICKS
 		m_blocks.push_back(std::make_unique<CBlock>());
+		BlockBricks = m_blocks[BLOCK_BRICKS].get();
 		m_blocks[BLOCK_BRICKS]->setSolid(true);
 		m_blocks[BLOCK_BRICKS]->setVisible(true);
 		m_blocks[BLOCK_BRICKS]->setTargetable(true);
@@ -192,6 +234,7 @@ namespace BLOCK_DATABASE
 
 		//BROKENSTONE
 		m_blocks.push_back(std::make_unique<CBlock>());
+		BlockBrokenStone = m_blocks[BLOCK_BROKENSTONE].get();
 		m_blocks[BLOCK_BROKENSTONE]->setSolid(true);
 		m_blocks[BLOCK_BROKENSTONE]->setVisible(true);
 		m_blocks[BLOCK_BROKENSTONE]->setTargetable(true);
@@ -204,6 +247,7 @@ namespace BLOCK_DATABASE
 
 		//STONEBRICK
 		m_blocks.push_back(std::make_unique<CBlock>());
+		BlockStoneBrick = m_blocks[BLOCK_STONEBRICK].get();
 		m_blocks[BLOCK_STONEBRICK]->setSolid(true);
 		m_blocks[BLOCK_STONEBRICK]->setVisible(true);
 		m_blocks[BLOCK_STONEBRICK]->setTargetable(true);
@@ -216,6 +260,7 @@ namespace BLOCK_DATABASE
 
 		//STONEBRICK
 		m_blocks.push_back(std::make_unique<CBlock>());
+		BlockGlass = m_blocks[BLOCK_GLASS].get();
 		m_blocks[BLOCK_GLASS]->setSolid(true);
 		m_blocks[BLOCK_GLASS]->setVisible(true);
 		m_blocks[BLOCK_GLASS]->setTransparent(true);
@@ -229,6 +274,7 @@ namespace BLOCK_DATABASE
 
 		//SAND
 		m_blocks.push_back(std::make_unique<CBlock>());
+		BlockSand = m_blocks[BLOCK_SAND].get();
 		m_blocks[BLOCK_SAND]->setSolid(true);
 		m_blocks[BLOCK_SAND]->setVisible(true);
 		m_blocks[BLOCK_SAND]->setTargetable(true);
@@ -241,6 +287,7 @@ namespace BLOCK_DATABASE
 
 		//OLDSTONE
 		m_blocks.push_back(std::make_unique<CBlock>());
+		BlockOldstone = m_blocks[BLOCK_OLDSTONE].get();
 		m_blocks[BLOCK_OLDSTONE]->setSolid(true);
 		m_blocks[BLOCK_OLDSTONE]->setVisible(true);
 		m_blocks[BLOCK_OLDSTONE]->setTargetable(true);
@@ -253,8 +300,10 @@ namespace BLOCK_DATABASE
 
 		//PEBLE
 		m_blocks.push_back(std::make_unique<CPable>());
+		BlockPebble = (CPable*)m_blocks[BLOCK_PEBBLE].get();
 		//WATER
 		m_blocks.push_back(std::make_unique<CBlock>());
+		BlockWater = m_blocks[BLOCK_WATER].get();
 		m_blocks[BLOCK_WATER]->setSolid(false);
 		m_blocks[BLOCK_WATER]->setVisible(true);
 		m_blocks[BLOCK_WATER]->setTargetable(false);
@@ -271,7 +320,8 @@ namespace BLOCK_DATABASE
 	{
 		if (BLOCK_TOTAL > id)
 			return m_blocks[id].get();
-		std::cout << "[BLOCK]Outside of range";
+		std::cout << "[BLOCK]Outside of range " << id;
+		//throw;
 		return nullptr;
 	}
 	Blocks Database;

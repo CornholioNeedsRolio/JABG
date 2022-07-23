@@ -20,11 +20,13 @@ protected:
 		IS_TARGETABLE,
 	};
 	std::bitset<4> m_flags;
+	std::bitset<27> m_neededNeighbors;
 	//uint8_t m_solid;
 	//uint8_t m_visible;
 	ColliderType m_type = BLOCKCOLLIDER_FULL;
 	const std::vector<SVertex>& GetDefaultBlock() const;
 public:
+	CBlock();
 	enum block_faces : uint8_t
 	{
 		BLOCK_FRONT = 0,
@@ -49,8 +51,27 @@ public:
 
 	int getFaceAtlasIndex(uint8_t face) { return m_faceatlasindex[face]; };
 	void setFaceAtlasIndex(uint8_t face, int index) { m_faceatlasindex[face] = index; };
-	virtual std::vector<SVertex> getBlockMeshVertices(CBlock* neighbors[6], std::shared_ptr<class CTextureAtlas> texture, glm::ivec3 position = glm::ivec3(0));
+
+	virtual const bool IsNeightborNeeded(int index) const { return m_neededNeighbors[index]; };
+	virtual std::vector<SVertex> getBlockMeshVertices(CBlock* neighbors[27], std::shared_ptr<class CTextureAtlas> texture, glm::ivec3 position = glm::ivec3(0));
 };
+
+
+extern class CBlock* BlockAir;
+extern class CGrass* BlockGrass;
+extern class CDirt* BlockDirt;
+extern class CBlock* BlockStone;
+extern class CBlock* BlockLog;
+extern class CBlock* BlockPlanks;
+extern class CBlock* BlockBricks;
+extern class CBlock* BlockBrokenStone;
+extern class CBlock* BlockStoneBrick;
+extern class CBlock* BlockGlass;
+extern class CBlock* BlockSand;
+extern class CBlock* BlockOldstone;
+extern class CPable* BlockPebble;
+extern class CBlock* BlockWater;
+extern class CBlock* BlockLeaves;
 
 enum
 {
