@@ -56,35 +56,42 @@ void CShader::Use()
 void CShader::SetUniform(glm::mat4 matrix, std::string name)
 {
 	GLuint id = glGetUniformLocation(m_program, name.c_str());
-	Use();
+	//Use();
 	glUniformMatrix4fv(id, 1, false, &matrix[0][0]);
 }
 
 void CShader::SetUniform(const std::vector<glm::mat4>& matrix, std::string name)
 {
 	GLuint id = glGetUniformLocation(m_program, name.c_str());
-	Use();
+	//Use();
 	glUniformMatrix4fv(id, matrix.size(), false, &matrix[0][0][0]);
 }
 
 void CShader::SetUniform(glm::vec3 vector, std::string name)
 {
 	GLuint id = glGetUniformLocation(m_program, name.c_str());
-	Use();
+	//Use();
 	glUniform3f(id, vector.x, vector.y, vector.z);
 }
 
 void CShader::SetUniform(glm::vec4 vector, std::string name)
 {
 	GLuint id = glGetUniformLocation(m_program, name.c_str());
-	Use();
+	//Use();
 	glUniform4f(id, vector.x, vector.y, vector.z, vector.w);
+}
+
+void CShader::SetUniform(float number, std::string name)
+{
+	GLuint id = glGetUniformLocation(m_program, name.c_str());
+	//Use();
+	glUniform1f(id, number);
 }
 
 void CShader::SetUniform(int number, std::string name)
 {
 	GLuint id = glGetUniformLocation(m_program, name.c_str());
-	Use();
+	//Use();
 	glUniform1i(id, number);
 }
 
@@ -109,6 +116,17 @@ GLuint CShader::MakeShader(std::string filepath, GLenum type)
 	FindErrors(output, false, GL_COMPILE_STATUS, filepath);
 
 	return output;
+}
+
+void CShader::SetShaderSettings(CShaderSettings* settings)
+{
+	m_settings = std::move(std::unique_ptr<CShaderSettings>(settings));
+	m_settings->SetParent(this);
+}
+
+CShaderSettings* CShader::GetShaderSettings() const
+{
+	return m_settings.get();
 }
 
 inline void CShader::FindErrors(GLuint id, bool isProgram, GLenum flag, std::string errorstring)

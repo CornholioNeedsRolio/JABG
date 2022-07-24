@@ -69,18 +69,18 @@ bool CChunkPart::destroyable()
 
 void CChunkPart::Draw(const SDrawInfo& info)
 {
-	for (auto it = m_chunks.begin(); it != m_chunks.end(); it++)
+	/*for (auto it = m_chunks.begin(); it != m_chunks.end(); it++)
 	{
 		it->second->getMeshComponent().setTextureAndShader(m_world->getAtlas(), m_world->getShader());
 		it->second->Draw(info);
-	}
+	}*/
 }
 
 void CChunkPart::BulkDraw(class CBulkRenderer* renderer)
 {
 	for (auto it = m_chunks.begin(); it != m_chunks.end(); ++it)
 	{
-		it->second->getMeshComponent().setTextureAndShader(m_world->getAtlas(), m_world->getShader());
+		it->second->getMeshComponent().setTextureAndShader({m_world->getAtlas(), m_world->getShader()}, {m_world->getAtlas(), m_world->getWaterShader()});
 		it->second->BulkDraw(renderer);
 	}
 }

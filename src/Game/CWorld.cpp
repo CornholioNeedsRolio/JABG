@@ -1,5 +1,6 @@
 #include "CWorld.h"
 #include "../CFileManager.h"
+#include "Game/SpecialBlocks/Water/CTimeShaderSetting.h"
 #include <iostream>
 
 
@@ -7,6 +8,8 @@ CWorld::CWorld(std::shared_ptr<CTextureAtlas> texture, CFPPlayer& player) :
 	m_manager(new CChunkManager(this)), m_texture(texture), m_threadManager(this), m_player(&player), m_playerPos(0,0,0), m_loader(1, this)
 {
 	m_shader = CFileManager::getShader("./res/DefaultShader/ChunkShader");
+	m_watershader = CFileManager::getShader("./res/DefaultShader/WaterShader");
+	m_watershader->SetShaderSettings(new CTimeShaderSetting());
 	player.load(getFilePath());
 }
 
@@ -108,4 +111,9 @@ std::shared_ptr<CTextureAtlas> CWorld::getAtlas()
 std::shared_ptr<CShader> CWorld::getShader()
 {
 	return m_shader;
+}
+
+std::shared_ptr<CShader> CWorld::getWaterShader()
+{
+	return m_watershader;
 }

@@ -211,8 +211,28 @@
 },
 {
   "directory": "/home/rellik/JABG/build",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CConnectedTexBlock.cpp.o -c /home/rellik/JABG/src/Game/SpecialBlocks/CConnectedTexBlock.cpp",
+  "file": "/home/rellik/JABG/src/Game/SpecialBlocks/CConnectedTexBlock.cpp"
+},
+{
+  "directory": "/home/rellik/JABG/build",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CDirt.cpp.o -c /home/rellik/JABG/src/Game/SpecialBlocks/CDirt.cpp",
+  "file": "/home/rellik/JABG/src/Game/SpecialBlocks/CDirt.cpp"
+},
+{
+  "directory": "/home/rellik/JABG/build",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CGrass.cpp.o -c /home/rellik/JABG/src/Game/SpecialBlocks/CGrass.cpp",
+  "file": "/home/rellik/JABG/src/Game/SpecialBlocks/CGrass.cpp"
+},
+{
+  "directory": "/home/rellik/JABG/build",
   "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CPable.cpp.o -c /home/rellik/JABG/src/Game/SpecialBlocks/CPable.cpp",
   "file": "/home/rellik/JABG/src/Game/SpecialBlocks/CPable.cpp"
+},
+{
+  "directory": "/home/rellik/JABG/build",
+  "command": "/usr/bin/gcc -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17 -o CMakeFiles/JABG.dir/src/Game/SpecialBlocks/Water/CWaterShader.cpp.o -c /home/rellik/JABG/src/Game/SpecialBlocks/Water/CWaterShader.cpp",
+  "file": "/home/rellik/JABG/src/Game/SpecialBlocks/Water/CWaterShader.cpp"
 },
 {
   "directory": "/home/rellik/JABG/build",

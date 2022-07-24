@@ -44,6 +44,7 @@ class CMesh : public CObject
 {
 	bool m_init = false;
 	bool m_wireframe = false;
+	int m_priority = 0;
 	GLuint m_VAO, m_VBO, m_indices;
 	GLenum m_type;
 	std::shared_ptr<CShader> m_shader = nullptr;
@@ -58,6 +59,7 @@ public:
 	void InitDebugRect(float x1, float y1, float z1, float x2, float y2, float z2);
 	void InitLine(float x1, float y1, float z1, float x2, float y2, float z2);
 
+	void SetPriority(int priority);
 	void SetTexture(std::shared_ptr<CTexture> _texture);
 	void SetShader(std::shared_ptr<CShader> _shader);
 	void SetWireframe(bool value);
@@ -74,6 +76,7 @@ public:
 	void Clear();
 	void Draw(const SDrawInfo& info) override;
 	void BulkDraw(class CBulkRenderer* renderer) override;
+
 
 	void DrawGLSimple() const;
 	

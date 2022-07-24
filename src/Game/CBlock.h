@@ -6,6 +6,12 @@
 #include <bitset>
 
 
+enum
+{
+	BLOCKMESH_NORMAL,
+	BLOCKMESH_WATER
+};
+
 class CBlock
 {
 	static std::vector<SVertex> DefaultBlock;
@@ -21,6 +27,8 @@ protected:
 	};
 	std::bitset<4> m_flags;
 	std::bitset<27> m_neededNeighbors;
+	uint8_t blockMeshType = BLOCKMESH_NORMAL;
+	float m_height = 1;
 	//uint8_t m_solid;
 	//uint8_t m_visible;
 	ColliderType m_type = BLOCKCOLLIDER_FULL;
@@ -36,10 +44,12 @@ public:
 		BLOCK_TOP,
 		BLOCK_BOTTOM
 	};
+
 	bool isVisible() const { return m_flags[IS_VISIBLE]; };
 	bool isSolid() const { return m_flags[IS_SOLID]; };
 	bool isTransparent() const { return m_flags[IS_TRANSPARENT]; };
 	bool isTargetable() const { return m_flags[IS_TARGETABLE]; };
+	uint8_t getMeshType() const { return blockMeshType; };
 
 	const ColliderType& getCollision();
 
@@ -47,16 +57,18 @@ public:
 	void setSolid(bool solid) { m_flags[IS_SOLID] = solid; };
 	void setTransparent(bool transparent) { m_flags[IS_TRANSPARENT] = transparent; };
 	void setTargetable(bool targetable) { m_flags[IS_TARGETABLE] = targetable; };
+	void setMeshType(uint8_t mesh) { blockMeshType = mesh; };
 	void setCollisionType(ColliderType type);
+	void setHeight(float height);
 
 	int getFaceAtlasIndex(uint8_t face) const { return m_faceatlasindex[face]; };
 	void setFaceAtlasIndex(uint8_t face, int index) { m_faceatlasindex[face] = index; };
 
 	virtual uint8_t getFaceAt(CBlock* neighbors[27], uint8_t face) const;
 	virtual const bool IsNeightborNeeded(int index) const { return m_neededNeighbors[index]; };
+	virtual bool IsFaceVisible(CBlock* facingBlock) const;
 	virtual std::vector<SVertex> getBlockMeshVertices(CBlock* neighbors[27], std::shared_ptr<class CTextureAtlas> texture, glm::ivec3 position = glm::ivec3(0));
 };
-
 
 extern class CBlock* BlockAir;
 extern class CGrass* BlockGrass;

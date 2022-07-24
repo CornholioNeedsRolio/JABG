@@ -66,7 +66,7 @@ void CChunkMeshThreadManager::ChooseChunk()
 				if (!chunk->getMeshComponent().isDirty()) continue;
 
 				m_neighbors.fill(nullptr);
-
+				std::map<std::pair<int, int>, CChunkPart*> Cache;
 				for(int xx = -1; xx <= 1; ++xx )
 				{
 					for(int yy = -1; yy <= 1; ++yy )
@@ -74,7 +74,14 @@ void CChunkMeshThreadManager::ChooseChunk()
 						for(int zz = -1; zz <= 1; ++zz )
 						{
 							if(!xx && !yy && !zz) continue;
-							CChunkPart* part =  m_world->getManager().getChunkPart(x+xx, z+zz);
+							CChunkPart* part =  nullptr;
+							std::pair<int, int>	partpos(x+xx, z+zz);
+							if(Cache.find(partpos) != Cache.end())
+								part = Cache[partpos];
+							else{
+								part =  m_world->getManager().getChunkPart(x+xx, z+zz);
+								Cache.insert({partpos, part});
+							}
 							if(!part) continue;
 							CChunk* chunk = part->getChunk(y+yy);
 							if(chunk) m_neighbors[(xx+1) + 3 * (yy+1 + (zz+1)*3)] = chunk; 

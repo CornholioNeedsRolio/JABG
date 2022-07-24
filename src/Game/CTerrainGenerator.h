@@ -15,6 +15,8 @@ struct comp
 	};
 };*/
 
+
+///// DEPRECATED, OLD GENERATOR
 class CTerrainGenerator
 {
 	int m_maxy = 5;

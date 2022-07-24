@@ -26,6 +26,7 @@ void CGame::Run()
 		std::chrono::duration<float> elapsedTime = end - begin;
 		begin = end;
 		m_deltaTime = elapsedTime.count();
+		m_passedTime+= m_deltaTime;
 		if (m_currentLevel && m_deltaTime > 0 && m_deltaTime <= 1)
 		{
 			m_currentLevel->Run(m_inputmanager, m_deltaTime);
@@ -43,6 +44,11 @@ CGame* CGame::getInstance()
 unsigned int CGame::getTickNum() const
 {
 	return m_tickNum;
+}
+
+float CGame::getPassedTime() const
+{
+	return m_passedTime;
 }
 
 void CGame::setLevel(CLevel* level)

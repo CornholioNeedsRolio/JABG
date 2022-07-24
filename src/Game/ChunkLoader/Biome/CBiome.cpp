@@ -10,7 +10,7 @@
 
 float CBiome::simplexPlains(float x, float z) const
 {
-    return getTopBlock()+OctaveSimplex(x/ (float)(CHUNK_SIZE*5), 0, z/ (float)(CHUNK_SIZE*5), 8, 0.25)*m_intesity;
+    return getLevel()+OctaveSimplex(x/ (float)(CHUNK_SIZE*5), 0, z/ (float)(CHUNK_SIZE*5), 8, 0.25)*m_intesity;
 }
 float CBiome::simplexCave(float x, float y, float z) const
 {

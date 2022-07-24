@@ -18,7 +18,7 @@ fi
 
 if [[ $2 == run ]]; then
     mkdir -p bin
-    mv -f ./JABG ./bin/JABG
+   mv -f ./JABG ./bin/JABG
     rm -f -r ./bin/res
     cp  -R --copy-contents ../../res ./bin/res
     cd bin

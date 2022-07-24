@@ -31,7 +31,7 @@ class CWorld : public CObject
     std::tuple<int, int, int> m_playerPos;
 
     std::shared_ptr<CTextureAtlas> m_texture = 0x0;
-    std::shared_ptr<CShader> m_shader = 0x0;
+    std::shared_ptr<CShader> m_shader = 0x0, m_watershader = 0x0;
     std::string m_filePath = "./world/";
     CFPPlayer* m_player = nullptr;
 
@@ -53,6 +53,7 @@ public:
     int getDrawDistance();
     std::shared_ptr<CTextureAtlas> getAtlas();
     std::shared_ptr<CShader> getShader();
+    std::shared_ptr<CShader> getWaterShader();
 
     void Draw(const SDrawInfo& info) override;
     void BulkDraw(class CBulkRenderer* renderer) override;

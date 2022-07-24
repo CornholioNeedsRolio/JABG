@@ -34,6 +34,17 @@ uint8_t CBlock::getFaceAt(CBlock* neighbors[27], uint8_t face) const
 	return getFaceAtlasIndex(face);
 }
 
+bool CBlock::IsFaceVisible(CBlock* facingBlock) const
+{
+	if(!facingBlock) return false;
+	return !facingBlock->isTransparent() && blockMeshType == facingBlock->blockMeshType;
+}
+
+void CBlock::setHeight(float height)
+{
+	m_height = height;
+}
+
 std::vector<SVertex> CBlock::getBlockMeshVertices(CBlock* neighbors[27], std::shared_ptr<class CTextureAtlas> texture, glm::ivec3 position)
 {
 	const std::vector<SVertex>& _temp = GetDefaultBlock();
@@ -41,13 +52,15 @@ std::vector<SVertex> CBlock::getBlockMeshVertices(CBlock* neighbors[27], std::sh
 	std::vector<SVertex> output = {};
 	for(int i = 0; i < 6; i++)
 	{
-		if(neighbors[visibleSides[i]]) if(!neighbors[visibleSides[i]]->isTransparent()) continue;
+		if(IsFaceVisible(neighbors[visibleSides[i]])) continue;
 		std::vector<SVertex> face = {};
+		float yoffset = 0;
+		if(i == 4) yoffset = 1.f - m_height;
 		face.insert(face.end(), _temp.begin()+i*6, _temp.begin()+i*6+6);
 		for (int i = 0; i < face.size(); i++)
 		{
 			face[i].position.x += position.x;
-			face[i].position.y += position.y;
+			face[i].position.y += position.y - yoffset;
 			face[i].position.z += position.z;
 		}
 
@@ -311,7 +324,8 @@ namespace BLOCK_DATABASE
 		BlockWater = m_blocks[BLOCK_WATER].get();
 		BlockWater->setSolid(false);
 		BlockWater->setVisible(true);
-		BlockWater->setTargetable(false);
+		BlockWater->setTargetable(true);
+		BlockWater->setMeshType(BLOCKMESH_WATER);
 		BlockWater->setFaceAtlasIndex(CBlock::BLOCK_TOP, 17);
 		BlockWater->setFaceAtlasIndex(CBlock::BLOCK_BOTTOM, 17);
 		BlockWater->setFaceAtlasIndex(CBlock::BLOCK_FRONT, 17);
@@ -319,6 +333,7 @@ namespace BLOCK_DATABASE
 		BlockWater->setFaceAtlasIndex(CBlock::BLOCK_RIGHT, 17);
 		BlockWater->setFaceAtlasIndex(CBlock::BLOCK_LEFT, 17);
 		BlockWater->setTransparent(false);
+		BlockWater->setHeight(1.f-0.0625);
 	}
 
 	CBlock* Blocks::getBlock(int id)

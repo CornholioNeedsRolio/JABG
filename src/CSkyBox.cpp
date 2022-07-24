@@ -69,7 +69,7 @@ void CSkyBox::Init(std::shared_ptr<class CTexture> texture)
 	};
 
     const float unit = 1.0f/6.0f;
-    const float scale = 600;
+    const float scale = 250;
     for(int i = 0; i < _temp.size(); ++i)
     {
         const int current = i/6;
@@ -77,7 +77,7 @@ void CSkyBox::Init(std::shared_ptr<class CTexture> texture)
         for(int j = 0; j < 3; ++j)
             _temp[i].position[j] = scale*(-0.5+_temp[i].position[j]);
     }
-
+	m_mesh.SetPriority(0);
     m_mesh.Init(_temp);
     m_mesh.SetTexture(texture);
 }

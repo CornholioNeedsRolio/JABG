@@ -4,14 +4,21 @@
 #include <mutex>
 #include "../../CMesh.h"
 
+struct STextureAndShader
+{
+    std::shared_ptr<class CTextureAtlas> texture;
+    std::shared_ptr<class CShader> shader;
+};
+
 class CChunkMeshComponent
 {
-    CMesh m_mesh;
     class CChunk* m_parent = nullptr;
     std::atomic_char m_flags = 0;
     std::atomic_int m_currentDirty = 0, m_lastDirty = 0;
     std::mutex m_mutex;
-    std::vector<SVertex> m_meshinfo;
+
+    std::vector<SVertex> m_meshinfo, m_watermeshinfo;
+    CMesh m_mesh, m_watermesh;
     enum
     {
         THREAD_RUNNING = 0x1,
@@ -22,7 +29,7 @@ public:
     ~CChunkMeshComponent();
 
     void Draw(class CBulkRenderer* renderer);
-    void setTextureAndShader(std::shared_ptr<class CTextureAtlas> texture, std::shared_ptr<class CShader> shader);
+    void setTextureAndShader(STextureAndShader normal, STextureAndShader water);
     void BuildMeshData(std::array<CChunk*, 27> neighbors, std::shared_ptr<class CTextureAtlas> atlas);
     void makeDirty();
     bool isDirty() const;

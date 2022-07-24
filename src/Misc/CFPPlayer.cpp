@@ -29,7 +29,7 @@ CFPPlayer::CFPPlayer(SVector3 _pos, SVector3 _rot, class CWorld* world) :
 	m_camera.MakePerspective(90.f, 4.f / 3.f, 0.1f, 500.f);
 
 	m_flags = IS_HOVERING;
-	m_holdingBlock = BLOCK_DIRT;
+	m_holdingBlock = BLOCK_WATER;
 	m_collider.getCollider().SetPosition(_pos);
 	Attach(&m_collider.getCollider());
 }

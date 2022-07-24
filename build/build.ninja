@@ -343,12 +343,40 @@ build CMakeFiles/JABG.dir/src/Game/ChunkLoader/CChunkLoaderInstance.cpp.o: CXX_C
   OBJECT_DIR = CMakeFiles/JABG.dir
   OBJECT_FILE_DIR = CMakeFiles/JABG.dir/src/Game/ChunkLoader
 
+build CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CConnectedTexBlock.cpp.o: CXX_COMPILER__JABG_Debug /home/rellik/JABG/src/Game/SpecialBlocks/CConnectedTexBlock.cpp || cmake_object_order_depends_target_JABG
+  DEP_FILE = CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CConnectedTexBlock.cpp.o.d
+  FLAGS = -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17
+  INCLUDES = -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include
+  OBJECT_DIR = CMakeFiles/JABG.dir
+  OBJECT_FILE_DIR = CMakeFiles/JABG.dir/src/Game/SpecialBlocks
+
+build CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CDirt.cpp.o: CXX_COMPILER__JABG_Debug /home/rellik/JABG/src/Game/SpecialBlocks/CDirt.cpp || cmake_object_order_depends_target_JABG
+  DEP_FILE = CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CDirt.cpp.o.d
+  FLAGS = -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17
+  INCLUDES = -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include
+  OBJECT_DIR = CMakeFiles/JABG.dir
+  OBJECT_FILE_DIR = CMakeFiles/JABG.dir/src/Game/SpecialBlocks
+
+build CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CGrass.cpp.o: CXX_COMPILER__JABG_Debug /home/rellik/JABG/src/Game/SpecialBlocks/CGrass.cpp || cmake_object_order_depends_target_JABG
+  DEP_FILE = CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CGrass.cpp.o.d
+  FLAGS = -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17
+  INCLUDES = -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include
+  OBJECT_DIR = CMakeFiles/JABG.dir
+  OBJECT_FILE_DIR = CMakeFiles/JABG.dir/src/Game/SpecialBlocks
+
 build CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CPable.cpp.o: CXX_COMPILER__JABG_Debug /home/rellik/JABG/src/Game/SpecialBlocks/CPable.cpp || cmake_object_order_depends_target_JABG
   DEP_FILE = CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CPable.cpp.o.d
   FLAGS = -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17
   INCLUDES = -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include
   OBJECT_DIR = CMakeFiles/JABG.dir
   OBJECT_FILE_DIR = CMakeFiles/JABG.dir/src/Game/SpecialBlocks
+
+build CMakeFiles/JABG.dir/src/Game/SpecialBlocks/Water/CWaterShader.cpp.o: CXX_COMPILER__JABG_Debug /home/rellik/JABG/src/Game/SpecialBlocks/Water/CWaterShader.cpp || cmake_object_order_depends_target_JABG
+  DEP_FILE = CMakeFiles/JABG.dir/src/Game/SpecialBlocks/Water/CWaterShader.cpp.o.d
+  FLAGS = -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g -std=gnu++17
+  INCLUDES = -I/usr/include/SDL2 -I/usr/include/freetype2 -I/home/rellik/JABG/src -I/home/rellik/JABG/include
+  OBJECT_DIR = CMakeFiles/JABG.dir
+  OBJECT_FILE_DIR = CMakeFiles/JABG.dir/src/Game/SpecialBlocks/Water
 
 build CMakeFiles/JABG.dir/src/Misc/CFPPlayer.cpp.o: CXX_COMPILER__JABG_Debug /home/rellik/JABG/src/Misc/CFPPlayer.cpp || cmake_object_order_depends_target_JABG
   DEP_FILE = CMakeFiles/JABG.dir/src/Misc/CFPPlayer.cpp.o.d
@@ -372,7 +400,7 @@ build CMakeFiles/JABG.dir/src/main.cpp.o: CXX_COMPILER__JABG_Debug /home/rellik/
 #############################################
 # Link the executable JABG
 
-build JABG: CXX_EXECUTABLE_LINKER__JABG_Debug CMakeFiles/JABG.dir/glad.c.o CMakeFiles/JABG.dir/src/BulkRenderer/CBulkRenderer.cpp.o CMakeFiles/JABG.dir/src/CAABB.cpp.o CMakeFiles/JABG.dir/src/CCamera.cpp.o CMakeFiles/JABG.dir/src/CDebugLevel.cpp.o CMakeFiles/JABG.dir/src/CDirectionalLight.cpp.o CMakeFiles/JABG.dir/src/CDisplay.cpp.o CMakeFiles/JABG.dir/src/CDrawableText.cpp.o CMakeFiles/JABG.dir/src/CFileManager.cpp.o CMakeFiles/JABG.dir/src/CFrustumCollider.cpp.o CMakeFiles/JABG.dir/src/CGame.cpp.o CMakeFiles/JABG.dir/src/CInputManager.cpp.o CMakeFiles/JABG.dir/src/CLevel.cpp.o CMakeFiles/JABG.dir/src/CMesh.cpp.o CMakeFiles/JABG.dir/src/CObject.cpp.o CMakeFiles/JABG.dir/src/COctree.cpp.o CMakeFiles/JABG.dir/src/CPauseMenu.cpp.o CMakeFiles/JABG.dir/src/CRenderManager.cpp.o CMakeFiles/JABG.dir/src/CShader.cpp.o CMakeFiles/JABG.dir/src/CSkyBox.cpp.o CMakeFiles/JABG.dir/src/CSprite.cpp.o CMakeFiles/JABG.dir/src/CTexture.cpp.o CMakeFiles/JABG.dir/src/CTextureAtlas.cpp.o CMakeFiles/JABG.dir/src/Game/CBlock.cpp.o CMakeFiles/JABG.dir/src/Game/CChunk.cpp.o CMakeFiles/JABG.dir/src/Game/CChunkCollider.cpp.o CMakeFiles/JABG.dir/src/Game/CChunkManager.cpp.o CMakeFiles/JABG.dir/src/Game/CChunkMeshThreadManager.cpp.o CMakeFiles/JABG.dir/src/Game/CChunkPart.cpp.o CMakeFiles/JABG.dir/src/Game/CGameEntityCollider.cpp.o CMakeFiles/JABG.dir/src/Game/CStructure.cpp.o CMakeFiles/JABG.dir/src/Game/CStructureTree.cpp.o CMakeFiles/JABG.dir/src/Game/CTerrainGenerator.cpp.o CMakeFiles/JABG.dir/src/Game/CWorld.cpp.o CMakeFiles/JABG.dir/src/Game/ChunkComponents/CChunkMeshComponent.cpp.o CMakeFiles/JABG.dir/src/Game/ChunkComponents/CChunkSaveComponent.cpp.o CMakeFiles/JABG.dir/src/Game/ChunkComponents/CChunkVoxelComponent.cpp.o CMakeFiles/JABG.dir/src/Game/ChunkLoader/Biome/CBiome.cpp.o CMakeFiles/JABG.dir/src/Game/ChunkLoader/Biome/CBiomeMap.cpp.o CMakeFiles/JABG.dir/src/Game/ChunkLoader/CChunkGenerator.cpp.o CMakeFiles/JABG.dir/src/Game/ChunkLoader/CChunkLoader.cpp.o CMakeFiles/JABG.dir/src/Game/ChunkLoader/CChunkLoaderInstance.cpp.o CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CPable.cpp.o CMakeFiles/JABG.dir/src/Misc/CFPPlayer.cpp.o CMakeFiles/JABG.dir/src/main.cpp.o | /usr/lib/libSDL2main.a /usr/lib/libSDL2-2.0.so.0.22.0 /usr/lib/libfreetype.so
+build JABG: CXX_EXECUTABLE_LINKER__JABG_Debug CMakeFiles/JABG.dir/glad.c.o CMakeFiles/JABG.dir/src/BulkRenderer/CBulkRenderer.cpp.o CMakeFiles/JABG.dir/src/CAABB.cpp.o CMakeFiles/JABG.dir/src/CCamera.cpp.o CMakeFiles/JABG.dir/src/CDebugLevel.cpp.o CMakeFiles/JABG.dir/src/CDirectionalLight.cpp.o CMakeFiles/JABG.dir/src/CDisplay.cpp.o CMakeFiles/JABG.dir/src/CDrawableText.cpp.o CMakeFiles/JABG.dir/src/CFileManager.cpp.o CMakeFiles/JABG.dir/src/CFrustumCollider.cpp.o CMakeFiles/JABG.dir/src/CGame.cpp.o CMakeFiles/JABG.dir/src/CInputManager.cpp.o CMakeFiles/JABG.dir/src/CLevel.cpp.o CMakeFiles/JABG.dir/src/CMesh.cpp.o CMakeFiles/JABG.dir/src/CObject.cpp.o CMakeFiles/JABG.dir/src/COctree.cpp.o CMakeFiles/JABG.dir/src/CPauseMenu.cpp.o CMakeFiles/JABG.dir/src/CRenderManager.cpp.o CMakeFiles/JABG.dir/src/CShader.cpp.o CMakeFiles/JABG.dir/src/CSkyBox.cpp.o CMakeFiles/JABG.dir/src/CSprite.cpp.o CMakeFiles/JABG.dir/src/CTexture.cpp.o CMakeFiles/JABG.dir/src/CTextureAtlas.cpp.o CMakeFiles/JABG.dir/src/Game/CBlock.cpp.o CMakeFiles/JABG.dir/src/Game/CChunk.cpp.o CMakeFiles/JABG.dir/src/Game/CChunkCollider.cpp.o CMakeFiles/JABG.dir/src/Game/CChunkManager.cpp.o CMakeFiles/JABG.dir/src/Game/CChunkMeshThreadManager.cpp.o CMakeFiles/JABG.dir/src/Game/CChunkPart.cpp.o CMakeFiles/JABG.dir/src/Game/CGameEntityCollider.cpp.o CMakeFiles/JABG.dir/src/Game/CStructure.cpp.o CMakeFiles/JABG.dir/src/Game/CStructureTree.cpp.o CMakeFiles/JABG.dir/src/Game/CTerrainGenerator.cpp.o CMakeFiles/JABG.dir/src/Game/CWorld.cpp.o CMakeFiles/JABG.dir/src/Game/ChunkComponents/CChunkMeshComponent.cpp.o CMakeFiles/JABG.dir/src/Game/ChunkComponents/CChunkSaveComponent.cpp.o CMakeFiles/JABG.dir/src/Game/ChunkComponents/CChunkVoxelComponent.cpp.o CMakeFiles/JABG.dir/src/Game/ChunkLoader/Biome/CBiome.cpp.o CMakeFiles/JABG.dir/src/Game/ChunkLoader/Biome/CBiomeMap.cpp.o CMakeFiles/JABG.dir/src/Game/ChunkLoader/CChunkGenerator.cpp.o CMakeFiles/JABG.dir/src/Game/ChunkLoader/CChunkLoader.cpp.o CMakeFiles/JABG.dir/src/Game/ChunkLoader/CChunkLoaderInstance.cpp.o CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CConnectedTexBlock.cpp.o CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CDirt.cpp.o CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CGrass.cpp.o CMakeFiles/JABG.dir/src/Game/SpecialBlocks/CPable.cpp.o CMakeFiles/JABG.dir/src/Game/SpecialBlocks/Water/CWaterShader.cpp.o CMakeFiles/JABG.dir/src/Misc/CFPPlayer.cpp.o CMakeFiles/JABG.dir/src/main.cpp.o | /usr/lib/libSDL2main.a /usr/lib/libSDL2-2.0.so.0.22.0 /usr/lib/libfreetype.so
   FLAGS = -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -g
   LINK_LIBRARIES = /usr/lib/libSDL2main.a  /usr/lib/libSDL2-2.0.so.0.22.0  /usr/lib/libfreetype.so  -lm  -lstdc++  -ldl
   OBJECT_DIR = CMakeFiles/JABG.dir

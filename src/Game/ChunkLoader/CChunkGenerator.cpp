@@ -23,6 +23,10 @@ inline float  BilinearInterpolation(float botLeft, float topLeft, float botRight
     );
 }
 
+
+/*
+	MUST REFRACTOR IT, I REGRET NOT COMMENTING THIS SPAGHETTA
+*/
 std::unique_ptr<SBlockInfo[]> CChunkGenerator::generateChunk(int cx, int cy, int cz, CChunkGenerator* Generator)
 {
     std::unique_ptr<SBlockInfo[]> output = std::make_unique<SBlockInfo[]>(CHUNK_SIZE*CHUNK_SIZE*CHUNK_SIZE);
@@ -59,16 +63,26 @@ std::unique_ptr<SBlockInfo[]> CChunkGenerator::generateChunk(int cx, int cy, int
 
 			/////////////FIND Y POS ON HEIGHTMAP//////////////////
 			CBiome* currentBiome = Generator->getBiome(gx, gz);
-			srand(x+z<<32);
+			int waterLevel = currentBiome->getWaterLevel();
+			srand(x+(z<<8));
 			if(currentBiome->getDirtLevel() != -1)
-				dirtLevel = currentBiome->getDirtLevel() - rand() % 20;
+				dirtLevel = currentBiome->getDirtLevel() - rand() % 2;
 			else dirtLevel = 2000;
 			//top = currentBiome->simplexPlains(gx, gz);
 
 			if(NW == SW && NW == NE && NW == SE && NW == currentBiome) top = currentBiome->simplexPlains(gx, gz);
 			else top = BilinearInterpolation(SW_y, NW_y, SE_y, NE_y, 0, CHUNK_SIZE-1, CHUNK_SIZE-1, 0, x, z);
 			//top += currentBiome->getTopBlock();
-			if (downPos <= top && top < upPos)
+			for(int y = 0; y < CHUNK_SIZE; ++y)
+			{
+				int gy = cy*CHUNK_SIZE + y;
+				if(gy <= currentBiome->getWaterLevel())
+				{
+					output[getIndex(x, y, z)].id = BLOCK_WATER;
+				}
+			}
+
+			if (downPos < top && top < upPos)
 			{
 				int max = top - downPos;
 				for (int i = 0; i < max; i++)
@@ -80,26 +94,33 @@ std::unique_ptr<SBlockInfo[]> CChunkGenerator::generateChunk(int cx, int cy, int
                     output[getIndex(x, i, z)].id = currentBiome->caveHere(gx, cy*CHUNK_SIZE+i, gz) ? BLOCK_STONE : BLOCK_AIR;
 			}
 
+			bool underWater = waterLevel >= top;
+			if(underWater && top >= downPos && top <  upPos)
+			{
+				output[getIndex(x, top-downPos, z)].id = BLOCK_SAND;
+			}
+			bool sandy = top <= waterLevel - 5;
+
 			for(int i = CHUNK_SIZE-1; i >= 0; --i)
 			{
 				int current = output[getIndex(x, i, z)].id;
 				int gy = cy*CHUNK_SIZE+i;
 				if(current == BLOCK_STONE)
 				{
-					int gy = cy*CHUNK_SIZE + i;
 					int distTop = std::abs(top - gy);
 					bool aboveBlockMissing = distTop <= 1 || (!currentBiome->caveHere(gx, gy+1, gz) && distTop <= 30);
 
 					if(aboveBlockMissing)
 					{
 						if(dirtLevel>= gy)
-							output[getIndex(x, i, z)].id = currentBiome->getTopBlock();
+							output[getIndex(x, i, z)].id = sandy ? BLOCK_SAND : currentBiome->getTopBlock();
 						if(i+1<CHUNK_SIZE && output[getIndex(x, i+1, z)].id ==BLOCK_AIR)
 						{
 							srand(gx^gy^gz);
 							if((rand()&15)==0)
 								output[getIndex(x, i+1, z)].id = currentBiome->getVegetationBlock(gx, gy, gz);
 						}
+						if(!underWater)
 						currentBiome->AddStructure(gx, gy, gz, m_structInfo, m_mutex);
 					}
 					else
@@ -111,12 +132,19 @@ std::unique_ptr<SBlockInfo[]> CChunkGenerator::generateChunk(int cx, int cy, int
 							bool aboveBlockMissing = _distTop <= 1 || (!currentBiome->caveHere(gx, _gy+1, gz) && _distTop <= 30);
 							if(aboveBlockMissing && _gy < dirtLevel)
 							{
-								output[getIndex(x, i, z)].id = currentBiome->getUnderBlock();
+								output[getIndex(x, i, z)].id = sandy ? BLOCK_SAND : currentBiome->getUnderBlock();
 								break;
 							}
 						}
 					}
 				}
+
+				//if(underWater && (gy >= top-5 ))
+				//	output[getIndex(x, i, z)].id = BLOCK_SAND;
+				
+				/*if(gy <= waterLevel + 5 && gy >= top-5 && output[getIndex(x, i, z)].id != BLOCK_WATER)
+				{
+				}*/
 			}
 		}
 	}
@@ -166,10 +194,10 @@ void CChunkGenerator::consumeCache(CChunkManager* world)
 
 CChunkGenerator::CChunkGenerator() : m_map(0, TOTAL_BIOMES)
 {
-	m_biomes[BIOME_PLAINS] = std::unique_ptr<CBiome>((new CBiome(this, BIOME_PLAINS))->addStructure(new CStructureTree())->addVegetation(BLOCK_PEBBLE));
+	m_biomes[BIOME_PLAINS] = std::unique_ptr<CBiome>((new CBiome(this, BIOME_PLAINS))->addStructure(new CStructureTree())->addVegetation(BLOCK_PEBBLE)->setWaterLevel(58));
 	m_biomes[BIOME_DESERT] = std::unique_ptr<CBiome>((new CBiome(this, BIOME_DESERT))->setTopBlock(BLOCK_SAND)->setUnderBlock(BLOCK_SAND)->addVegetation(BLOCK_PEBBLE));
-	m_biomes[BIOME_OCEAN] = std::unique_ptr<CBiome>((new CBiome(this, BIOME_OCEAN))->setTopBlock(BLOCK_SAND)->setUnderBlock(BLOCK_SAND)->setLevel(16)->setIntensity(30));
-	m_biomes[BIOME_MOUNTAINS] = std::unique_ptr<CBiome>((new CBiome(this, BIOME_MOUNTAINS))->setLevel(64)->setIntensity(80)->addVegetation(BLOCK_PEBBLE)->setDirtLevel(40)->setFrequency(0.75f));
+	m_biomes[BIOME_OCEAN] = std::unique_ptr<CBiome>((new CBiome(this, BIOME_OCEAN))->setTopBlock(BLOCK_SAND)->setUnderBlock(BLOCK_SAND)->setLevel(16)->setFrequency(0.5));
+	m_biomes[BIOME_MOUNTAINS] = std::unique_ptr<CBiome>((new CBiome(this, BIOME_MOUNTAINS))->setLevel(64)->setIntensity(80)->addVegetation(BLOCK_PEBBLE)->setDirtLevel(62)->setFrequency(0.75f));
 }
 
 int CChunkGenerator::getTop(int x, int z) const

@@ -3,10 +3,11 @@
 #include "../../CTextureAtlas.h"
 #include "CChunkMeshComponent.h"
 #include "../CChunk.h"
+#include <iostream>
 
 CChunkMeshComponent::CChunkMeshComponent(CChunk* parent) : m_parent(parent)
 {
-
+	m_watermesh.SetPriority(2);
 }
 
 CChunkMeshComponent::~CChunkMeshComponent()
@@ -14,10 +15,12 @@ CChunkMeshComponent::~CChunkMeshComponent()
 	while(m_flags & THREAD_RUNNING);
 }
 
-void CChunkMeshComponent::setTextureAndShader(std::shared_ptr<CTextureAtlas> texture, std::shared_ptr<CShader> shader)
+void CChunkMeshComponent::setTextureAndShader(STextureAndShader normal, STextureAndShader water)
 {
-	m_mesh.SetTexture(texture);
-	m_mesh.SetShader(shader);
+	m_watermesh.SetTexture(water.texture);
+	m_watermesh.SetShader(water.shader);
+	m_mesh.SetTexture(normal.texture);
+	m_mesh.SetShader(normal.shader);
 }
 
 void CChunkMeshComponent::Draw(CBulkRenderer* renderer)
@@ -25,22 +28,32 @@ void CChunkMeshComponent::Draw(CBulkRenderer* renderer)
     if (m_flags & THREAD_DONE && (m_flags & THREAD_RUNNING) == 0)
 	{
 		m_mesh.Clear();
-
+		m_watermesh.Clear();
 		if (!m_meshinfo.empty())
 		{
 			m_mesh.Init(m_meshinfo);
 			m_meshinfo.clear();
 		}
+		if (!m_watermeshinfo.empty())
+		{
+			m_watermesh.Init(m_watermeshinfo);
+			m_watermeshinfo.clear();
+		}
+
 		m_flags &= ~THREAD_DONE;
 	}
 	
-	if (!m_mesh.isInit())
-		return;
 	CCamera* camera = renderer->getActiveCamera();
 	if(!m_parent->fustumCulling(camera)) 
 		return;
-	m_mesh.SetPosition(m_parent->getChunkPosition() * CHUNK_SIZE);
-	m_mesh.BulkDraw(renderer);
+	if (m_mesh.isInit()){
+		m_mesh.SetPosition(m_parent->getChunkPosition() * CHUNK_SIZE);
+		m_mesh.BulkDraw(renderer);
+	}
+	if (m_watermesh.isInit()){
+		m_watermesh.SetPosition(m_parent->getChunkPosition() * CHUNK_SIZE);
+		m_watermesh.BulkDraw(renderer);
+	}
 }
 
 void CChunkMeshComponent::makeDirty()
@@ -118,25 +131,25 @@ void CChunkMeshComponent::BuildMeshData(std::array<CChunk*, 27> neighbors, std::
 							int index = (xx+1)+3*((yy+1) + ((zz+1)*3));
 
 							if(self->IsNeightborNeeded(index)) 
-							{
-								if(getBlock(xx+x, yy+y, zz+z).getBlock() == nullptr) throw;
 								temp[index] = getBlock(xx+x, yy+y, zz+z).getBlock();
-							}
 							else 
 								temp[index] = nullptr;
 						}
 					}
 				}
-                /*temp[CBlock::BLOCK_BACK]   = getBlock(x, y, z-1).getBlock();
-				temp[CBlock::BLOCK_FRONT]  = getBlock(x, y, z+1).getBlock();
-				temp[CBlock::BLOCK_RIGHT]  = getBlock(x+1, y, z).getBlock();
-				temp[CBlock::BLOCK_LEFT]   = getBlock(x-1, y, z).getBlock();
-				temp[CBlock::BLOCK_TOP]    = getBlock(x, y+1, z).getBlock();
-				temp[CBlock::BLOCK_BOTTOM] = getBlock(x, y-1, z).getBlock();*/
 
 				auto blockmeshinfo = self->getBlockMeshVertices(temp, atlas, {x, y, z});
-
-				m_meshinfo.insert(m_meshinfo.end(), blockmeshinfo.begin(), blockmeshinfo.end());
+				std::vector<SVertex> *currentMeshInfo = nullptr;
+				switch(self->getMeshType())
+				{
+					case BLOCKMESH_WATER: 
+						currentMeshInfo = &m_watermeshinfo;
+						break;
+					case BLOCKMESH_NORMAL: default:
+						currentMeshInfo = &m_meshinfo;
+					break;
+				}
+				currentMeshInfo->insert(currentMeshInfo->end(), blockmeshinfo.begin(), blockmeshinfo.end());
             }
         }
     }

@@ -1,5 +1,6 @@
 #include "CMesh.h"
 #include "CDirectionalLight.h"
+#include "CFileManager.h"
 #include "BulkRenderer/CBulkRenderer.h"
 #include <iostream>
 
@@ -283,6 +284,8 @@ std::shared_ptr<CTexture> CMesh::GetTexture() const
 
 std::shared_ptr<CShader> CMesh::GetShader() const
 {
+	if(!m_shader)
+		return CFileManager::getDefaultShader();
 	return m_shader;
 }
 
@@ -352,9 +355,14 @@ void CMesh::Draw(const SDrawInfo& info)
 	glBindVertexArray(0);
 }
 
+void CMesh::SetPriority(int priority)
+{
+	m_priority = priority;
+}
+
 void CMesh::BulkDraw(CBulkRenderer* renderer)
 {
-	renderer->AddToBulkRender(this);
+	renderer->AddToBulkRender(this, m_priority);
 }
 
 bool CMesh::isWireframeMode() const
