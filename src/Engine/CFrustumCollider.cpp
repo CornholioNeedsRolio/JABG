@@ -1,5 +1,5 @@
 #include "CFrustumCollider.h"
-#include "CCamera.h"
+#include "Engine/CCamera.h"
 #include <iostream>
 
 void CFrustumCollider::updatePlanes()

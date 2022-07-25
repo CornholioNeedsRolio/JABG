@@ -1,7 +1,7 @@
 #ifndef CBLOCK_HEADER
 #define CBLOCK_HEADER
 #include <vector>
-#include "../CMesh.h"
+#include "Engine/CMesh.h"
 #include "GameImportantStuff.h"
 #include <bitset>
 
@@ -9,7 +9,8 @@
 enum
 {
 	BLOCKMESH_NORMAL,
-	BLOCKMESH_WATER
+	BLOCKMESH_WATER,
+    BLOCKMESH_GLASS
 };
 
 class CBlock
@@ -79,7 +80,7 @@ extern class CBlock* BlockPlanks;
 extern class CBlock* BlockBricks;
 extern class CBlock* BlockBrokenStone;
 extern class CBlock* BlockStoneBrick;
-extern class CBlock* BlockGlass;
+extern class CConnectedTexBlock* BlockGlass;
 extern class CBlock* BlockSand;
 extern class CBlock* BlockOldstone;
 extern class CPable* BlockPebble;

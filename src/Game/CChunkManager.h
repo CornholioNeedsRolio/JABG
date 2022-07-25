@@ -1,7 +1,7 @@
 #ifndef CCHUNKMANAGER_HEADER
 #define CCHUNKMANAGER_HEADER
 #include <map>
-#include "../CObject.h"
+#include "Engine/CObject.h"
 #include "CChunkPart.h"
 
 using UChunkPos = std::tuple<int, int, int>;

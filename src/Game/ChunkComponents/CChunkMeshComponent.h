@@ -2,7 +2,7 @@
 #define CChunkMeshComponent_Header
 #include <atomic>
 #include <mutex>
-#include "../../CMesh.h"
+#include "Engine/CMesh.h"
 
 struct STextureAndShader
 {
@@ -17,8 +17,8 @@ class CChunkMeshComponent
     std::atomic_int m_currentDirty = 0, m_lastDirty = 0;
     std::mutex m_mutex;
 
-    std::vector<SVertex> m_meshinfo, m_watermeshinfo;
-    CMesh m_mesh, m_watermesh;
+    std::vector<SVertex> m_meshinfo, m_watermeshinfo, m_glassmeshinfo;
+    CMesh m_mesh, m_watermesh, m_glassmesh;
     enum
     {
         THREAD_RUNNING = 0x1,

@@ -1,7 +1,7 @@
 #ifndef CLEVEL_HEADER
 #define CLEVEL_HEADER
 #include "CInputManager.h"
-#include "CGame.h"
+#include "Engine/CGame.h"
 
 class CLevel
 {

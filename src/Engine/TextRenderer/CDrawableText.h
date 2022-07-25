@@ -3,12 +3,12 @@
 #include <glm/vec2.hpp>
 
 #include <ft2build.h>
-#include FT_FREETYPE_H
+#include FT_FREETYPE_H //"freetype/freetype.h"
 #include <memory>
 #include <string>
 #include <map>
-#include "CObject.h"
-#include "CSprite.h"
+#include "Engine/CObject.h"
+#include "Engine/CSprite.h"
 
 struct SChar
 {

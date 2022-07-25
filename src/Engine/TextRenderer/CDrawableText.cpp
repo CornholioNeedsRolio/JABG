@@ -1,9 +1,9 @@
 #include "CDrawableText.h"
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include <iostream>
-#include "CTexture.h"
-#include "CMesh.h"
-#include "CFileManager.h"
+#include "Engine/CTexture.h"
+#include "Engine/CMesh.h"
+#include "Engine/CFileManager.h"
 
 
 std::shared_ptr<CShader> CDrawableText::m_shader=nullptr;

@@ -1,14 +1,12 @@
 #ifndef CDEBUGLEVEL_HEADER
 #define CDEBUGLEVEL_HEADER
-#include "CLevel.h"
+#include "Engine/CLevel.h"
 #include "Misc/CFPPlayer.h"
 #include "Game/CWorld.h"
-#include "CDrawableText.h"
-#include "CRenderManager.h"
+#include "Engine/TextRenderer/CDrawableText.h"
 #include "COctree.h"
 #include "BulkRenderer/CBulkRenderer.h"
 #include "CSkyBox.h"
-#include "CDirectionalLight.h"
 #include "CPauseMenu.h"
 #include <array>
 
@@ -29,12 +27,9 @@ class CDebugLevel : public CLevel
 	CSkyBox m_skybox;
 
 	std::shared_ptr<CTexture> m_depthTexture = nullptr;
-
 	std::unique_ptr<CWorld> m_world;
 	
 	//std::vector<CObject*> m_renderlist;
-	CDirectionalLight m_testLight;
-	CRenderManager m_renderManager;
 	const uint16_t m_width, m_height;
 public:
 	CDebugLevel();

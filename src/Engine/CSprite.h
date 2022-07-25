@@ -1,6 +1,6 @@
 #ifndef CSPRITE_HEADER
 #define CSPRITE_HEADER
-#include "CMesh.h"
+#include "Engine/CMesh.h"
 #include "CObject.h"
 
 class CSprite : public CMesh

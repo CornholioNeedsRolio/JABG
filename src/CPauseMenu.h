@@ -1,9 +1,9 @@
 #ifndef CPauseMenu_Header
 #define CPauseMenu_Header
 #include "BulkRenderer/CBulkRenderer.h"
-#include "CDrawableText.h"
-#include "CInputManager.h"
-#include "CSprite.h"
+#include "Engine/TextRenderer/CDrawableText.h"
+#include "Engine/CInputManager.h"
+#include "Engine/CSprite.h"
 
 class CPauseMenu
 {

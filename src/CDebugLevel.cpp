@@ -1,10 +1,9 @@
 #include "CDebugLevel.h"
-#include "CTextureAtlas.h"
+#include "Engine/CTextureAtlas.h"
 #include "Game/CBlock.h"
-#include "CFileManager.h"
+#include "Engine/CFileManager.h"
 #include "glm/gtx/string_cast.hpp"
-#include "CFrustumCollider.h"
-#include <iostream>
+#include "Engine/CFrustumCollider.h"
 
 CDebugLevel::CDebugLevel() : m_width(1920), m_height(1080)
 {
@@ -77,11 +76,6 @@ void CDebugLevel::Load(CGame* game)
 
 	m_player->setWorld(m_world.get());
 
-	//m_renderlist.push_back(&*m_world);
-	//m_renderlist.push_back(m_player.get());
-	m_renderManager.addObjectToRender(m_world.get());
-	m_renderManager.addObjectToRender(m_player.get());
-
 	m_text.setFont("./res/Pixolletta8px.ttf", 25);
 	m_text.SetPosition({ 0, 0, -5 });
 	m_ortho.MakeOrtho(0, m_width, m_height, 0, -100, 100);
@@ -91,9 +85,6 @@ void CDebugLevel::Load(CGame* game)
 	m_info.mode = NORMAL_DRAW;
 	m_info.defaultShader = CFileManager::getDefaultShader();
 
-	m_testLight.Init(1024*2, 1024*2);
-	m_testLight.setAngle(-45, 0, 0);
-	m_info.testlight = &m_testLight;
 	m_depthView.InitRect(0,300 , 1, 600, 900, 1);
 
 	m_pauseMenu.Init();

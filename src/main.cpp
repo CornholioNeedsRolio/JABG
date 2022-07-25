@@ -1,8 +1,8 @@
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
-#include "CGame.h"
+#include "Engine/CGame.h"
 #include "CDebugLevel.h"
-#include "CCamera.h"
+#include "Engine/CCamera.h"
 #include <fenv.h>
 
 int main()

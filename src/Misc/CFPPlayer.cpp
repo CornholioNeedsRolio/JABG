@@ -1,5 +1,5 @@
-#include "../CFrustumCollider.h"
-#include "../CFileManager.h"
+#include "Engine/CFrustumCollider.h"
+#include "Engine/CFileManager.h"
 #include "../Game/CWorld.h"
 #include "CFPPlayer.h"
 #include <filesystem>

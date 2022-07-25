@@ -1,6 +1,6 @@
 #ifndef CWORLD_HEADER
 #define CWORLD_HEADER
-#include "../CObject.h"
+#include "Engine/CObject.h"
 #include "CChunkPart.h"
 #include "CTerrainGenerator.h"
 #include "CChunkMeshThreadManager.h"

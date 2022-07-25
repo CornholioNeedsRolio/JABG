@@ -2,7 +2,7 @@
 #define COBJECT_HEADER
 #include <glm/glm.hpp>
 #include <memory>
-#include "CInputManager.h"
+#include "Engine/CInputManager.h"
 
 using SVector3 = glm::vec3;
 using SMat4 = glm::mat4;

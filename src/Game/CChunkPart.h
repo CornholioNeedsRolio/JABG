@@ -1,6 +1,6 @@
 #ifndef CHUNKPART_HEADER
 #define CHUNKPART_HEADER
-#include "../CObject.h"
+#include "Engine/CObject.h"
 #include "CChunk.h"
 
 #include <map>

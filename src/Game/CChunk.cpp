@@ -6,7 +6,7 @@
 #include "CWorld.h"
 #include <algorithm>
 #include <glm/gtx/string_cast.hpp>
-#include "../CFrustumCollider.h"
+#include "Engine/CFrustumCollider.h"
 #include "../BulkRenderer/CBulkRenderer.h"
 
 CChunk::CChunk(glm::ivec3 position, CChunkManager* manager) :

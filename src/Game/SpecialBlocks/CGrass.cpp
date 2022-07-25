@@ -1,5 +1,5 @@
 #include "CGrass.h"
-#include "../../CTextureAtlas.h"
+#include "Engine/CTextureAtlas.h"
 
 
 CGrass::CGrass()

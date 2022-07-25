@@ -2,7 +2,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "CFrustumCollider.h"
 #include <iostream>
-#include "CMesh.h"
+#include "Engine/CMesh.h"
 #include <glm/glm.hpp>
 #include <iostream>
 

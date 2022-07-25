@@ -1,5 +1,4 @@
 #include "CMesh.h"
-#include "CDirectionalLight.h"
 #include "CFileManager.h"
 #include "BulkRenderer/CBulkRenderer.h"
 #include <iostream>
@@ -331,11 +330,6 @@ void CMesh::Draw(const SDrawInfo& info)
 		
 		if (m_texture) m_texture->Bind();
 		else glBindTexture(GL_TEXTURE_2D, 0);
-
-		if(info.testlight)
-		{
-			info.testlight->configureShader(m_shader.get());
-		}
 
 		m_shader->SetUniform(m_color, "color");
 

@@ -1,6 +1,6 @@
 #ifndef COCTREE_HEADER
 #define COCTREE_HEADER
-#include "CObject.h"
+#include "Engine/CObject.h"
 #include "CAABB.h"
 #include <array>
 #include <memory>

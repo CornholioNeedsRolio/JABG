@@ -1,9 +1,9 @@
 #ifndef CFPPLAYER_HEADER
 #define CFPPLAYER_HEADER
 #include "../Game/CGameEntityCollider.h"
-#include "../CObject.h"
-#include "../CCamera.h"
-#include "../CMesh.h"
+#include "Engine/CObject.h"
+#include "Engine/CCamera.h"
+#include "Engine/CMesh.h"
 #include "../CAABB.h"
 
 class CFPPlayer : public CObject

@@ -3,8 +3,8 @@
 #include <string>
 #include <unordered_map>
 #include <memory>
-#include "CTexture.h"
-#include "CShader.h"
+#include "Engine/CTexture.h"
+#include "Engine/CShader.h"
 
 
 class CFileManager

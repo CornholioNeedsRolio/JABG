@@ -1,8 +1,9 @@
 #include "SpecialBlocks/CPable.h"
-#include "../CTextureAtlas.h"
+#include "Engine/CTextureAtlas.h"
 #include "CBlock.h"
 #include "SpecialBlocks/CDirt.h"
 #include "SpecialBlocks/CGrass.h"
+#include "SpecialBlocks/CConnectedTexBlock.h"
 #include <iostream>
 
 
@@ -88,7 +89,7 @@ class CBlock* BlockPlanks = nullptr;
 class CBlock* BlockBricks = nullptr;
 class CBlock* BlockBrokenStone = nullptr;
 class CBlock* BlockStoneBrick= nullptr;
-class CBlock* BlockGlass = nullptr;
+class CConnectedTexBlock* BlockGlass = nullptr;
 class CBlock* BlockSand = nullptr;
 class CBlock* BlockOldstone = nullptr;
 class CPable* BlockPebble = nullptr;
@@ -276,19 +277,23 @@ namespace BLOCK_DATABASE
 		BlockStoneBrick->setFaceAtlasIndex(CBlock::BLOCK_RIGHT, 13);
 		BlockStoneBrick->setFaceAtlasIndex(CBlock::BLOCK_LEFT, 13);
 
-		//STONEBRICK
-		m_blocks.push_back(std::make_unique<CBlock>());
-		BlockGlass = m_blocks[BLOCK_GLASS].get();
+		//GLASS
+		m_blocks.push_back(std::make_unique<CConnectedTexBlock>());
+		BlockGlass = (CConnectedTexBlock*)m_blocks[BLOCK_GLASS].get();
 		BlockGlass->setSolid(true);
 		BlockGlass->setVisible(true);
-		BlockGlass->setTransparent(true);
+		BlockGlass->setTransparent(false);
 		BlockGlass->setTargetable(true);
-		BlockGlass->setFaceAtlasIndex(CBlock::BLOCK_TOP, 14);
+        BlockGlass->setMeshType(BLOCKMESH_GLASS);
+        constexpr int glassAtlasIndexes[16] = {35, 82, 67, 49, 34, 50, 33, 80, 64, 48, 65, 83, 32, 81, 51, 66};
+        for(int i = 0; i < 16; ++i)
+           BlockGlass->setFaceAt(i, glassAtlasIndexes[i]);
+		/*BlockGlass->setFaceAtlasIndex(CBlock::BLOCK_TOP, 14);
 		BlockGlass->setFaceAtlasIndex(CBlock::BLOCK_BOTTOM, 14);
 		BlockGlass->setFaceAtlasIndex(CBlock::BLOCK_FRONT, 14);
 		BlockGlass->setFaceAtlasIndex(CBlock::BLOCK_BACK, 14);
 		BlockGlass->setFaceAtlasIndex(CBlock::BLOCK_RIGHT, 14);
-		BlockGlass->setFaceAtlasIndex(CBlock::BLOCK_LEFT, 14);
+		BlockGlass->setFaceAtlasIndex(CBlock::BLOCK_LEFT, 14);*/
 
 		//SAND
 		m_blocks.push_back(std::make_unique<CBlock>());

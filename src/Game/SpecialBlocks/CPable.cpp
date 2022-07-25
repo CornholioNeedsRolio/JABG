@@ -1,5 +1,5 @@
 #include "CPable.h"
-#include "../../CTextureAtlas.h"
+#include "Engine/CTextureAtlas.h"
 
 CPable::CPable()
 {

@@ -1,6 +1,6 @@
 #ifndef CSkyBox_Header
 #define CSkyBox_Header
-#include "CMesh.h"
+#include "Engine/CMesh.h"
 #include "BulkRenderer/CBulkRenderer.h"
 #include <memory>
 

@@ -1,6 +1,6 @@
 #include "CTimeShaderSetting.h"
-#include "CGame.h"
-#include "CCamera.h"
+#include "Engine/CGame.h"
+#include "Engine/CCamera.h"
 
 void CTimeShaderSetting::UpdateUniforms(class CCamera* camera)
 {

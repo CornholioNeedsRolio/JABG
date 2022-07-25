@@ -1,6 +1,6 @@
 #include "../../BulkRenderer/CBulkRenderer.h"
 #include "CChunkVoxelComponent.h"
-#include "../../CTextureAtlas.h"
+#include "Engine/CTextureAtlas.h"
 #include "CChunkMeshComponent.h"
 #include "../CChunk.h"
 #include <iostream>
@@ -21,6 +21,8 @@ void CChunkMeshComponent::setTextureAndShader(STextureAndShader normal, STexture
 	m_watermesh.SetShader(water.shader);
 	m_mesh.SetTexture(normal.texture);
 	m_mesh.SetShader(normal.shader);
+    m_glassmesh.SetTexture(normal.texture);
+    m_glassmesh.SetShader(normal.shader);
 }
 
 void CChunkMeshComponent::Draw(CBulkRenderer* renderer)
@@ -29,6 +31,7 @@ void CChunkMeshComponent::Draw(CBulkRenderer* renderer)
 	{
 		m_mesh.Clear();
 		m_watermesh.Clear();
+        m_glassmesh.Clear();
 		if (!m_meshinfo.empty())
 		{
 			m_mesh.Init(m_meshinfo);
@@ -39,6 +42,11 @@ void CChunkMeshComponent::Draw(CBulkRenderer* renderer)
 			m_watermesh.Init(m_watermeshinfo);
 			m_watermeshinfo.clear();
 		}
+        if (!m_glassmeshinfo.empty())
+        {
+            m_glassmesh.Init(m_glassmeshinfo);
+            m_glassmeshinfo.clear();
+        }
 
 		m_flags &= ~THREAD_DONE;
 	}
@@ -54,6 +62,10 @@ void CChunkMeshComponent::Draw(CBulkRenderer* renderer)
 		m_watermesh.SetPosition(m_parent->getChunkPosition() * CHUNK_SIZE);
 		m_watermesh.BulkDraw(renderer);
 	}
+    if (m_glassmesh.isInit()){
+        m_glassmesh.SetPosition(m_parent->getChunkPosition() * CHUNK_SIZE);
+        m_glassmesh.BulkDraw(renderer);
+    }
 }
 
 void CChunkMeshComponent::makeDirty()
@@ -145,6 +157,9 @@ void CChunkMeshComponent::BuildMeshData(std::array<CChunk*, 27> neighbors, std::
 					case BLOCKMESH_WATER: 
 						currentMeshInfo = &m_watermeshinfo;
 						break;
+                    case BLOCKMESH_GLASS:
+                        currentMeshInfo = &m_glassmeshinfo;
+                        break;
 					case BLOCKMESH_NORMAL: default:
 						currentMeshInfo = &m_meshinfo;
 					break;

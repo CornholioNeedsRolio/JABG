@@ -1,5 +1,5 @@
 #include "CDisplay.h"
-#include <glad/glad.h>
+#include "glad/glad.h"
 
 void CDisplay::Init(std::string title, int width, int height)
 {

@@ -5,7 +5,7 @@
 #include "CShader.h"
 #include "CTexture.h"
 #include <vector>
-#include <glad/glad.h>
+#include "glad/glad.h"
 
 struct SVertex
 {

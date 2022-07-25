@@ -1,5 +1,5 @@
 #include "CObject.h"
-#include "CCamera.h"
+#include "Engine/CCamera.h"
 #include <glm/gtc/matrix_transform.hpp>
 
 CObject::CObject(SVector3 _position, SVector3 _rotation) : 

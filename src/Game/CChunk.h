@@ -3,9 +3,9 @@
 #include "ChunkComponents/CChunkVoxelComponent.h"
 #include "ChunkComponents/CChunkMeshComponent.h"
 #include "ChunkComponents/CChunkSaveComponent.h"
-#include "../CTextureAtlas.h"
-#include "../CObject.h"
-#include "../CMesh.h"
+#include "Engine/CTextureAtlas.h"
+#include "Engine/CObject.h"
+#include "Engine/CMesh.h"
 #include "CBlock.h"
 #include <atomic>
 #include <memory>
