@@ -25,11 +25,13 @@ class CDebugLevel : public CLevel
 	CMesh m_depthView;
 	CMesh m_holdingBlock;
 	CMesh m_crosshair;
+	CMesh m_waterOverlay;
 	CSkyBox m_skybox;
 
 	std::shared_ptr<CTexture> m_depthTexture = nullptr;
 
 	std::unique_ptr<CWorld> m_world;
+	
 	//std::vector<CObject*> m_renderlist;
 	CDirectionalLight m_testLight;
 	CRenderManager m_renderManager;

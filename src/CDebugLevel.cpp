@@ -52,6 +52,15 @@ void CDebugLevel::Draw()
 	if(m_holdingBlock.isInit())
 		m_holdingBlock.BulkDraw(&m_renderer);
 	m_crosshair.BulkDraw(&m_renderer);
+	glm::vec3 cameraPos = drawCamera.GetGlobalPosition();
+	if(m_world->getBlock(cameraPos.x, cameraPos.y, cameraPos.z) == BLOCK_WATER)
+	{
+		m_waterOverlay.setSize(glm::vec3(m_width, m_height, 1));
+
+		m_waterOverlay.SetPriority(-1);
+		m_waterOverlay.setColor({0.4, 0.4, 0.7, 5});
+		m_waterOverlay.BulkDraw(&m_renderer);
+	}
 	m_renderer.RenderAll();
 
 }
@@ -96,6 +105,8 @@ void CDebugLevel::Load(CGame* game)
 	m_crosshair.SetTexture(CFileManager::getTexture("./res/crosshair.png"));
 	m_crosshair.SetPosition({m_width*0.5f, m_height*0.5f, 2});
 	m_skybox.Init(CFileManager::getTexture("./res/skybox.png"));
+	m_waterOverlay.Init2DRect(0, 0, 1, 1);
+	m_waterOverlay.SetShader(m_world->getWaterShader());
 }
 
 void CDebugLevel::UnLoad()

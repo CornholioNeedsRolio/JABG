@@ -41,6 +41,7 @@ class CFPPlayer : public CObject
 	float jumpHyperbola(float value);
 	CMesh m_targetBlock;
 	CMesh m_debugTarget;
+
 	CMesh* m_holdingBlockMesh = nullptr;
 	//FLAGS
 	uint8_t m_flags;

@@ -116,7 +116,6 @@ bool CAABB::applyCollision(CAABB& aabb, float push, bool move, glm::vec3* veloci
 					velocity->x = 0;
 			}
 		}
-
 		return true;
 	}
 

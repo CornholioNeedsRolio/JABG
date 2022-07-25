@@ -39,19 +39,19 @@ float noise( in vec2 p )
 void main()
 {
 	if(doesHaveTexture != 0)
-	{
-		mat4 inv = inverse(out_view);
-
-		vec3 pos = vec3(inv[3]);
-		vec3 dir = -vec3(inv[2]);
-
-		float ambientStrength = noise(out_uv)*0.25+1;
-    	vec3 ambient = ambientStrength * vec3(1,1,1);
-		
-		color_output = texture2D(texture0, out_texcoord)*vec4(ambient,1);
-		color_output.w = 0.35;
-	}
+		color_output = texture2D(texture0, out_texcoord);
 	else
 		color_output = out_color;
+
+	mat4 inv = inverse(out_view);
+
+	vec3 pos = vec3(inv[3]);
+	vec3 dir = -vec3(inv[2]);
+
+	float ambientStrength = noise(out_uv)*0.25+1;
+    vec3 ambient = ambientStrength * vec3(1,1,1);
+		
+	color_output = color_output*vec4(ambient,1);
+	color_output.w = 0.35;
 	
 }

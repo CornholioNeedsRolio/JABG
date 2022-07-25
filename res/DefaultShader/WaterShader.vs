@@ -25,7 +25,7 @@ void main()
 {
 	out_fragpos = ProjectionMatrix*ViewMatrix*ModelMatrix*vec4(position, 1.0);
 
-	out_uv = vec2(position.x, position.z*2) + Time*0.75;
+	out_uv = vec2(position.x, position.z*7) + Time*0.75;
 	out_texcoord = texCoords;
 	out_color = color;
 	out_view = ViewMatrix;

@@ -4,6 +4,7 @@
 /winbuild
 /Binary
 /build
+/.idea
 CMakeCache.txt
 jabg.exe
 jabg.out
