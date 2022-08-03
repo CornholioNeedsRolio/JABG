@@ -95,7 +95,7 @@ void CChunkManager::Clear(const std::tuple<int,int,int>& playerPos)
 	for (auto it = m_chunks.begin(); it != m_chunks.end();)
 	{
 		UChunkPartPos position = it->first;
-		int rd = m_world->getDrawDistance()*0.5+2;
+		int rd = m_world->getDrawDistance()*0.5+4;
 		if ((position.first - rd >= cx || cx >= position.first + rd || position.second - rd >= cz || cz >= position.second + rd))
 		{
 			it = m_chunks.erase(it);

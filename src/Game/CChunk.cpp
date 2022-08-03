@@ -37,10 +37,11 @@ void CChunk::setManager(class CChunkManager* manager)
 
 CChunk::~CChunk()
 {
-	if(m_manager)
+	/*if(m_manager)
 	{
 		m_saveComponent.save(m_manager->getWorld()->getFilePath());
-	}
+	}*/
+    //std::cout << m_position.x << ' ' << m_position.y << ' ' << m_position.z << std::endl;
 }
 
 bool CChunk::fustumCulling(class CCamera* camera) const

@@ -10,6 +10,7 @@ class CChunkLoader
 {
     std::vector<std::unique_ptr<CChunkLoaderInstance>> m_instances;
     std::vector<std::shared_ptr<CChunk>> m_chunks;
+	std::vector<glm::ivec3> m_requestedChunks;
     std::mutex m_mutex;
     class CWorld* m_world = nullptr;
     CChunkGenerator m_generator;

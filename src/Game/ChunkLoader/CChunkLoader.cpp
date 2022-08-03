@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "CChunkLoader.h"
 #include "../CChunkPart.h"
 #include "../CChunkManager.h"
@@ -15,19 +16,30 @@ CChunkLoader::~CChunkLoader()
 
 void CChunkLoader::requestChunk(int x, int y, int z)
 {
-    //search the thread with lowest amount of chunks requested
-    int min_index = 0;
-    for(int i = 1; i < m_instances.size(); ++i)
-        if(m_instances[min_index]->getChunkNum() > m_instances[i]->getChunkNum())
-            min_index = i;
-    //give it the job
-    m_instances[min_index]->addTargetChunk(x, y, z);
+			glm::ivec3 currentPos = glm::ivec3(x, y, z);
+			for(auto& chunk : m_chunks) {
+						if (chunk->getChunkPosition() == currentPos)
+									return;
+			}
+			for(auto& requestedChunk : m_requestedChunks) {
+						if (requestedChunk == currentPos)
+									return;
+			}
+			int min_index = 0;
+			//search the thread with lowest amount of chunks requested
+			for(int i = 1; i < m_instances.size(); ++i) {
+					if (m_instances[min_index]->getChunkNum() > m_instances[i]->getChunkNum())
+									min_index = i;
+			}
+			//give it the job
+			m_instances[min_index]->addTargetChunk(x, y, z);
+			m_requestedChunks.emplace_back(x, y, z);
 }
 
 void CChunkLoader::emptyListAllThreads()
 {
-    for(int i = 0; i < m_instances.size(); ++i)
-        m_instances[i]->clearTargetChunks();
+    for(auto & instance : m_instances)
+        instance->clearTargetChunks();
 }
 
 void CChunkLoader::addToList(std::shared_ptr<CChunk> chunk)
@@ -47,12 +59,12 @@ void CChunkLoader::onPlayerMove(std::tuple<int, int, int> playerPos, int distanc
     int cx = std::get<0>(playerPos);
     int cy = std::get<1>(playerPos);
     int cz = std::get<2>(playerPos);
-    distance = distance*0.5+1;
+    distance = distance*0.5;
 
     CChunkPart* part = nullptr;
     CChunk* chunk = nullptr;
 
-    for (int i = 0; i <= distance; i++)
+    for (int i = 0; i < distance; i++)
     {
         for(int x = cx-i; x <= cx+i; ++x)
         {
@@ -84,14 +96,16 @@ void CChunkLoader::Tick(CChunkManager* world)
         if(!m_chunks.empty())
         {
             //add chunks to world
-            for(auto& chunk : m_chunks)
-            {
-                glm::ivec3 position = chunk->getChunkPosition();
-                CChunkPart* part = world->createChunkIfNone(position.x, position.z);
-                part->addChunk(chunk);
-            }
-            //empty array
-            m_chunks.clear();
+			for(auto it = m_chunks.begin(); it != m_chunks.end();)
+			{
+						glm::ivec3 position = (*it)->getChunkPosition();
+						CChunkPart* part = world->createChunkIfNone(position.x, position.z);
+						/*if(part->getChunk((*it)->getChunkPosition().y))
+									throw;*/
+						part->addChunk((*it));
+						m_requestedChunks.erase( std::remove_if(m_requestedChunks.begin(), m_requestedChunks.end(),[&] (const glm::ivec3& A) -> bool{ return it->get()->getChunkPosition() == A; }), m_requestedChunks.end());
+						it = m_chunks.erase(it);
+			}
         }
     }
     m_generator.consumeCache(world);
