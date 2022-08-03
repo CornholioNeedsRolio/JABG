@@ -22,6 +22,7 @@ class CChunkLoaderInstance
 public:
     CChunkLoaderInstance(CChunkLoader* parent);
     ~CChunkLoaderInstance();
+	std::vector<std::tuple<int,int,int>> GetTargetChunks();
     void addTargetChunk(int x, int y, int z);
     void clearTargetChunks();
     void markDeath();

@@ -38,8 +38,9 @@ void CChunkLoader::requestChunk(int x, int y, int z)
 
 void CChunkLoader::emptyListAllThreads()
 {
-    for(auto & instance : m_instances)
-        instance->clearTargetChunks();
+			m_requestedChunks.clear();
+			for(auto & instance : m_instances)
+					instance->clearTargetChunks();
 }
 
 void CChunkLoader::addToList(std::shared_ptr<CChunk> chunk)
@@ -103,7 +104,12 @@ void CChunkLoader::Tick(CChunkManager* world)
 						/*if(part->getChunk((*it)->getChunkPosition().y))
 									throw;*/
 						part->addChunk((*it));
-						m_requestedChunks.erase( std::remove_if(m_requestedChunks.begin(), m_requestedChunks.end(),[&] (const glm::ivec3& A) -> bool{ return it->get()->getChunkPosition() == A; }), m_requestedChunks.end());
+						//m_requestedChunks.erase( std::remove_if(m_requestedChunks.begin(), m_requestedChunks.end(),[&] (const glm::ivec3& A) -> bool{ return it->get()->getChunkPosition() == A; }), m_requestedChunks.end());
+						for(int i = 0; i < m_requestedChunks.size(); ++i)
+									if(m_requestedChunks[i] == it->get()->getChunkPosition() ) {
+												m_requestedChunks.erase(m_requestedChunks.begin() + i);
+												break;
+									}
 						it = m_chunks.erase(it);
 			}
         }

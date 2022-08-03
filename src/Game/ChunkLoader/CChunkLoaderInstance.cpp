@@ -20,7 +20,7 @@ void CChunkLoaderInstance::addTargetChunk(int x, int y, int z)
     for(int i = 0; i < m_targetChunks.size(); ++i)
         if(std::get<0>(m_targetChunks[0]) == x && std::get<1>(m_targetChunks[0]) == y && std::get<2>(m_targetChunks[0]) == z)
             return;
-    m_targetChunks.push_back(std::make_tuple(x, y, z));
+    m_targetChunks.emplace_back(x, y, z);
     m_chunkNum = m_targetChunks.size();
 }
 
