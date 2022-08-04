@@ -1,5 +1,5 @@
 #include "CChunkMeshThreadManager.h"
-#include "CChunkManager.h"
+#include "Game/ChunkManager/CChunkManager.h"
 #include "CWorld.h"
 #include "CChunk.h"
 #include <iostream>

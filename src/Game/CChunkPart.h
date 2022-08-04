@@ -17,7 +17,7 @@ public:
 
 	CChunk* getChunk(int y);    /*if chunk doesn't exist it return nullptr*/
 	CChunk* getChunkNew(int y); /*if chunk doesn't exist it will create a new one*/
-	CChunk* addChunk(std::shared_ptr<CChunk> chunk); /*adds chunk to the chunk_part*/
+	CChunk* addChunk(const std::shared_ptr<CChunk>& chunk); /*adds chunk to the chunk_part*/
 
 	CChunk* getChunkInRange(int closeToY, bool fuckingClean = false, int *pos = nullptr);
 

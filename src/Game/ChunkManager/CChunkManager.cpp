@@ -1,5 +1,5 @@
 #include "CChunkManager.h"
-#include "CWorld.h"
+#include "Game/CWorld.h"
 #include <iostream>
 
 std::pair<UChunkPos, ULocalPos> CChunkManager::getLocal(int x, int y, int z)

@@ -3,7 +3,7 @@
 #include <memory>
 #include "../../CChunk.h"
 #include "../../CStructure.h"
-#include "../../CChunkManager.h"
+#include "Game/ChunkManager/CChunkManager.h"
 
 class CBiome
 {

@@ -1,5 +1,5 @@
 #include "CGameEntityCollider.h"
-#include "CChunkManager.h"
+#include "Game/ChunkManager/CChunkManager.h"
 #include "CChunkCollider.h"
 #include <iostream>
 #include <algorithm>

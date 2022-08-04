@@ -4,7 +4,7 @@
 #include "CChunkPart.h"
 #include "CTerrainGenerator.h"
 #include "CChunkMeshThreadManager.h"
-#include "CChunkManager.h"
+#include "Game/ChunkManager/CChunkManager.h"
 #include "../Misc/CFPPlayer.h"
 #include "ChunkLoader/CChunkLoader.h"
 

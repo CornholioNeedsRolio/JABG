@@ -1,7 +1,7 @@
 #include <algorithm>
 #include "CChunkLoader.h"
 #include "../CChunkPart.h"
-#include "../CChunkManager.h"
+#include "Game/ChunkManager/CChunkManager.h"
 
 CChunkLoader::CChunkLoader(int threadNum, CWorld* world) : m_world(world)
 {
@@ -17,12 +17,12 @@ CChunkLoader::~CChunkLoader()
 void CChunkLoader::requestChunk(int x, int y, int z)
 {
 			glm::ivec3 currentPos = glm::ivec3(x, y, z);
-			for(auto& chunk : m_chunks) {
-						if (chunk->getChunkPosition() == currentPos)
-									return;
-			}
 			for(auto& requestedChunk : m_requestedChunks) {
 						if (requestedChunk == currentPos)
+									return;
+			}
+			for(auto& chunk : m_chunks) {
+						if (chunk->getChunkPosition() == currentPos)
 									return;
 			}
 			int min_index = 0;
@@ -43,7 +43,7 @@ void CChunkLoader::emptyListAllThreads()
 					instance->clearTargetChunks();
 }
 
-void CChunkLoader::addToList(std::shared_ptr<CChunk> chunk)
+void CChunkLoader::addToList(const std::shared_ptr<CChunk>& chunk)
 {
     const std::lock_guard<std::mutex> lock(m_mutex);
     m_chunks.push_back(chunk);
@@ -104,12 +104,7 @@ void CChunkLoader::Tick(CChunkManager* world)
 						/*if(part->getChunk((*it)->getChunkPosition().y))
 									throw;*/
 						part->addChunk((*it));
-						//m_requestedChunks.erase( std::remove_if(m_requestedChunks.begin(), m_requestedChunks.end(),[&] (const glm::ivec3& A) -> bool{ return it->get()->getChunkPosition() == A; }), m_requestedChunks.end());
-						for(int i = 0; i < m_requestedChunks.size(); ++i)
-									if(m_requestedChunks[i] == it->get()->getChunkPosition() ) {
-												m_requestedChunks.erase(m_requestedChunks.begin() + i);
-												break;
-									}
+						m_requestedChunks.erase( std::remove_if(m_requestedChunks.begin(), m_requestedChunks.end(),[&] (const glm::ivec3& A) -> bool{ return it->get()->getChunkPosition() == A; }), m_requestedChunks.end());
 						it = m_chunks.erase(it);
 			}
         }

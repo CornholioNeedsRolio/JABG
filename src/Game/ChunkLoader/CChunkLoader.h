@@ -20,7 +20,7 @@ public:
 
     CWorld* getWorld();
     void requestChunk(int x, int y, int z);
-    void addToList(std::shared_ptr<CChunk> chunk);
+    void addToList(const std::shared_ptr<CChunk>& chunk);
     void emptyListAllThreads();
     void onPlayerMove(std::tuple<int, int, int> playerPos, int distance, CChunkManager* world);
     void Tick(CChunkManager* world);

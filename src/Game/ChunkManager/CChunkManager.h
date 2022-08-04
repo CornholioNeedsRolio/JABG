@@ -2,7 +2,7 @@
 #define CCHUNKMANAGER_HEADER
 #include <map>
 #include "Engine/CObject.h"
-#include "CChunkPart.h"
+#include "Game/CChunkPart.h"
 
 using UChunkPos = std::tuple<int, int, int>;
 using UChunkPartPos = std::pair<int, int>	;

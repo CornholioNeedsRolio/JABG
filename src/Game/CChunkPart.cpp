@@ -48,7 +48,7 @@ CChunk* CChunkPart::getChunkInRange(int closeToY, bool fuckingClean, int* pos)
 	return nullptr;
 }
 
-CChunk* CChunkPart::addChunk(std::shared_ptr<CChunk> chunk)
+CChunk* CChunkPart::addChunk(const std::shared_ptr<CChunk>& chunk)
 {
             chunk->setManager(&m_world->getManager());
             m_chunks.insert(std::make_pair(chunk->getChunkPosition().y, chunk));

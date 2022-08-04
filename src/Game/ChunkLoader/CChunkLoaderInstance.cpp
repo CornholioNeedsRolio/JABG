@@ -47,8 +47,6 @@ void CChunkLoaderInstance::Run()
     {
         std::tuple<int, int, int> current;
         {
-            //std::cout << m_targetChunks.size();
-
             const std::lock_guard<std::mutex> lock(m_mutex);
             if(m_targetChunks.empty()) continue;
 

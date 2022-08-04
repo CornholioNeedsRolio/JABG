@@ -1,7 +1,7 @@
 #include "CChunk.h"
 #include "CChunkCollider.h"
 #include "CChunkPart.h"
-#include "CChunkManager.h"
+#include "Game/ChunkManager/CChunkManager.h"
 #include <iostream>
 #include "CWorld.h"
 #include <algorithm>
@@ -37,10 +37,10 @@ void CChunk::setManager(class CChunkManager* manager)
 
 CChunk::~CChunk()
 {
-	/*if(m_manager)
+	if(m_manager)
 	{
 		m_saveComponent.save(m_manager->getWorld()->getFilePath());
-	}*/
+	}
     //std::cout << m_position.x << ' ' << m_position.y << ' ' << m_position.z << std::endl;
 }
 
