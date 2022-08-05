@@ -12,7 +12,8 @@ class CChunkLoaderInstance
     std::atomic_uint8_t m_flags = 0;
     std::atomic_uint16_t m_chunkNum = 0;
     std::vector<std::tuple<int,int,int>> m_targetChunks;
-    std::mutex m_mutex;
+	std::tuple<int, int, int> m_current;
+	std::mutex m_mutex;
     std::thread m_thread;
     class CChunkLoader* m_parent = nullptr;
     enum
@@ -23,7 +24,8 @@ public:
     CChunkLoaderInstance(CChunkLoader* parent);
     ~CChunkLoaderInstance();
     void addTargetChunk(int x, int y, int z);
-    void clearTargetChunks();
+	std::vector<std::tuple<int,int,int>> getTargetChunks();
+	std::tuple<int, int, int>  clearTargetChunks();
     void markDeath();
     int getChunkNum();
     void joinThreads();

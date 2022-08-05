@@ -81,7 +81,7 @@ void CSaveChunkManager::SaveFile()
 
 void CSaveChunkManager::Load(CChunkSaveComponent* saveComponent)
 {
-
+	saveComponent->GetLocalChunkPos();
 }
 
 bool CSaveChunkManager::Save(CChunkSaveComponent* saveComponent)

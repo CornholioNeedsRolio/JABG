@@ -154,7 +154,8 @@ std::unique_ptr<SBlockInfo[]> CChunkGenerator::generateChunk(int cx, int cy, int
 std::shared_ptr<class CChunk> CChunkGenerator::getChunk(int x, int y, int z, CWorld* world)
 {
     std::shared_ptr<CChunk> chunk = std::make_shared<CChunk>(glm::ivec3(x,y,z));
-	if(!chunk->getSaveComponent().load(world->getFilePath()))
+	//chunk->setManager(&world->getManager());
+	if(!chunk->getSaveComponent().load())
 	{
 		//int biome = m_map.getBiome(x, z,  0.01f);
     	chunk->getVoxelComponent().setAllBlocks(generateChunk(x, y, z, this));

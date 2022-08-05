@@ -17,7 +17,7 @@ std::pair<UChunkPos, ULocalPos> CChunkManager::getLocal(int x, int y, int z)
 
 	//std::cout << cx << ' ' << cy << ' ' << cz << ' ' << bx << ' ' << by << ' ' << bz  << ' ' << x << ' ' << y << ' ' << z << '\n';
 
-	return std::pair<UChunkPos, ULocalPos>({ cx, cy, cz }, { bx, by, bz});
+	return {{ cx, cy, cz }, { bx, by, bz}};
 }
 
 CChunkManager::CChunkManager(CWorld* world) : 

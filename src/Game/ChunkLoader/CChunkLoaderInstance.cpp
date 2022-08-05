@@ -45,22 +45,28 @@ void CChunkLoaderInstance::Run()
 {
     while(!(m_flags & SHOULD_DIE))
     {
-        std::tuple<int, int, int> current;
         {
             const std::lock_guard<std::mutex> lock(m_mutex);
             if(m_targetChunks.empty()) continue;
 
-            current = std::move(m_targetChunks[0]);
+			m_current = std::move(m_targetChunks[0]);
             m_targetChunks.erase(m_targetChunks.begin());
             m_chunkNum = m_targetChunks.size();
         }
-        m_parent->addToList(m_parent->getGenerator().getChunk(std::get<0>(current), std::get<1>(current), std::get<2>(current), m_parent->getWorld()));
+        m_parent->addToList(m_parent->getGenerator().getChunk(std::get<0>(m_current), std::get<1>(m_current), std::get<2>(m_current), m_parent->getWorld()));
     }
 }
 
-void CChunkLoaderInstance::clearTargetChunks()
+std::tuple<int, int, int>  CChunkLoaderInstance::clearTargetChunks()
 {
     const std::lock_guard<std::mutex> lock(m_mutex);
     m_targetChunks.clear();
+	return m_current;
+}
+
+std::vector<std::tuple<int, int, int>> CChunkLoaderInstance::getTargetChunks()
+{
+			const std::lock_guard<std::mutex> lock(m_mutex);
+			return m_targetChunks;
 }
 

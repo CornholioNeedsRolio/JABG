@@ -39,7 +39,7 @@ CChunk::~CChunk()
 {
 	if(m_manager)
 	{
-		m_saveComponent.save(m_manager->getWorld()->getFilePath());
+		m_saveComponent.save();
 	}
     //std::cout << m_position.x << ' ' << m_position.y << ' ' << m_position.z << std::endl;
 }

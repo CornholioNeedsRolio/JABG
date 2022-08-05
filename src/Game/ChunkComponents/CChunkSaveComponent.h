@@ -12,12 +12,17 @@
 class CChunkSaveComponent
 {
 			class CChunk* m_parent = nullptr;
-			std::string getChunkPath(const std::string filePath) const;
-public:
-			explicit CChunkSaveComponent(class CChunk* parent);
 
-			void save(const std::string& path);
-			bool load(const std::string& path);
+			std::tuple<int, int, int> m_megaChunkPos, m_localChunkPos;
+public:
+			CChunkSaveComponent(class CChunk* parent);
+			const std::tuple<int, int, int>& GetMegaChunkPos() const;
+			const std::tuple<int, int, int>& GetLocalChunkPos() const;
+			CChunk *getParent() const;
+
+			void save();
+			bool load();
+
 };
 
 #endif

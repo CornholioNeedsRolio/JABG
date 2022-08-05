@@ -24,9 +24,18 @@ void CDebugLevel::Run(CInputManager& _inputmanager, const float& deltaTime)
 
 	m_fpscounter[0] = 1.f / deltaTime;
 	int sum = 0;
+	std::string playerPos = glm::to_string(m_player->GetGlobalPosition());
+	playerPos.erase(0, 4);
+	playerPos = "Player Pos: " + playerPos;
+	std::string chunkPos = glm::to_string(glm::ivec3(glm::floor(m_player->GetGlobalPosition() / 16.f)));
+	chunkPos.erase(0, 5);
+	chunkPos = "Chunk Pos:" + chunkPos;
 	for (size_t i = 0; i != m_fpscounter.size(); ++i)
 		sum += m_fpscounter[i];
-	m_text.setString("FPS: " + std::to_string(sum/ m_fpscounter.size()) + '\n' + glm::to_string(m_player->GetGlobalPosition()));
+	m_text.setString("FPS: "
+	+ std::to_string(sum/ m_fpscounter.size()) + '\n'
+	+ playerPos + "\n"
+	+ chunkPos);
 }
 
 void CDebugLevel::Draw()
