@@ -5,11 +5,19 @@
 #include "CSaveChunkManager.h"
 #include "../CChunkManager.h"
 #include "../../CWorld.h"
+#include <filesystem>
+#include <iostream>
 
 CSaveChunkManager::CSaveChunkManager(CChunkManager* parent, std::tuple<int, int, int> MegaChunkPos) : m_parent(parent), m_megaChunkPos(MegaChunkPos)
 {
 	memset(&FileOffsets, 0, sizeof FileOffsets);
 	m_timeExisted = 0;
+	LoadFile();
+}
+
+CSaveChunkManager::~CSaveChunkManager()
+{
+	SaveFile();
 }
 
 std::vector<char> CSaveChunkManager::TurnToByteStr()
@@ -42,6 +50,7 @@ std::vector<char> CSaveChunkManager::TurnToByteStr()
 
 void CSaveChunkManager::FromByteStr(const std::vector<char>& ByteStr)
 {
+		if(ByteStr.size() < sizeof(FileOffsets)) return;
 		memcpy(&FileOffsets[0], ByteStr.data(), sizeof(FileOffsets));
 		for(int i = 0; i < FileOffsets.size(); ++i)
 		{
@@ -53,13 +62,19 @@ void CSaveChunkManager::FromByteStr(const std::vector<char>& ByteStr)
 
 void CSaveChunkManager::LoadFile()
 {
+			std::string path = m_parent->getWorld()->getFilePath();
+			if (!std::filesystem::is_directory(path) || !std::filesystem::exists(path)) {
+						return;
+			}
 			std::string chunk_path = GetFilePath();
 			std::ifstream file(chunk_path, std::ios::binary | std::ios::in);
+			if(!file.good()) return;
 			std::vector<char> buffer;
 
 			//getting file size
 			file.seekg(0, std::ios::end);
 			size_t fileSize = file.tellg();
+			std::cerr << fileSize << std::endl;
 			file.seekg(0, std::ios::beg);
 			//copying the file to the bugger
 			buffer.reserve(fileSize);
@@ -72,21 +87,39 @@ void CSaveChunkManager::LoadFile()
 
 void CSaveChunkManager::SaveFile()
 {
+			std::string path = m_parent->getWorld()->getFilePath();
+			if (!std::filesystem::is_directory(path) || !std::filesystem::exists(path)) {
+						std::filesystem::create_directory(path);
+			}
+
 			std::string chunk_path = GetFilePath();
 			std::ofstream file(chunk_path, std::ios::binary | std::ofstream::trunc | std::ios::out);
+			if(!file.good()) return;
 			std::vector<char> buffer = TurnToByteStr();
 			file.write(buffer.data(), buffer.size());
 			file.close();
 }
 
-void CSaveChunkManager::Load(CChunkSaveComponent* saveComponent)
+bool CSaveChunkManager::Load(CChunkSaveComponent* saveComponent)
 {
-	saveComponent->GetLocalChunkPos();
+	std::lock_guard g(m_mutex);
+	const int index = saveComponent->GetLocalChunkIndex();
+
+	if(!LoadedChunks[index].BlockData) return false;
+	std::unique_ptr<SBlockInfo[]> temp = std::make_unique<SBlockInfo[]>(CHUNK_SIZE*CHUNK_SIZE*CHUNK_SIZE);
+
+	std::copy(LoadedChunks[index].BlockData.get(), LoadedChunks[index].BlockData.get() + CHUNK_SIZE*CHUNK_SIZE*CHUNK_SIZE, temp.get());
+	saveComponent->getParent()->getVoxelComponent().setAllBlocks(std::move(temp));
+	return true;
 }
 
-bool CSaveChunkManager::Save(CChunkSaveComponent* saveComponent)
+void CSaveChunkManager::Save(CChunkSaveComponent* saveComponent)
 {
-			return false;
+			std::lock_guard g(m_mutex);
+			const int index = saveComponent->GetLocalChunkIndex();
+			LoadedChunks[index].BlockData = std::make_unique<SBlockInfo[]>(CHUNK_SIZE*CHUNK_SIZE*CHUNK_SIZE);
+			SBlockInfo* block = saveComponent->getParent()->getVoxelComponent().getAllBlocks();
+			std::copy(block, block + CHUNK_SIZE*CHUNK_SIZE*CHUNK_SIZE, LoadedChunks[index].BlockData.get());
 }
 
 std::string CSaveChunkManager::GetFilePath() const
@@ -105,4 +138,9 @@ float CSaveChunkManager::IncrementTime(float deltaTime)
 void CSaveChunkManager::ChunkData::Init()
 {
 			BlockData = std::make_unique<SBlockInfo[]>(CHUNK_SIZE*CHUNK_SIZE*CHUNK_SIZE);
+}
+
+const std::tuple<int, int, int>& CSaveChunkManager::GetMegaChunkPos() const
+{
+			return m_megaChunkPos;
 }

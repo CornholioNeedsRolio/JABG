@@ -107,3 +107,25 @@ void CChunkManager::Clear(const std::tuple<int,int,int>& playerPos)
 		}
 	}
 }
+
+void CChunkManager::Tick(CInputManager &_manager, float deltaTime)
+{
+			CObject::Tick(_manager, deltaTime);
+			for(auto it = m_loadedSaves.begin(); it != m_loadedSaves.end(); ++it)
+			{
+						if((*it)->IncrementTime(deltaTime) >= 45.f)
+									it = m_loadedSaves.erase(it);
+						else ++it;
+			}
+}
+
+std::shared_ptr<CSaveChunkManager> CChunkManager::GetLoadedMegaChunk(int x, int y, int z)
+{
+			std::tuple<int, int, int> tuple = std::make_tuple(x, y, z);
+			for(auto& LoadedSave : m_loadedSaves)
+						if(LoadedSave->GetMegaChunkPos() == tuple)
+									return LoadedSave;
+			std::shared_ptr<CSaveChunkManager> loadedMegaChunk = std::make_shared<CSaveChunkManager>(this, tuple);
+			m_loadedSaves.push_back(loadedMegaChunk);
+			return loadedMegaChunk;
+}

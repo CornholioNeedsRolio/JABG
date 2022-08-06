@@ -19,7 +19,7 @@ class CSaveChunkManager
 			};
 			//all the chunks loaded, if BlockData is null it's invalid
 			std::array<ChunkData, CHUNK_SIZE*CHUNK_SIZE*CHUNK_SIZE> LoadedChunks;
-
+			std::mutex m_mutex;
 			float m_timeExisted;
 			class CChunkManager* m_parent = nullptr;
 			std::tuple<int, int, int> m_megaChunkPos;
@@ -30,13 +30,16 @@ class CSaveChunkManager
 			std::string GetFilePath() const;
 public:
 			CSaveChunkManager(CChunkManager* parent, std::tuple<int, int, int> MegaChunkPos);
+			~CSaveChunkManager();
 			float IncrementTime(float deltaTime);
 
 			void LoadFile();
 			void SaveFile();
 
-			void Load(class CChunkSaveComponent* saveComponent);
-			bool Save(class CChunkSaveComponent* saveComponent);
+			const std::tuple<int, int, int>& GetMegaChunkPos() const;
+
+			bool Load(class CChunkSaveComponent* saveComponent);
+			void Save(class CChunkSaveComponent* saveComponent);
 };
 
 

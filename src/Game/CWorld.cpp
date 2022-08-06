@@ -14,9 +14,9 @@ CWorld::CWorld(std::shared_ptr<CTextureAtlas> texture, CFPPlayer& player) :
 }
 
 CWorld::~CWorld(){
-	m_loader.joinThreads();
-	m_player->save(getFilePath());
-	delete m_manager;
+			m_player->save(getFilePath());
+			m_loader.joinThreads();
+			delete m_manager;
 }
 
 void CWorld::setBlock(int x, int y, int z, int id)

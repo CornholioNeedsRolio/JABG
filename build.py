@@ -87,11 +87,11 @@ def getLastEdited(file):
     return time
 
 f = []
-for path, subdirs, files in os.walk("./"):
+for path, subdirs, files in os.walk("./src/"):
     for name in files:
         if name.endswith('.cpp') or name.endswith('.c'):
             f.append(os.path.join(path, name).replace('./', ''))
-
+f.append("./libs/glad/glad.c")
 try:
     os.mkdir(buildDir)
     print('Directory', buildDir, 'has beed created')
@@ -132,7 +132,7 @@ def compObj(file):
     obj_builded = obj_builded + 1
     output = ""
     if(normieMode):
-        output = os.popen(compiler+" /O12x /EHsc /experimental:module /std:c++latest /I "+workingDirWindows+"\\\\libraries\\\\include /Fo /c " + workingDirWindows +"\\\\{}".format(file.replace('/', '\\\\'))).read()
+        output = os.popen(compiler+" /O2x /EHsc /experimental:module /std:c++latest /I "+workingDirWindows +"\\\\libraries\\\\include" + " /I "+workingDirWindows + "\\\\src "+ "/Fo /c " + workingDirWindows +"\\\\{}".format(file.replace('/', '\\\\'))).read()
         try:
             os.replace(os.getcwd()+'/'+os.path.basename(obj), obj)
         except:

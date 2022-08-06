@@ -40,6 +40,8 @@ public:
 	CChunkSaveComponent getSaveComponent();
 
 	void setManager(class CChunkManager* manager = 0x0);
+	CChunkManager* getManager() const;
+
 	const glm::ivec3& getChunkPosition() const;
 
 	void BulkDraw(class CBulkRenderer* renderer) override;

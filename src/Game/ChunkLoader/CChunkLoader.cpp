@@ -104,7 +104,7 @@ void CChunkLoader::Tick(CChunkManager* world)
 															part->addChunk((*it));
 												else std::cout << position.x << " " << position.y << " " << position.z << std::endl;*/
 												//WHYYYY, WHY ARE THERE DUPLICATE CHUNKS..... no matter how many checks I put in place it fucks me over...
-												//future me here... when clearing m_requestedChunks, we should readd the current one to the list... damn threading is so tricky to debug
+												//future me here... when clearing m_requestedChunks, we should add back the one processed currently... damn threading is so tricky to debug
 												//m_requestedChunks.erase( std::remove_if(m_requestedChunks.begin(), m_requestedChunks.end(),[&] (const glm::ivec3& A) -> bool{ return (*it)->getChunkPosition() == A; }), m_requestedChunks.end());
 												part->addChunk((*it));
 												it = m_chunks.erase(it);

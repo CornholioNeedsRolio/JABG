@@ -3,20 +3,20 @@ cmake_minimum_required(VERSION 3.10)
 project(JABG)
 
 set(CMAKE_CXX_STANDARD 17)
+set(SDL2W_SDL2_DIR ${CMAKE_SOURCE_DIR}/libs/SDL2)
+
+add_subdirectory(libs/glad)
+add_subdirectory(libs/glm)
 
 find_package(SDL2 REQUIRED)
 find_package(Freetype REQUIRED)
-find_package(glm REQUIRED)
 find_package(Threads)
 
 include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(${FREETYPE_INCLUDE_DIRS})
 include_directories(${GLM_INCLUDE_DIRS})
 include_directories(${CMAKE_SOURCE_DIR}/src)
-
-
-include_directories(${CMAKE_SOURCE_DIR}/src)
-include_directories(${CMAKE_SOURCE_DIR}/include)
+include_directories(${CMAKE_SOURCE_DIR}/libs)
 
 #is it compiled on normie platform?
 if(MSVC)
@@ -38,4 +38,4 @@ file(GLOB_RECURSE SOURCES
 
 add_executable(JABG ${SOURCES})
 
-target_link_libraries(JABG ${SDL2_LIBRARIES} ${FREETYPE_LIBRARIES} ${GLM_LIBRARIES} m stdc++ ${CMAKE_DL_LIBS})
+target_link_libraries(JABG glm glad ${SDL2_LIBRARIES} ${FREETYPE_LIBRARIES} ${GLM_LIBRARIES} m stdc++  ${CMAKE_DL_LIBS})

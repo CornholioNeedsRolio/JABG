@@ -131,3 +131,8 @@ void CChunk::makeNeighborsDirty()
 	for(CChunk* chunk : m_neighbours)
 		if(chunk) chunk->getMeshComponent().makeDirty();
 }
+
+CChunkManager* CChunk::getManager() const
+{
+			return m_manager;
+}

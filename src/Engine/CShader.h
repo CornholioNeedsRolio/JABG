@@ -1,7 +1,7 @@
 #ifndef CSHADER_HEADER
 #define CSHADER_HEADER
 #include <string>
-#include "glad/glad.h"
+#include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <vector>
 #include <memory>
