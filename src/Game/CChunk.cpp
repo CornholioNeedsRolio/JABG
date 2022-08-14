@@ -3,15 +3,16 @@
 #include "CChunkPart.h"
 #include "Game/ChunkManager/CChunkManager.h"
 #include <iostream>
-#include "CWorld.h"
+#include "Game/GameWorld/CWorld.h"
 #include <algorithm>
 #include <glm/gtx/string_cast.hpp>
 #include "Engine/CFrustumCollider.h"
 #include "../BulkRenderer/CBulkRenderer.h"
 
 CChunk::CChunk(glm::ivec3 position, CChunkManager* manager) :
-	m_position(position), m_manager(manager), m_voxelComponent(this), m_meshComponent(this), m_saveComponent(this)
+	m_position(position), m_manager(manager), m_voxelComponent(this), m_meshComponent(this), m_saveComponent(this), m_components{&m_meshComponent, &m_saveComponent, &m_voxelComponent}
 {
+
 }
 
 CChunkVoxelComponent& CChunk::getVoxelComponent()
@@ -37,7 +38,7 @@ void CChunk::setManager(class CChunkManager* manager)
 
 CChunk::~CChunk()
 {
-	if(m_manager)
+	if(m_manager && m_saveComponent.IsDirty())
 	{
 		m_saveComponent.save();
 	}
@@ -96,7 +97,7 @@ void CChunk::makeNeighborDirty(uint8_t card)
 			chunk = chunkpart->getChunk(cy);
 
 		if (chunk)
-			chunk->getMeshComponent().makeDirty();
+					chunk->MakeDirty();
 	}
 }
 
@@ -129,10 +130,16 @@ void CChunk::makeNeighborsDirty()
 		m_neighbours.push_back(parent->getChunk(cy - 1));
 	}
 	for(CChunk* chunk : m_neighbours)
-		if(chunk) chunk->getMeshComponent().makeDirty();
+		if(chunk) chunk->MakeDirty();
 }
 
 CChunkManager* CChunk::getManager() const
 {
 			return m_manager;
+}
+
+void CChunk::MakeDirty()
+{
+			for(auto component : m_components)
+						component->MakeDirty();
 }

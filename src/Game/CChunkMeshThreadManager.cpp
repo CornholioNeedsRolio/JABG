@@ -1,6 +1,6 @@
 #include "CChunkMeshThreadManager.h"
 #include "Game/ChunkManager/CChunkManager.h"
-#include "CWorld.h"
+#include "Game/GameWorld/CWorld.h"
 #include "CChunk.h"
 #include <iostream>
 
@@ -63,7 +63,7 @@ void CChunkMeshThreadManager::ChooseChunk()
 				CChunk* chunk = part->getChunkInRange(py, false, &y);
 				
 				if (!chunk) continue;
-				if (!chunk->getMeshComponent().isDirty()) continue;
+				if (!chunk->getMeshComponent().IsDirty()) continue;
 
 				m_neighbors.fill(nullptr);
 				std::map<std::pair<int, int>, CChunkPart*> Cache;

@@ -3,9 +3,11 @@
 #include <memory>
 #include <mutex>
 #include "../CBlock.h"
+#include "IChunkComponent.h"
 
 using blocktype = unsigned short;
 #define CHUNK_SIZE 16
+#define CHUNK_SIZE_SQR CHUNK_SIZE*CHUNK_SIZE*CHUNK_SIZE
 #define HALF_CHUNK CHUNK_SIZE*0.5
 
 struct SBlockInfo
@@ -17,7 +19,7 @@ struct SBlockInfo
     };
 };
 
-class CChunkVoxelComponent
+class CChunkVoxelComponent : public IChunkComponent
 {
     class CChunk* m_parent = nullptr;
     std::unique_ptr<SBlockInfo[]> m_blocks = nullptr;

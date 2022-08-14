@@ -68,12 +68,12 @@ void CChunkMeshComponent::Draw(CBulkRenderer* renderer)
     }
 }
 
-void CChunkMeshComponent::makeDirty()
+void CChunkMeshComponent::MakeDirty()
 {
     ++m_currentDirty;
 }
 
-bool CChunkMeshComponent::isDirty() const
+bool CChunkMeshComponent::IsDirty() const
 {
     return m_currentDirty >= m_lastDirty;
 }
@@ -126,7 +126,7 @@ void CChunkMeshComponent::BuildMeshData(std::array<CChunk*, 27> neighbors, std::
         {
             for(char z = 0; z < CHUNK_SIZE; ++z)
             {
-                if(isDirty())
+                if(IsDirty())
                     return;
 
                 CBlock* self = m_parent->getVoxelComponent().getBlock(x, y, z).getBlock();

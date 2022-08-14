@@ -1,6 +1,6 @@
 #include "Engine/CFrustumCollider.h"
 #include "Engine/CFileManager.h"
-#include "../Game/CWorld.h"
+#include "Game/GameWorld/CWorld.h"
 #include "CFPPlayer.h"
 #include <filesystem>
 #include <algorithm>
@@ -251,6 +251,11 @@ void CFPPlayer::Tick(CInputManager& _manager, float deltaTime)
 	{
 		m_lastPlaced = 0;
 		placeBlock(m_holdingBlock);
+	}
+
+	if(_manager.keyPressed(SDL_SCANCODE_9))
+	{
+				m_world->GetLoader().ForceSave();
 	}
 
 	bool left_arrow = _manager.keyPressed(SDL_SCANCODE_LEFT);

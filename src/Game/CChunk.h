@@ -30,7 +30,7 @@ class CChunk : public CObject
 
 	glm::ivec3 m_position;
 	class CChunkManager* m_manager = 0x0;
-
+	std::vector<IChunkComponent*> m_components;
 public:
 	CChunk(glm::ivec3 position, class CChunkManager* manager = 0x0);
 	virtual ~CChunk() override;
@@ -41,6 +41,8 @@ public:
 
 	void setManager(class CChunkManager* manager = 0x0);
 	CChunkManager* getManager() const;
+
+	void MakeDirty();
 
 	const glm::ivec3& getChunkPosition() const;
 

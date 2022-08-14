@@ -2,7 +2,7 @@
 #include "CChunk.h"
 #include "CChunkPart.h"
 #include "CBlock.h"
-#include "CWorld.h"
+#include "Game/GameWorld/CWorld.h"
 
 #include <glm/gtc/noise.hpp>
 #include <iostream>

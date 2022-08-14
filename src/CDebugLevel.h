@@ -2,7 +2,7 @@
 #define CDEBUGLEVEL_HEADER
 #include "Engine/CLevel.h"
 #include "Misc/CFPPlayer.h"
-#include "Game/CWorld.h"
+#include "Game/GameWorld/CWorld.h"
 #include "Engine/TextRenderer/CDrawableText.h"
 #include "COctree.h"
 #include "BulkRenderer/CBulkRenderer.h"

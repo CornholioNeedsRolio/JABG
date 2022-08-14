@@ -1,14 +1,15 @@
 #ifndef CWORLD_HEADER
 #define CWORLD_HEADER
 #include "Engine/CObject.h"
-#include "CChunkPart.h"
-#include "CTerrainGenerator.h"
-#include "CChunkMeshThreadManager.h"
+#include "Game/CChunkPart.h"
+#include "Game/CTerrainGenerator.h"
+#include "Game/CChunkMeshThreadManager.h"
 #include "Game/ChunkManager/CChunkManager.h"
-#include "../Misc/CFPPlayer.h"
-#include "ChunkLoader/CChunkLoader.h"
+#include "Misc/CFPPlayer.h"
+#include "Game/ChunkLoader/CChunkLoader.h"
 
-#include <glm/glm.hpp>
+#include "glm/glm/glm.hpp"
+#include "Game/GameWorld/SavingSystem/CMegaChunkManager.h"
 
 
 enum
@@ -26,7 +27,7 @@ class CWorld : public CObject
     CChunkManager* m_manager;
     CChunkMeshThreadManager m_threadManager;
     CChunkLoader m_loader;
-
+	CMegaChunkManager m_loadingComponent;
 
     std::tuple<int, int, int> m_playerPos;
 
@@ -42,13 +43,15 @@ class CWorld : public CObject
     };
 public:
     CWorld(std::shared_ptr<CTextureAtlas> texture, CFPPlayer& player);
-    ~CWorld();
+    ~CWorld() override;
 
     void setBlock(int x, int y, int z, int id);
     int getBlock(int x, int y, int z);
 
     CChunkManager& getManager();
     const std::string& getFilePath() const;
+
+	CMegaChunkManager& GetLoader();
 
     int getDrawDistance();
     std::shared_ptr<CTextureAtlas> getAtlas();
@@ -58,6 +61,7 @@ public:
     void Draw(const SDrawInfo& info) override;
     void BulkDraw(class CBulkRenderer* renderer) override;
     void Tick(CInputManager& _manager, float deltaTime) override;
+
 };
 
 #endif

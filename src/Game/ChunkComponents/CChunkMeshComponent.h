@@ -3,6 +3,7 @@
 #include <atomic>
 #include <mutex>
 #include "Engine/CMesh.h"
+#include "IChunkComponent.h"
 
 struct STextureAndShader
 {
@@ -10,7 +11,7 @@ struct STextureAndShader
     std::shared_ptr<class CShader> shader;
 };
 
-class CChunkMeshComponent
+class CChunkMeshComponent : public IChunkComponent
 {
     class CChunk* m_parent = nullptr;
     std::atomic_char m_flags = 0;
@@ -31,8 +32,8 @@ public:
     void Draw(class CBulkRenderer* renderer);
     void setTextureAndShader(STextureAndShader normal, STextureAndShader water);
     void BuildMeshData(std::array<CChunk*, 27> neighbors, std::shared_ptr<class CTextureAtlas> atlas);
-    void makeDirty();
-    bool isDirty() const;
+    void MakeDirty() override;
+    bool IsDirty() const override;
 };
 
 #endif

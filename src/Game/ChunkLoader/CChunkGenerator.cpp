@@ -2,7 +2,7 @@
 #include <glm/gtc/noise.hpp>
 #include "Biome/CBiome.h"
 #include <glm/glm.hpp>
-#include "../CWorld.h"
+#include "Game/GameWorld/CWorld.h"
 #include <iostream>
 #include <csignal>
 

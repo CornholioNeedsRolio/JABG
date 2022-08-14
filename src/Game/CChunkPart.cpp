@@ -1,6 +1,6 @@
 #include "ChunkComponents/CChunkMeshComponent.h"
 #include "CChunkPart.h"
-#include "CWorld.h"
+#include "Game/GameWorld/CWorld.h"
 #include <array>
 #include <iostream>
 #include <cmath>
@@ -39,7 +39,7 @@ CChunk* CChunkPart::getChunkNew(int y)
 CChunk* CChunkPart::getChunkInRange(int closeToY, bool fuckingClean, int* pos)
 {
 	for (auto it = m_chunks.begin(); it != m_chunks.end(); it++)
-		if (it->second->getMeshComponent().isDirty())
+		if (it->second->getMeshComponent().IsDirty())
 		{
 			if (pos) *pos = it->first;
 			return it->second.get();
@@ -58,7 +58,7 @@ CChunk* CChunkPart::addChunk(const std::shared_ptr<CChunk>& chunk)
 void CChunkPart::MakeDirty()
 {
 	for (auto it = m_chunks.begin(); it != m_chunks.end(); it++)
-		it->second->getMeshComponent().makeDirty();
+				it->second->getMeshComponent().MakeDirty();
 }
 
 bool CChunkPart::destroyable()

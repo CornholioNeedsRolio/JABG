@@ -42,7 +42,7 @@ void CChunkVoxelComponent::setBlock(char x, char y, char z, blocktype id)
             m_blocks = std::make_unique<SBlockInfo[]>(CHUNK_SIZE*CHUNK_SIZE*CHUNK_SIZE);
         m_blocks[x + CHUNK_SIZE * (y + CHUNK_SIZE*z)].id = id;
     }
-    m_parent->getMeshComponent().makeDirty();
+	m_parent->MakeDirty();
 }
 
 void CChunkVoxelComponent::setBlocksInBulk(const std::vector<std::pair<std::tuple<int, int, int>, int>>& blocks)
@@ -71,7 +71,7 @@ void CChunkVoxelComponent::setBlocksInBulk(const std::vector<std::pair<std::tupl
 	if (cards & 16) m_parent->makeNeighborDirty(CARD_DOWN);
 	if (cards & 32) m_parent->makeNeighborDirty(CARD_UP);
 
-    m_parent->getMeshComponent().makeDirty();
+	m_parent->MakeDirty();
 }
 
 void CChunkVoxelComponent::setAllBlocks(std::unique_ptr<SBlockInfo[]> blocks)

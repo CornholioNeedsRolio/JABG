@@ -5,7 +5,7 @@
 
 
 CWorld::CWorld(std::shared_ptr<CTextureAtlas> texture, CFPPlayer& player) :
-	m_manager(new CChunkManager(this)), m_texture(texture), m_threadManager(this), m_player(&player), m_playerPos(0,0,0), m_loader(1, this)
+	m_manager(new CChunkManager(this)), m_texture(texture), m_threadManager(this), m_player(&player), m_playerPos(0,0,0), m_loader(1, this), m_loadingComponent(this)
 {
 	m_shader = CFileManager::getShader("./res/DefaultShader/ChunkShader");
 	m_watershader = CFileManager::getShader("./res/DefaultShader/WaterShader");
@@ -15,6 +15,7 @@ CWorld::CWorld(std::shared_ptr<CTextureAtlas> texture, CFPPlayer& player) :
 
 CWorld::~CWorld(){
 			m_player->save(getFilePath());
+			m_loadingComponent.ForceSave();
 			m_loader.joinThreads();
 			delete m_manager;
 }
@@ -116,4 +117,9 @@ std::shared_ptr<CShader> CWorld::getShader()
 std::shared_ptr<CShader> CWorld::getWaterShader()
 {
 	return m_watershader;
+}
+
+CMegaChunkManager& CWorld::GetLoader()
+{
+			return m_loadingComponent;
 }
