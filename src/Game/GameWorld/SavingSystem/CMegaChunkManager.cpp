@@ -6,8 +6,10 @@ std::shared_ptr<CMegaChunk> CMegaChunkManager::GetMegaChunk(int x, int y, int z)
 			std::lock_guard g(m_mutex);
 			for(auto& megachunk : m_megaChunks)
 			{
-						if(megachunk->PositionEqual(x, y, z))
+						if(megachunk->PositionEqual(x, y, z)) {
+									megachunk->ResetTime();
 									return megachunk;
+						}
 			}
 			std::shared_ptr<CMegaChunk> chunk = std::make_shared<CMegaChunk>(x, y, z, m_world);
 			chunk->Load();

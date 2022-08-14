@@ -19,6 +19,9 @@ class CMegaChunk
 			std::vector<char> SerializeMegaChunk();
 			void DeserializeMegaChunk(const std::vector<char>& serialized);
 
+			std::vector<char> Decompress(const std::vector<char>& Compressed);
+			std::vector<char> Compress(const std::vector<char>& Decompressed);
+
 			class CWorld * m_world = nullptr;
 public:
 			CMegaChunk(int x, int y, int z, CWorld* world);

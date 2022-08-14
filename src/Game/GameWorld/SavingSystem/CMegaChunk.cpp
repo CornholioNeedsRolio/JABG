@@ -10,6 +10,44 @@ CMegaChunk::CMegaChunk(int x, int y, int z, CWorld* world) : m_Pos(x, y, z), m_w
 						serializedChunk.first = false;
 }
 
+std::vector<char> CMegaChunk::Decompress(const std::vector<char>& Compressed)
+{
+			std::vector<char> Decompressed;
+			//getting the size of the archive
+			std::uint32_t size;
+			memcpy(&size, Compressed.data(), sizeof size);
+
+			//doing the decompression
+			uLong u_size = size;
+			Decompressed.resize(size);
+			//the pointer of compressed is offseted by the size since it's not part of the compression
+			uncompress((Bytef*)Decompressed.data(), &u_size, (Bytef*)(Compressed.data() + sizeof(size)), Compressed.size() - sizeof size);
+			return Decompressed;
+}
+
+std::vector<char> CMegaChunk::Compress(const std::vector<char>& Decompressed)
+{
+			std::vector<char> Compressed;
+
+			//making compressed the same size as decompressed
+			Compressed.resize(compressBound(Decompressed.size()));
+			std::uint32_t size = Compressed.size();
+			uLong u_size = size;
+
+			//compressing data to Compressed
+			compress((Bytef*)Compressed.data(), &u_size, (Bytef*)Decompressed.data(), Decompressed.size());
+			//resizing Compressed to the new size
+			Compressed.resize(u_size);
+
+			//Serializing size and adding it to the beginning
+			size = Decompressed.size();
+			char SerializedSize[sizeof size];
+			memcpy(&SerializedSize[0], &size, sizeof size);
+			Compressed.insert(Compressed.begin(), &SerializedSize[0], &SerializedSize[0]+sizeof size);
+
+			return Compressed;
+}
+
 void CMegaChunk::Load()
 {
 			std::string path = m_world->getFilePath();
@@ -27,10 +65,10 @@ void CMegaChunk::Load()
 			file.seekg(0, std::ios::beg);
 
 			std::vector<char> Ser_Buffer;
-			//copying the file to the bugger
 			Ser_Buffer.resize(fileSize);
-			file.read(Ser_Buffer.data(), fileSize);
-			DeserializeMegaChunk(Ser_Buffer);
+			file.read(Ser_Buffer.data(), Ser_Buffer.size());
+			std::vector<char> Ser_Buffer_Decomp = Decompress(Ser_Buffer);
+			DeserializeMegaChunk(Ser_Buffer_Decomp);
 			file.close();
 }
 
@@ -47,7 +85,8 @@ void CMegaChunk::Save()
 			}
 
 			std::vector<char> Ser_Buffer = SerializeMegaChunk();
-			file.write(Ser_Buffer.data(), Ser_Buffer.size());
+			std::vector<char> SerBuffer_Comp = Compress(Ser_Buffer);
+			file.write(SerBuffer_Comp.data(), SerBuffer_Comp.size());
 			//file.write(Ser_Buffer.data(), Ser_Buffer.size());
 			file.close();
 }
