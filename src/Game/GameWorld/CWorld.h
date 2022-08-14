@@ -8,7 +8,7 @@
 #include "Misc/CFPPlayer.h"
 #include "Game/ChunkLoader/CChunkLoader.h"
 
-#include "glm/glm/glm.hpp"
+#include "glm/glm.hpp"
 #include "Game/GameWorld/SavingSystem/CMegaChunkManager.h"
 
 

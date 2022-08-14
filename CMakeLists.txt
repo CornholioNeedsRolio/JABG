@@ -21,7 +21,7 @@ include_directories(${CMAKE_SOURCE_DIR}/libs)
 
 #is it compiled on normie platform?
 if(MSVC)
-    set(CMAKE_CXX_FLAGS "/O12x /EHsc /experimental:module /std:c++latest /I")
+    set(CMAKE_CXX_FLAGS "/O12x /EHsc /experimental:module /std:c++latest")
 else()
     set(CMAKE_C_COMPILER /usr/bin/gcc)
     set(CMAKE_CXX_COMPILER /usr/bin/gcc)

@@ -5,6 +5,11 @@
 #include "Engine/CCamera.h"
 #include <fenv.h>
 
+#include <limits.h>
+#if CHAR_BIT != 8
+#error "Char must be 8 bits wide"
+#endif
+
 int main()
 {
 //	feenableexcept(FE_INVALID);

@@ -132,7 +132,7 @@ def compObj(file):
     obj_builded = obj_builded + 1
     output = ""
     if(normieMode):
-        output = os.popen(compiler+" /O2x /EHsc /experimental:module /std:c++latest /I "+workingDirWindows +"\\\\libraries\\\\include" + " /I "+workingDirWindows + "\\\\src "+ "/Fo /c " + workingDirWindows +"\\\\{}".format(file.replace('/', '\\\\'))).read()
+        output = os.popen(compiler+" /O2x /EHsc /experimental:module /std:c++20 /I "+workingDirWindows +"\\\\libwin\\\\include" + " /I "+workingDirWindows + "\\\\src "+ "/Fo /c " + workingDirWindows +"\\\\{}".format(file.replace('/', '\\\\'))).read()
         try:
             os.replace(os.getcwd()+'/'+os.path.basename(obj), obj)
         except:
@@ -153,7 +153,7 @@ for process in threads:
 print('Finished building object files, building executable now, builded', obj_builded, '/', obj_total)
 paramaters = paramaters + ' ' + link_libs 
 if(normieMode):
-    os.system(compiler+" /Otxdiy /std:c++latest {} /o{} /link /LIBPATH:{}\\\\libraries\\\\lib\\\\ /SUBSYSTEM:CONSOLE /DEFAULTLIB:SDL2.lib /DEFAULTLIB:SDL2main.lib /DEFAULTLIB:opengl32.lib /DEFAULTLIB:freetype.lib".format(objects, outputFile, workingDirWindows))
+    os.system(compiler+" /Otxdiy /std:c++20 {} /o{} /link /LIBPATH:{}\\\\libwin\\\\lib\\\\ /SUBSYSTEM:CONSOLE /DEFAULTLIB:SDL2.lib /DEFAULTLIB:SDL2main.lib /DEFAULTLIB:opengl32.lib /DEFAULTLIB:freetype.lib /DEFAULTLIB:zlibwapi.lib ".format(objects, outputFile, workingDirWindows))
 else:
     os.system(compiler + '-o ' + outputFile + ' ' + paramaters + ' ' + objects)
 
