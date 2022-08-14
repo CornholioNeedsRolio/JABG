@@ -3,15 +3,16 @@
 #include <glm/glm.hpp>
 #include "Game/CChunk.h"
 
-#define MEGA_CHUNK_SIZE 16
+#define MEGA_CHUNK_SIZE 32
+#define MEGA_CHUNK_SIZE_SQR MEGA_CHUNK_SIZE*MEGA_CHUNK_SIZE*MEGA_CHUNK_SIZE
 
 class CMegaChunk
 {
 			float m_timeExisted = 0;
 			glm::ivec3 m_Pos;
 
-			std::array<std::uint32_t, CHUNK_SIZE_SQR> m_chunkIndexes{0};
-			std::array<std::pair<bool, std::vector<char>>, CHUNK_SIZE_SQR> m_serializedChunks; // first = initialized, vector of chars the chunk
+			std::array<std::uint32_t, MEGA_CHUNK_SIZE_SQR> m_chunkIndexes{0};
+			std::array<std::pair<bool, std::vector<char>>, MEGA_CHUNK_SIZE_SQR> m_serializedChunks; // first = initialized, vector of chars the chunk
 
 			std::string GetFileName() const;
 

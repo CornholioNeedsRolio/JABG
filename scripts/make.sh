@@ -24,7 +24,7 @@ if [[ $2 == run ]]; then
     cd bin
 
     if [[ $1 == debug ]]; then
-        gdb ./JABG
+       gdb ./JABG
     else
         ./JABG
     fi

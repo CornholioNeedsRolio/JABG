@@ -5,9 +5,6 @@
 #include <array>
 #include <vector>
 
-#define MEGA_CHUNK_SIZE 16
-
-
 class CChunkSaveComponent : public IChunkComponent
 {
 			class CChunk* m_parent = nullptr;

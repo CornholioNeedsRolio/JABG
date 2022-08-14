@@ -1,5 +1,10 @@
 #include <filesystem>
 #include <iostream>
+#include <gzip/compress.hpp>
+#include <gzip/config.hpp>
+#include <gzip/decompress.hpp>
+#include <gzip/utils.hpp>
+#include <gzip/version.hpp>
 #include "CMegaChunk.h"
 #include "Game/GameWorld/CWorld.h"
 
@@ -30,7 +35,12 @@ void CMegaChunk::Load()
 			std::vector<char> Ser_Buffer;
 			//copying the file to the bugger
 			Ser_Buffer.reserve(fileSize);
+
 			file.read(Ser_Buffer.data(), fileSize);
+			std::string decompressed_data = gzip::decompress(Ser_Buffer.data(), Ser_Buffer.size());
+			std::vector<char> Buffer{};
+			Buffer.resize(decompressed_data.size());
+			memcpy(Buffer.data(), decompressed_data.data(), decompressed_data.size());
 			DeserializeMegaChunk(Ser_Buffer);
 			file.close();
 }
@@ -49,7 +59,9 @@ void CMegaChunk::Save()
 			}
 
 			std::vector<char> Ser_Buffer = SerializeMegaChunk();
-			file.write(Ser_Buffer.data(), Ser_Buffer.size());
+			std::string compressed_data = gzip::compress(Ser_Buffer.data(), Ser_Buffer.size());
+			file.write(compressed_data.data(), compressed_data.size());
+			//file.write(Ser_Buffer.data(), Ser_Buffer.size());
 			file.close();
 }
 
@@ -58,7 +70,7 @@ std::vector<char> CMegaChunk::SerializeMegaChunk()
 			std::vector<char> Ser_Output{},Ser_ChunkOffset{},Ser_ChunkData{};
 			//reseting all offsets to 0
 			memset(&m_chunkIndexes[0], 0, sizeof(m_chunkIndexes));
-			for(int i = 0; i < CHUNK_SIZE_SQR; ++i)
+			for(int i = 0; i < MEGA_CHUNK_SIZE_SQR; ++i)
 			{
 						if(!m_serializedChunks[i].first) continue;
 						std::vector<char> Ser_TempChunkData{};
@@ -81,7 +93,7 @@ std::vector<char> CMegaChunk::SerializeMegaChunk()
 void CMegaChunk::DeserializeMegaChunk(const std::vector<char>& serialized)
 {
 			memcpy(&m_chunkIndexes[0], serialized.data(), sizeof(m_chunkIndexes));
-			for(int i = 0; i < CHUNK_SIZE_SQR; ++i)
+			for(int i = 0; i < MEGA_CHUNK_SIZE_SQR; ++i)
 			{
 						if(m_chunkIndexes[i] == 0) continue;
 						unsigned short ChunkSize;
