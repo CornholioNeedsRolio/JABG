@@ -11,6 +11,7 @@ add_subdirectory(libs/glm)
 find_package(SDL2 REQUIRED)
 find_package(Freetype REQUIRED)
 find_package(Threads)
+find_package(ZLIB)
 
 include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(${FREETYPE_INCLUDE_DIRS})
@@ -24,7 +25,7 @@ if(MSVC)
 else()
     set(CMAKE_C_COMPILER /usr/bin/gcc)
     set(CMAKE_CXX_COMPILER /usr/bin/gcc)
-    set(CMAKE_CXX_FLAGS "-ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native ")
+    set(CMAKE_CXX_FLAGS " -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native ")
     set(CMAKE_CXX_FLAGS_DEBUG "-g")
     set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 endif()
@@ -38,4 +39,4 @@ file(GLOB_RECURSE SOURCES
 
 add_executable(JABG ${SOURCES})
 
-target_link_libraries(JABG glm glad ${SDL2_LIBRARIES} ${FREETYPE_LIBRARIES} ${GLM_LIBRARIES} m stdc++  ${CMAKE_DL_LIBS})
+target_link_libraries(JABG glm glad ${SDL2_LIBRARIES} ${FREETYPE_LIBRARIES} ${GLM_LIBRARIES} m stdc++   ${CMAKE_DL_LIBS} ZLIB::ZLIB)

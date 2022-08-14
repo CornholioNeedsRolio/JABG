@@ -1,10 +1,6 @@
 #include <filesystem>
 #include <iostream>
-#include <gzip/compress.hpp>
-#include <gzip/config.hpp>
-#include <gzip/decompress.hpp>
-#include <gzip/utils.hpp>
-#include <gzip/version.hpp>
+#include <zlib.h>
 #include "CMegaChunk.h"
 #include "Game/GameWorld/CWorld.h"
 
@@ -18,12 +14,10 @@ void CMegaChunk::Load()
 {
 			std::string path = m_world->getFilePath();
 			if (!std::filesystem::is_directory(path) || !std::filesystem::exists(path)) {
-						std::cout << "file not found\n";
 						return;
 			}
 			std::ifstream file(path+GetFileName());
 			if(!file.good() || !file.is_open()) {
-						std::cout << "file not open" + path+GetFileName() + "\n";
 						return;
 			}
 
@@ -34,13 +28,8 @@ void CMegaChunk::Load()
 
 			std::vector<char> Ser_Buffer;
 			//copying the file to the bugger
-			Ser_Buffer.reserve(fileSize);
-
+			Ser_Buffer.resize(fileSize);
 			file.read(Ser_Buffer.data(), fileSize);
-			std::string decompressed_data = gzip::decompress(Ser_Buffer.data(), Ser_Buffer.size());
-			std::vector<char> Buffer{};
-			Buffer.resize(decompressed_data.size());
-			memcpy(Buffer.data(), decompressed_data.data(), decompressed_data.size());
 			DeserializeMegaChunk(Ser_Buffer);
 			file.close();
 }
@@ -54,13 +43,11 @@ void CMegaChunk::Save()
 
 			std::ofstream file(path+GetFileName(), std::ios::trunc);
 			if(!file.good() || !file.is_open()) {
-						std::cout << "bad file\n";
 						return;
 			}
 
 			std::vector<char> Ser_Buffer = SerializeMegaChunk();
-			std::string compressed_data = gzip::compress(Ser_Buffer.data(), Ser_Buffer.size());
-			file.write(compressed_data.data(), compressed_data.size());
+			file.write(Ser_Buffer.data(), Ser_Buffer.size());
 			//file.write(Ser_Buffer.data(), Ser_Buffer.size());
 			file.close();
 }
