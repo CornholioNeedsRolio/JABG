@@ -125,6 +125,7 @@ void CMegaChunk::DeserializeMegaChunk(const std::vector<char>& serialized)
 						memcpy(&ChunkSize, &serialized[m_chunkIndexes[i]] , sizeof(ChunkSize));
 						m_serializedChunks[i].first = true;
 						m_serializedChunks[i].second.resize(ChunkSize);
+						if(m_serializedChunks[i].second.size() < ChunkSize) continue; //should be safer now
 						memcpy(m_serializedChunks[i].second.data(), &serialized[m_chunkIndexes[i] + sizeof(ChunkSize)], ChunkSize);
 			}
 }
