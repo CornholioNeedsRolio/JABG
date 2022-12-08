@@ -1,3 +1,0 @@
-/home/rellik/JABG/build/CMakeFiles/JABG.dir
-/home/rellik/JABG/build/CMakeFiles/edit_cache.dir
-/home/rellik/JABG/build/CMakeFiles/rebuild_cache.dir
