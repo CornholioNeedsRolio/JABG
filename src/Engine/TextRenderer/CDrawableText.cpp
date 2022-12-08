@@ -1,8 +1,8 @@
 #include "CDrawableText.h"
 #include "glad/glad.h"
 #include <iostream>
-#include "Engine/CTexture.h"
-#include "Engine/CMesh.h"
+#include "Engine/GLRenderer/CTexture.h"
+#include "Engine/GLRenderer/CMesh.h"
 #include "Engine/CFileManager.h"
 
 

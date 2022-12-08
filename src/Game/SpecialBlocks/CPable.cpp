@@ -1,5 +1,5 @@
 #include "CPable.h"
-#include "Engine/CTextureAtlas.h"
+#include "Engine/GLRenderer/CTextureAtlas.h"
 
 CPable::CPable()
 {
@@ -11,7 +11,7 @@ CPable::CPable()
         m_faceatlasindex[i] = 3;
 }
 
-std::vector<SVertex> CPable::getBlockMeshVertices(CBlock* neighbors[27], std::shared_ptr<CTextureAtlas> texture, glm::ivec3 position)
+std::vector<SVertex> CPable::getBlockMeshVertices(CBlock* neighbors[27], std::shared_ptr<CTextureAtlas> texture, const class SBlockLightData* LightData, glm::ivec3 position)
 {
 	const std::vector<SVertex>& _temp = GetDefaultBlock();
 

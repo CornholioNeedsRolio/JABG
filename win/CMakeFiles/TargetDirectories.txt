@@ -1,0 +1,11 @@
+/home/rellik/JABG/win/CMakeFiles/JABG.dir
+/home/rellik/JABG/win/CMakeFiles/edit_cache.dir
+/home/rellik/JABG/win/CMakeFiles/rebuild_cache.dir
+/home/rellik/JABG/win/libs/glad/CMakeFiles/glad.dir
+/home/rellik/JABG/win/libs/glad/CMakeFiles/edit_cache.dir
+/home/rellik/JABG/win/libs/glad/CMakeFiles/rebuild_cache.dir
+/home/rellik/JABG/win/libs/glm/CMakeFiles/edit_cache.dir
+/home/rellik/JABG/win/libs/glm/CMakeFiles/rebuild_cache.dir
+/home/rellik/JABG/win/libs/glm/glm/CMakeFiles/glm_shared.dir
+/home/rellik/JABG/win/libs/glm/glm/CMakeFiles/edit_cache.dir
+/home/rellik/JABG/win/libs/glm/glm/CMakeFiles/rebuild_cache.dir

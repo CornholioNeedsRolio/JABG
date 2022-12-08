@@ -1,6 +1,6 @@
 #ifndef CCTimeShaderSetting_Header
 #define CTimeShaderSetting_Header
-#include "Engine/CShader.h"
+#include "Engine/GLRenderer/CShader.h"
 
 class CTimeShaderSetting : public CShaderSettings
 {

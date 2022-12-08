@@ -1,5 +1,5 @@
 #include "CDirt.h"
-#include "Engine/CTextureAtlas.h"
+#include "Engine/GLRenderer/CTextureAtlas.h"
 
 CDirt::CDirt() : CBlock()
 {

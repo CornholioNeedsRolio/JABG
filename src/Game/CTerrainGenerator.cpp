@@ -1,6 +1,6 @@
 #include "CTerrainGenerator.h"
-#include "CChunk.h"
-#include "CChunkPart.h"
+#include "Game/Chunk/CChunk.h"
+#include "Game/Chunk/CChunkPart.h"
 #include "CBlock.h"
 #include "Game/GameWorld/CWorld.h"
 

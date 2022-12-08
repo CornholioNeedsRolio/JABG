@@ -1,11 +1,14 @@
 #include "Engine/CFrustumCollider.h"
 #include "Engine/CFileManager.h"
+#include "Entity/Components/CEntityMovement.h"
+#include "Engine/GLRenderer/CTextureAtlas.h"
 #include "Game/GameWorld/CWorld.h"
 #include "CFPPlayer.h"
 #include <filesystem>
 #include <algorithm>
 #include <iostream>
 #include <fstream>
+#include <memory>
 #include <cmath>
 
 template<class T>
@@ -21,22 +24,28 @@ float CFPPlayer::jumpHyperbola(float value)
 	return -t*t * 4;
 }
 
+#define WALK_SPEED 0.06f
+
 CFPPlayer::CFPPlayer(SVector3 _pos, SVector3 _rot, class CWorld* world) :
-	CObject(glm::vec3(0), glm::vec3(0)), m_camera(glm::vec3(0), glm::vec3(0)), m_camerayrot(0), m_collider({ -0.30, 0, -0.30 }, { 0.30, 1.75, 0.30 }), m_world(world), m_velocity(0)
+	CGameEntity(glm::vec3(0), glm::vec3(0)), m_camera(glm::vec3(0), glm::vec3(0)), m_camerayrot(0), m_world(world), m_velocity(0)
 {
+	m_collider = std::unique_ptr<CGameEntityCollider>(new CGameEntityCollider({ -0.30, 0, -0.30 }, { 0.30, 1.75, 0.30 })); 
+	m_movementComponent = std::shared_ptr<CEntityMovement>(new CEntityMovement(this));
+	m_movementComponent->SetMaximumWalkingSpeed(WALK_SPEED);
+	
 	m_camera.Attach(this);
 	m_camera.SetPosition({ 0, 1.65, 0 });
 	m_camera.MakePerspective(90.f, 4.f / 3.f, 0.01f, 500.f);
 
 	m_flags = IS_HOVERING;
 	m_holdingBlock = BLOCK_WATER;
-	m_collider.getCollider().SetPosition(_pos);
-	Attach(&m_collider.getCollider());
+	m_collider->getCollider().SetPosition(_pos);
+	Attach(&m_collider->getCollider());
 }
 
 CFPPlayer::~CFPPlayer()
 {
-	save(m_world->getFilePath());
+	//save(m_world->getFilePath());
 }
 
 bool CFPPlayer::checkFlag(const uint8_t& flag) const
@@ -86,7 +95,7 @@ void CFPPlayer::Move(bool forward, bool back, bool top, bool bottom, bool left, 
 	glm::mat4 invcam = glm::inverse(m_camera.getModelMatrix(nullptr));
 	glm::vec3 ray = glm::vec3(invcam[2]) * glm::vec3(1, 1, -1), position, normal;
 	ray *= 6.f;
-	if (m_collider.RayCast(m_camera.GetGlobalPosition(), ray, position, normal, &m_world->getManager()))
+	if (m_collider->RayCast(m_camera.GetGlobalPosition(), ray, position, normal, &m_world->getManager()))
 	{
 		if (!m_targetBlock.isInit())
 		{
@@ -128,9 +137,9 @@ void CFPPlayer::Move(bool forward, bool back, bool top, bool bottom, bool left, 
 		if (glm::all(glm::isnan(m_velocity)))
 			m_velocity = glm::vec3(0);
 		if(!checkFlag(IS_NOCLIPPING)) 
-			m_collider.Move(m_velocity, &m_world->getManager());
+			m_collider->Move(m_velocity, &m_world->getManager());
 		else
-			m_collider.getCollider().Move(m_velocity);
+			m_collider->getCollider().Move(m_velocity);
 	}
 	else
 	{
@@ -150,7 +159,7 @@ void CFPPlayer::Move(bool forward, bool back, bool top, bool bottom, bool left, 
 			m_accel *= 1 - delta;
 		}
 
-		m_collider.Move(m_velocity, &m_world->getManager());
+		m_collider->Move(m_velocity, &m_world->getManager());
 		float y = m_velocity.y;
 
 		m_velocity = (vforward * (float)(forward - back) + vright * (float)(right - left));
@@ -186,7 +195,7 @@ void CFPPlayer::Move(bool forward, bool back, bool top, bool bottom, bool left, 
 		else
 			m_velocity += vtop * m_gravity * delta * 0.05f;
 
-		uint8_t normals = m_collider.Move(m_velocity, &m_world->getManager());
+		uint8_t normals = m_collider->Move(m_velocity, &m_world->getManager());
 		
 		if (top && (normals & EntityC_Up) && m_jumpCoolDown <= 0)
 		{
@@ -216,38 +225,86 @@ CCamera& CFPPlayer::getCamera()
 void CFPPlayer::placeBlock(int block)
 {
 	CAABB box(m_targetPlace, m_targetPlace+glm::ivec3(1));
-	if(m_collider.getCollider().checkIntersetion(box) == AABB_NotIntersected)
+	if(m_collider->getCollider().checkIntersetion(box) == AABB_NotIntersected)
 	{
 		m_world->setBlock(m_targetPlace.x, m_targetPlace.y, m_targetPlace.z, block);
 	}
 }
 
+void CFPPlayer::TempManageBlocks()
+{
+	if (!m_world) return;
+	glm::mat4 matrix = getModelMatrix(nullptr);
+
+	glm::vec3 vforward = -glm::normalize(matrix[2]);
+	glm::vec3 vright = glm::normalize(matrix[0]);
+	glm::vec3 vtop = glm::vec3(0, 1, 0);
+
+
+	glm::mat4 invcam = glm::inverse(m_camera.getModelMatrix(nullptr));
+	glm::vec3 ray = glm::vec3(invcam[2]) * glm::vec3(1, 1, -1), position, normal;
+	ray *= 6.f;
+	if (m_collider->RayCast(m_camera.GetGlobalPosition(), ray, position, normal, &m_world->getManager()))
+	{
+		if (!m_targetBlock.isInit())
+		{
+			float epsilon = 10e-4;
+			m_targetBlock.InitDebugRect(-0.5 - epsilon, -0.5 - epsilon, -0.5-epsilon, 0.5+ epsilon, 0.5 + epsilon, 0.5 + epsilon);
+			m_targetBlock.setColor(glm::vec3(0));
+		}
+		if(!m_debugTarget.isInit())
+		{
+			m_debugTarget.InitCube(0.2);
+			m_debugTarget.setColor(glm::vec3(1, 0, 0));
+		}
+
+		m_pointing = glm::floor(position);
+	
+		if (normal.x > 0)
+			m_pointing.x--;
+		if (normal.z > 0)
+			m_pointing.z--;
+		if (normal.y > 0)
+			m_pointing.y--;
+
+		m_targetPlace = m_pointing + normal;
+
+		//m_targetBlock.SetPosition({ 0, -100000, 0 });
+		m_targetBlock.SetPosition(glm::vec3(0.5)+ m_pointing);
+		m_debugTarget.SetPosition(glm::vec3(position));
+
+	}
+	else
+	{
+		m_targetBlock.SetPosition({ 0, -100000, 0 });
+	}
+}
+
 void CFPPlayer::Tick(CInputManager& _manager, float deltaTime)
 {
+	m_movementComponent->SetWantsToJump(_manager.keyPressed(SDL_SCANCODE_SPACE));
+	CGameEntity::Tick(_manager, deltaTime);
 	RotateCamera(-_manager.getMouseRelative(), 0.2f, deltaTime * 1000 * m_sensivity);
 
 	if (_manager.keyDown(SDL_SCANCODE_Q))
-		m_speed = 500;
+		m_movementComponent->SetMaximumWalkingSpeed(500);
 	else
-		m_speed = 5;
+		m_movementComponent->SetMaximumWalkingSpeed(WALK_SPEED);
+	
 	if(_manager.keyPressed(SDL_SCANCODE_1))
-	{
 		setFlags(IS_HOVERING, !checkFlag(IS_HOVERING));
-	}
 	if(_manager.keyPressed(SDL_SCANCODE_2))
-	{
 		setFlags(IS_NOCLIPPING, !checkFlag(IS_NOCLIPPING));
-	}
 	m_lastPlaced += deltaTime;
 
-	if (_manager.mouseButtonDown(LEFT_MOUSE) && m_lastPlaced > 0.2)
+	if (_manager.mouseButtonPressed(LEFT_MOUSE) || _manager.mouseButtonDown(LEFT_MOUSE) && m_lastPlaced > 0.2)
 	{
 		m_lastPlaced = 0;
 		glm::vec3 pos = glm::floor(m_pointing);
 		m_world->setBlock(pos.x, pos.y, pos.z, BLOCK_AIR);
 	}
 	
-	if (_manager.mouseButtonDown(RIGHT_MOUSE) && m_lastPlaced > 0.2)
+	if (_manager.mouseButtonPressed(RIGHT_MOUSE) || _manager.mouseButtonDown(RIGHT_MOUSE) && m_lastPlaced > 0.2)
 	{
 		m_lastPlaced = 0;
 		placeBlock(m_holdingBlock);
@@ -255,7 +312,7 @@ void CFPPlayer::Tick(CInputManager& _manager, float deltaTime)
 
 	if(_manager.keyPressed(SDL_SCANCODE_9))
 	{
-				m_world->GetLoader().ForceSave();
+		m_world->GetLoader().ForceSave();
 	}
 
 	bool left_arrow = _manager.keyPressed(SDL_SCANCODE_LEFT);
@@ -276,18 +333,24 @@ void CFPPlayer::Tick(CInputManager& _manager, float deltaTime)
 		{
 			m_holdingBlockMesh->Clear();
 			CBlock* faces[27]{nullptr};
-			m_holdingBlockMesh->Init(BLOCK_DATABASE::getBlock(m_holdingBlock)->getBlockMeshVertices(faces, m_world->getAtlas()));
+			m_holdingBlockMesh->Init(BLOCK_DATABASE::getBlock(m_holdingBlock)->getBlockMeshVertices(faces, m_world->getAtlas(), nullptr));
 		}
 	}
 
-	Move(_manager.keyDown(SDL_SCANCODE_W),
+
+	const float Forward = static_cast<float>(_manager.keyDown(SDL_SCANCODE_W)) - static_cast<float>(_manager.keyDown(SDL_SCANCODE_S));
+	const float Right = static_cast<float>(_manager.keyDown(SDL_SCANCODE_D)) - static_cast<float>(_manager.keyDown(SDL_SCANCODE_A));
+	m_movementComponent->AddMovementVector(GetForwardVector()*Forward);
+	m_movementComponent->AddMovementVector(GetRightVector()*Right);
+	TempManageBlocks();
+	/*Move(_manager.keyDown(SDL_SCANCODE_W),
 		 _manager.keyDown(SDL_SCANCODE_S),
 		 _manager.keyDown(SDL_SCANCODE_SPACE),
 		 _manager.keyDown(SDL_SCANCODE_LSHIFT),
 		 _manager.keyDown(SDL_SCANCODE_A),
 		 _manager.keyDown(SDL_SCANCODE_D),
 		 deltaTime,
-		-20.f);
+		-20.f);*/
 
 
 	//m_collider.applyCollision(m_testcollider, 0.f);
@@ -297,7 +360,7 @@ void CFPPlayer::Tick(CInputManager& _manager, float deltaTime)
 
 void CFPPlayer::Draw(const SDrawInfo& info)
 {
-	m_collider.getCollider().Draw(info);
+	m_collider->getCollider().Draw(info);
 	if(info.testlight != nullptr)
 		m_targetBlock.Draw(info);
 }
@@ -319,14 +382,14 @@ void CFPPlayer::Hover(bool value)
 	setFlags(IS_HOVERING, value);
 }
 
-bool CFPPlayer::isJumping()
+CGameEntityCollider* CFPPlayer::GetCollider() const
 {
-	return checkFlag(IS_JUMPING);
+	return m_collider.get();
 }
 
-bool CFPPlayer::canJump()
+CWorld* CFPPlayer::GetWorld() const
 {
-	return false;
+	return m_world;
 }
 
 void CFPPlayer::save(const std::string& path)
@@ -336,7 +399,7 @@ void CFPPlayer::save(const std::string& path)
     }
 	std::string pth = path + "/player.data";
 	std::ofstream file(pth, std::ios::binary | std::ofstream::trunc);
-	SVector3 position = m_collider.getCollider().GetPosition(), rotation = m_collider.getCollider().GetRotation();
+	SVector3 position = m_collider->getCollider().GetPosition(), rotation = m_collider->getCollider().GetRotation();
 	file.write((char*)&position, sizeof(position));
 	file.write((char*)&rotation, sizeof(rotation));
 	file.close();
@@ -354,8 +417,8 @@ void CFPPlayer::load(const std::string& path)
 	SVector3 position, rotation;
 	file.read((char*)&position, sizeof(SVector3));
 	file.read((char*)&rotation, sizeof(SVector3));
-	m_collider.getCollider().SetPosition(position);
-	m_collider.getCollider().SetRotation(rotation);
+	m_collider->getCollider().SetPosition(position);
+	m_collider->getCollider().SetRotation(rotation);
 	file.close();
 }
 
@@ -363,6 +426,6 @@ void CFPPlayer::setHoldingBlockMesh(CMesh* mesh)
 {
 	m_holdingBlockMesh = mesh;
 	CBlock* faces[27]{nullptr};
-	m_holdingBlockMesh->Init(BLOCK_DATABASE::getBlock(m_holdingBlock)->getBlockMeshVertices(faces, m_world->getAtlas()));
+	m_holdingBlockMesh->Init(BLOCK_DATABASE::getBlock(m_holdingBlock)->getBlockMeshVertices(faces, m_world->getAtlas(), nullptr));
 	m_holdingBlockMesh->SetTexture(m_world->getAtlas());
 }

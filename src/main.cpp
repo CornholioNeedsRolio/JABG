@@ -2,7 +2,6 @@
 #include <SDL2/SDL.h>
 #include "Engine/CGame.h"
 #include "CDebugLevel.h"
-#include "Engine/CCamera.h"
 #include <fenv.h>
 
 #include <limits.h>

@@ -1,0 +1,1 @@
+-I"/usr/i686-w64-mingw32/include/SDL2" -I"/usr/i686-w64-mingw32/include/freetype2" -I/home/rellik/JABG/src -I/home/rellik/JABG/libs -I/home/rellik/JABG/libs/glm/glm/..

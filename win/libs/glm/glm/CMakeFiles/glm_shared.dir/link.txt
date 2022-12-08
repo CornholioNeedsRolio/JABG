@@ -1,0 +1,3 @@
+/usr/bin/cmake -E rm -f CMakeFiles/glm_shared.dir/objects.a
+/usr/bin/i686-w64-mingw32-ar qc CMakeFiles/glm_shared.dir/objects.a @CMakeFiles/glm_shared.dir/objects1.rsp
+/usr/bin/i686-w64-mingw32-g++ -D_FORTIFY_SOURCE=2 -D_GLIBCXX_ASSERTIONS -O2 -pipe -fno-plt -fexceptions --param=ssp-buffer-size=4 -Wformat -Werror=format-security -fcf-protection -O3 -DNDEBUG -Wl,-O1,--sort-common,--as-needed -fstack-protector -shared -o libglm_shared.dll -Wl,--out-implib,libglm_shared.dll.a -Wl,--major-image-version,0,--minor-image-version,0 -Wl,--whole-archive CMakeFiles/glm_shared.dir/objects.a -Wl,--no-whole-archive @CMakeFiles/glm_shared.dir/linklibs.rsp

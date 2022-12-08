@@ -3,7 +3,7 @@
 #include "BulkRenderer/CBulkRenderer.h"
 #include "Engine/TextRenderer/CDrawableText.h"
 #include "Engine/CInputManager.h"
-#include "Engine/CSprite.h"
+#include "Engine/GLRenderer/CSprite.h"
 
 class CPauseMenu
 {

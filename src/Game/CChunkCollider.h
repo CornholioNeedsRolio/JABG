@@ -3,8 +3,8 @@
 
 #include <array>
 #include "../CAABB.h"
-#include "Engine/CObject.h"
-#include "CChunk.h"
+#include "Engine/Objects/CObject.h"
+#include "Game/Chunk/CChunk.h"
 #include "GameImportantStuff.h"
 
 /*

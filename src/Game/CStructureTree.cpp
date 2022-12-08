@@ -1,5 +1,5 @@
 #include "CStructureTree.h"
-#include "CChunk.h"
+#include "Game/Chunk/CChunk.h"
 #include <iostream>
 
 bool CStructureTree::shouldBeHere(int x, int y, int z)

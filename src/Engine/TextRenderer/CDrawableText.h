@@ -7,8 +7,8 @@
 #include <memory>
 #include <string>
 #include <map>
-#include "Engine/CObject.h"
-#include "Engine/CSprite.h"
+#include "Engine/Objects/CObject.h"
+#include "Engine/GLRenderer/CSprite.h"
 
 struct SChar
 {

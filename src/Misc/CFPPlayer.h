@@ -1,12 +1,13 @@
 #ifndef CFPPLAYER_HEADER
 #define CFPPLAYER_HEADER
 #include "../Game/CGameEntityCollider.h"
-#include "Engine/CObject.h"
-#include "Engine/CCamera.h"
-#include "Engine/CMesh.h"
+#include "Engine/Objects/CObject.h"
+#include "Engine/GLRenderer/CCamera.h"
+#include "Engine/GLRenderer/CMesh.h"
 #include "../CAABB.h"
+#include "Entity/CGameEntity.h"
 
-class CFPPlayer : public CObject
+class CFPPlayer : public CGameEntity
 {
 	CCamera m_camera;
 	
@@ -25,7 +26,6 @@ class CFPPlayer : public CObject
 	float m_jumpCoolDownMax = 0.15;
 	float m_rampUp = 0;
 
-
 	float m_lastPlaced;
 
 	glm::vec3 m_velocity;
@@ -36,7 +36,8 @@ class CFPPlayer : public CObject
 	int m_holdingBlock;
 
 	class CWorld* m_world = 0x0;
-	CGameEntityCollider m_collider;
+	std::unique_ptr<CGameEntityCollider> m_collider;
+	std::shared_ptr<class CEntityMovement> m_movementComponent;
 
 	float jumpHyperbola(float value);
 	CMesh m_targetBlock;
@@ -56,6 +57,8 @@ class CFPPlayer : public CObject
 	void setFlags(const uint8_t& flag, const bool& set);
 
 	void placeBlock(int block);
+
+	void TempManageBlocks();
 public:
 	CFPPlayer(SVector3 _pos = SVector3(0), SVector3 _rot = SVector3(0), class CWorld* world = 0x0);
 	~CFPPlayer();
@@ -74,8 +77,8 @@ public:
 
 	void setHoldingBlockMesh(CMesh* mesh);
 
-	bool isJumping();
-	bool canJump();
+	virtual class CGameEntityCollider* GetCollider() const override;
+	class CWorld* GetWorld() const override;
 };
 
 #endif

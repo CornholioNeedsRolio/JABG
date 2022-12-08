@@ -1,7 +1,7 @@
 #include "CChunkMeshThreadManager.h"
-#include "Game/ChunkManager/CChunkManager.h"
+#include "Game/Chunk/ChunkManager/CChunkManager.h"
 #include "Game/GameWorld/CWorld.h"
-#include "CChunk.h"
+#include "Game/Chunk/CChunk.h"
 #include <iostream>
 
 CChunkMeshThreadManager::CChunkMeshThreadManager(class CWorld* world) : m_world(world)
@@ -28,6 +28,7 @@ void CChunkMeshThreadManager::threadMain()
 			m_flags |= BUILDING_MESH;
 			if (m_selectedChunk)
 			{
+				//m_selectedChunk->getLightComponent().BuildChunkLightingData(m_neighbors);
 				m_selectedChunk->getMeshComponent().BuildMeshData(m_neighbors, m_world->getAtlas());
 			}
 			m_selectedChunk = nullptr;

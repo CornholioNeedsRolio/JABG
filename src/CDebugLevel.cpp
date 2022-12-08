@@ -1,5 +1,5 @@
 #include "CDebugLevel.h"
-#include "Engine/CTextureAtlas.h"
+#include "Engine/GLRenderer/CTextureAtlas.h"
 #include "Game/CBlock.h"
 #include "Engine/CFileManager.h"
 #include "glm/gtx/string_cast.hpp"
@@ -97,7 +97,7 @@ void CDebugLevel::Load(CGame* game)
 	m_depthView.InitRect(0,300 , 1, 600, 900, 1);
 
 	m_pauseMenu.Init();
-	m_holdingBlock.SetPosition({50, 120, -5});
+	m_holdingBlock.SetPosition({50, 120, 15});
 	m_holdingBlock.setSize({45,45,45});
 	m_holdingBlock.SetRotation({10, 45, 180});
 	m_player->setHoldingBlockMesh(&m_holdingBlock);

@@ -1,7 +1,7 @@
 #ifndef CBLOCK_HEADER
 #define CBLOCK_HEADER
 #include <vector>
-#include "Engine/CMesh.h"
+#include "Engine/GLRenderer/CMesh.h"
 #include "GameImportantStuff.h"
 #include <bitset>
 
@@ -68,7 +68,7 @@ public:
 	virtual uint8_t getFaceAt(CBlock* neighbors[27], uint8_t face) const;
 	virtual const bool IsNeightborNeeded(int index) const { return m_neededNeighbors[index]; };
 	virtual bool IsFaceVisible(CBlock* facingBlock) const;
-	virtual std::vector<SVertex> getBlockMeshVertices(CBlock* neighbors[27], std::shared_ptr<class CTextureAtlas> texture, glm::ivec3 position = glm::ivec3(0));
+	virtual std::vector<SVertex> getBlockMeshVertices(CBlock* neighbors[27], std::shared_ptr<class CTextureAtlas> texture, const class SBlockLightData* LightData, glm::ivec3 position = glm::ivec3(0));
 };
 
 extern class CBlock* BlockAir;

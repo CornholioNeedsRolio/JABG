@@ -4,7 +4,7 @@
 #include <array>
 #include <map>
 #include "CStructureTree.h"
-#include "CChunk.h"
+#include "Game/Chunk/CChunk.h"
 
 /*
 struct comp

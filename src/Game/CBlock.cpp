@@ -1,10 +1,11 @@
 #include "SpecialBlocks/CPable.h"
-#include "Engine/CTextureAtlas.h"
+#include "Engine/GLRenderer/CTextureAtlas.h"
 #include "CBlock.h"
 #include "SpecialBlocks/CDirt.h"
 #include "SpecialBlocks/CGrass.h"
 #include "SpecialBlocks/CConnectedTexBlock.h"
 #include <iostream>
+#include "Chunk/ChunkComponents/CChunkLightComponent.h"
 
 
 const ColliderType& CBlock::getCollision()
@@ -46,7 +47,7 @@ void CBlock::setHeight(float height)
 	m_height = height;
 }
 
-std::vector<SVertex> CBlock::getBlockMeshVertices(CBlock* neighbors[27], std::shared_ptr<class CTextureAtlas> texture, glm::ivec3 position)
+std::vector<SVertex> CBlock::getBlockMeshVertices(CBlock* neighbors[27], std::shared_ptr<class CTextureAtlas> texture, const SBlockLightData* LightData, glm::ivec3 position)
 {
 	const std::vector<SVertex>& _temp = GetDefaultBlock();
 
@@ -70,6 +71,10 @@ std::vector<SVertex> CBlock::getBlockMeshVertices(CBlock* neighbors[27], std::sh
 		{
 			face[i].texture.u = tex[i*2];
 			face[i].texture.v = tex[i*2+1];
+		}
+
+		for (SVertex& vertex : face)
+		{
 		}
 		
 		output.insert(output.end(), face.begin(), face.end());
@@ -153,14 +158,6 @@ std::vector<SVertex> CBlock::DefaultBlock =  {
 		{{0, 0, 0},{0, 0}, {0, -1, 0}}
 
 	};
-
-
-
-
-
-
-
-
 
 namespace BLOCK_DATABASE
 {

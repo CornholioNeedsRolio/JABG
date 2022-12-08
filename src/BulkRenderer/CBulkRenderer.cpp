@@ -1,7 +1,7 @@
 #include "CBulkRenderer.h"
-#include "Engine/CMesh.h"
-#include "Engine/CShader.h"
-#include "Engine/CCamera.h"
+#include "Engine/GLRenderer/CMesh.h"
+#include "Engine/GLRenderer/CShader.h"
+#include "Engine/GLRenderer/CCamera.h"
 #include "Engine/CFileManager.h"
 #include <iostream>
 

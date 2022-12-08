@@ -1,0 +1,3 @@
+/usr/bin/cmake -E rm -f CMakeFiles/JABG.dir/objects.a
+/usr/bin/i686-w64-mingw32-ar qc CMakeFiles/JABG.dir/objects.a @CMakeFiles/JABG.dir/objects1.rsp
+/usr/bin/gcc  -ggdb -Wall -Wno-reorder -Wno-sign-compare -Wno-unused-command-line-argument -march=native  -O3 -Wl,-O1,--sort-common,--as-needed -fstack-protector -Wl,--whole-archive CMakeFiles/JABG.dir/objects.a -Wl,--no-whole-archive -o JABG.exe -Wl,--out-implib,libJABG.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/JABG.dir/linklibs.rsp

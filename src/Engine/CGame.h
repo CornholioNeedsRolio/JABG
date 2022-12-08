@@ -1,6 +1,6 @@
 #ifndef CGAME_HEADER
 #define CGAME_HEADER
-#include "Engine/CDisplay.h"
+#include "Engine/GLRenderer/CDisplay.h"
 /*
 Handles engine specifics, and levels
 */

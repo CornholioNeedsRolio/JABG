@@ -1,8 +1,8 @@
 #ifndef CAABB_HEADER
 #define CAABB_HEADER
 #include <glm/glm.hpp>
-#include "Engine/CObject.h"
-#include "Engine/CMesh.h"
+#include "Engine/Objects/CObject.h"
+#include "Engine/GLRenderer/CMesh.h"
 
 #define DEBUG_DRAW_COLLIDER
 

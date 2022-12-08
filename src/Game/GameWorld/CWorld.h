@@ -1,12 +1,12 @@
 #ifndef CWORLD_HEADER
 #define CWORLD_HEADER
-#include "Engine/CObject.h"
-#include "Game/CChunkPart.h"
+#include "Engine/Objects/CObject.h"
+#include "Game/Chunk/CChunkPart.h"
 #include "Game/CTerrainGenerator.h"
 #include "Game/CChunkMeshThreadManager.h"
-#include "Game/ChunkManager/CChunkManager.h"
+#include "Game/Chunk/ChunkManager/CChunkManager.h"
 #include "Misc/CFPPlayer.h"
-#include "Game/ChunkLoader/CChunkLoader.h"
+#include "Game/Chunk/ChunkLoader/CChunkLoader.h"
 
 #include "glm/glm.hpp"
 #include "Game/GameWorld/SavingSystem/CMegaChunkManager.h"

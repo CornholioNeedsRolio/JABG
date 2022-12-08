@@ -1,0 +1,1 @@
+ libs/glad/libglad.dll.a -L/usr/i686-w64-mingw32/lib  -lmingw32 -lSDL2main -lSDL2 -mwindows "/usr/i686-w64-mingw32/lib/libfreetype.dll.a" -lm -lstdc++ "/usr/i686-w64-mingw32/lib/libz.dll.a" -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

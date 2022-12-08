@@ -3,7 +3,7 @@
 
 CInputManager::CInputManager()
 {
-	for(int i = 0; i < m_mouseButtons.size(); ++i)
+	for (int i = 0; i < m_mouseButtons.size(); ++i)
 		m_mouseButtons[i] = false;
 }
 
@@ -14,25 +14,25 @@ void CInputManager::pressKey()
 
 void CInputManager::releaseKey()
 {
-	if(m_numKeys)
-	{	
-		if(!m_oldKeystates) 
+	if (m_numKeys)
+	{
+		if (!m_oldKeystates)
 			m_oldKeystates = std::make_unique<Uint8[]>(m_numKeys);
 
-		for(int i = 0; i < m_numKeys; ++i)
+		for (int i = 0; i < m_numKeys; ++i)
 			m_oldKeystates[i] = m_keystates[i];
 	}
 }
 
 bool CInputManager::keyPressed(SDL_Scancode key)
 {
-	if(!m_keystates || !m_oldKeystates) return false;
+	if (!m_keystates || !m_oldKeystates) return false;
 	return !m_oldKeystates[key] && m_keystates[key];
 }
 
 bool CInputManager::keyReleased(SDL_Scancode key)
 {
-	if(!m_keystates || !m_oldKeystates) return false;
+	if (!m_keystates || !m_oldKeystates) return false;
 	return m_oldKeystates[key] && !m_keystates[key];
 }
 
@@ -41,6 +41,7 @@ bool CInputManager::Update(SDL_Window* _window)
 	SDL_Event event;
 	m_mouserel *= 0;
 	releaseKey();
+	m_mouseButtonsPrevious = m_mouseButtons;
 	while (SDL_PollEvent(&event))
 	{
 		switch (event.type)
@@ -84,6 +85,9 @@ bool CInputManager::Update(SDL_Window* _window)
 			}
 			break;
 		case SDL_MOUSEMOTION:
+			int width, height;
+			SDL_GetWindowSize(_window, &width, &height);
+			SDL_WarpMouseInWindow(_window, width * 0.5f, height * 0.5f);
 			m_mousepos.x = event.motion.x;
 			m_mousepos.y = event.motion.y;
 
@@ -100,6 +104,16 @@ bool CInputManager::Update(SDL_Window* _window)
 bool CInputManager::mouseButtonDown(Input_Mouse key)
 {
 	return m_mouseButtons[key];
+}
+
+bool CInputManager::mouseButtonPressed(Input_Mouse key)
+{
+	return m_mouseButtons[key] && !m_mouseButtonsPrevious[key];
+}
+
+bool CInputManager::mouseButtonReleased(Input_Mouse key)
+{
+	return !m_mouseButtons[key] && m_mouseButtonsPrevious[key];
 }
 
 glm::ivec2 CInputManager::getMousePosition()
@@ -124,7 +138,7 @@ void CInputManager::centerMouse()
 
 bool CInputManager::keyDown(SDL_Scancode key)
 {
-	if(m_keystates)
+	if (m_keystates)
 		return m_keystates[key];
 	return false;
 }
