@@ -108,7 +108,7 @@ bool CInputManager::mouseButtonDown(Input_Mouse key)
 
 bool CInputManager::mouseButtonPressed(Input_Mouse key)
 {
-	return m_mouseButtons[key] && !m_mouseButtonsPrevious[key];
+	return m_mouseButtons[key] &&  !m_mouseButtonsPrevious[key];
 }
 
 bool CInputManager::mouseButtonReleased(Input_Mouse key)

@@ -91,23 +91,43 @@ bool CGameEntityCollider::RayCast(const glm::vec3& position, const glm::vec3& of
 	normal *= 0;
 	glm::ivec3 step;
 	glm::vec3 distance;
-
-	for(int i = 0; i < 3; ++i)
+	if (direction.x < 0)
 	{
-		if (direction[i] < 0)
-		{
-			step[i] = -1;
-			distance[i] = (position[i] - mapPos[i]) * delta[i];
-			continue;
-		}
-		step[i] = 1;
-		distance[i] = (mapPos[i] + 1 - position[i]) * delta[i];
+		step.x = -1;
+		distance.x = (position.x - mapPos.x) * delta.x;
+	}
+	else
+	{
+		step.x = 1;
+		distance.x = (mapPos.x + 1 - position.x) * delta.x;
+	}
+
+	if (direction.y < 0)
+	{
+		step.y = -1;
+		distance.y = (position.y - mapPos.y) * delta.y;
+	}
+	else
+	{
+		step.y = 1;
+		distance.y = (mapPos.y + 1 - position.y) * delta.y;
+	}
+
+	if (direction.z < 0)
+	{
+		step.z = -1;
+		distance.z = (position.z - mapPos.z) * delta.z;
+	}
+	else
+	{
+		step.z = 1;
+		distance.z = (mapPos.z + 1 - position.z) * delta.z;
 	}
 
 	float lenght = 0;
 	bool stop = false;
 	int failTicks = 0;
-	while (!stop && lenght < maxLenght/* && failTicks++ < 100*/)
+	while (!stop && lenght < maxLenght && failTicks++ < 100)
 	{
 		//todo make this more optimal
 		auto pos = manager->getLocal(mapPos.x, mapPos.y, mapPos.z);
@@ -128,16 +148,27 @@ bool CGameEntityCollider::RayCast(const glm::vec3& position, const glm::vec3& of
 			}
 		}
 
-
-		normal = glm::vec3(0);
-
-		std::uint8_t Issue = ((distance.y < distance.z) | ((distance.x < distance.z) << 1) | ((distance.x < distance.y) << 2)) << 1;
-		std::uint8_t Index = (int)(0x666 >> Issue) & 3;
-
-		mapPos[Index] += step[Index];
-		lenght = distance[Index];
-		distance[Index] += delta[Index];
-		normal[Index] = -step[Index];
+		if (distance.x < distance.y && distance.x < distance.z)
+		{
+			mapPos.x += step.x;
+			lenght = distance.x;
+			distance.x += delta.x;
+			normal = glm::vec3(-step.x, 0, 0);
+		}
+		else if (distance.y < distance.z)
+		{
+			mapPos.y += step.y;
+			lenght = distance.y;
+			distance.y += delta.y;
+			normal = glm::vec3(0, -step.y, 0);
+		}
+		else
+		{
+			mapPos.z += step.z;
+			lenght = distance.z;
+			distance.z += delta.z;
+			normal = glm::vec3(0, 0, -step.z);
+		}
 	}
 	if (stop)
 	{
@@ -185,29 +216,62 @@ std::vector<glm::ivec3> CGameEntityCollider::RayCastBlocks(const glm::vec3& posi
 	const float maxLenght = glm::length(offset);
 	glm::ivec3 step;
 	glm::vec3 distance;
-
-	for(int i = 0; i < 3; ++i) {
-		if (direction[i] < 0) {
-			step[i] = -1;
-			distance[i] = (position[i] - mapPos[i]) * delta[i];
-			continue;
-		}
-		step[i] = 1;
-		distance[i] = (mapPos[i] + 1 - position[i]) * delta[i];
+	if (direction.x < 0)
+	{
+		step.x = -1;
+		distance.x = (position.x - mapPos.x) * delta.x;
+	}
+	else
+	{
+		step.x = 1;
+		distance.x = (mapPos.x + 1 - position.x) * delta.x;
 	}
 
+	if (direction.y < 0)
+	{
+		step.y = -1;
+		distance.y = (position.y - mapPos.y) * delta.y;
+	}
+	else
+	{
+		step.y = 1;
+		distance.y = (mapPos.y + 1 - position.y) * delta.y;
+	}
+
+	if (direction.z < 0)
+	{
+		step.z = -1;
+		distance.z = (position.z - mapPos.z) * delta.z;
+	}
+	else
+	{
+		step.z = 1;
+		distance.z = (mapPos.z + 1 - position.z) * delta.z;
+	}
 
 	float lenght = 0;
 	bool stop = false;
 	while (!stop && lenght < maxLenght)
 	{
 		output.push_back(mapPos);
-		std::uint8_t Issue = ((distance.y < distance.z) | ((distance.x < distance.z) << 1) | ((distance.x < distance.y) << 2)) << 1;
-		std::uint8_t Index = (int)(0x666 >> Issue) & 3;
-
-		mapPos[Index] += step[Index];
-		lenght = distance[Index];
-		distance[Index] += delta[Index];
+		if (distance.x < distance.y && distance.x < distance.z)
+		{
+			mapPos.x += step.x;
+			lenght = distance.x;
+			distance.x += delta.x;
+		}
+		else if (distance.y < distance.z)
+		{
+			mapPos.y += step.y;
+			lenght = distance.y;
+			distance.y += delta.y;
+		}
+		else
+		{
+			mapPos.z += step.z;
+			lenght = distance.z;
+			distance.z += delta.z;
+		}
 	}
 	return output;
 }

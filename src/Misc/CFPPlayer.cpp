@@ -24,7 +24,7 @@ float CFPPlayer::jumpHyperbola(float value)
 	return -t*t * 4;
 }
 
-#define WALK_SPEED 0.06f
+#define WALK_SPEED 0.1f
 
 CFPPlayer::CFPPlayer(SVector3 _pos, SVector3 _rot, class CWorld* world) :
 	CGameEntity(glm::vec3(0), glm::vec3(0)), m_camera(glm::vec3(0), glm::vec3(0)), m_camerayrot(0), m_world(world), m_velocity(0)
@@ -282,7 +282,7 @@ void CFPPlayer::TempManageBlocks()
 
 void CFPPlayer::Tick(CInputManager& _manager, float deltaTime)
 {
-	m_movementComponent->SetWantsToJump(_manager.keyPressed(SDL_SCANCODE_SPACE));
+	m_movementComponent->SetWantsToJump(_manager.keyDown(SDL_SCANCODE_SPACE));
 	CGameEntity::Tick(_manager, deltaTime);
 	RotateCamera(-_manager.getMouseRelative(), 0.2f, deltaTime * 1000 * m_sensivity);
 
@@ -312,7 +312,7 @@ void CFPPlayer::Tick(CInputManager& _manager, float deltaTime)
 
 	if(_manager.keyPressed(SDL_SCANCODE_9))
 	{
-		m_world->GetLoader().ForceSave();
+				m_world->GetLoader().ForceSave();
 	}
 
 	bool left_arrow = _manager.keyPressed(SDL_SCANCODE_LEFT);

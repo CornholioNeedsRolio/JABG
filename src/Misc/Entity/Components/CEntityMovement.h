@@ -15,7 +15,6 @@ class CEntityMovement : public CEntityComponent
     float m_friction = 10.f;
     float m_airresistance = 1.f;
     bool m_grounded;
-	float m_jumpedDelay = 0;
 
     float m_currentFallVelocity = 0;
     float m_currentSpeed = 0.f;

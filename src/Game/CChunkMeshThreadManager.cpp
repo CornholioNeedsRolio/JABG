@@ -28,7 +28,7 @@ void CChunkMeshThreadManager::threadMain()
 			m_flags |= BUILDING_MESH;
 			if (m_selectedChunk)
 			{
-				//m_selectedChunk->getLightComponent().BuildChunkLightingData(m_neighbors);
+				m_selectedChunk->getLightComponent().BuildChunkLightingData(m_neighbors);
 				m_selectedChunk->getMeshComponent().BuildMeshData(m_neighbors, m_world->getAtlas());
 			}
 			m_selectedChunk = nullptr;

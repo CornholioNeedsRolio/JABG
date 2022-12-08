@@ -27,7 +27,7 @@ class CChunkLightComponent : public IChunkComponent
 
     int getIndex(std::int16_t x, std::int16_t y, std::int16_t z) const;
     
-    struct smh {int chunk_x, chunk_y, chunk_z; int local_x, local_y, local_z;}; 
+    struct smh {int chunk_x, chunk_y, chunk_z; int local_x, local_y, local_z;};
     smh getStuff(std::int16_t x, std::int16_t y, std::int16_t z) const;
 
     std::int16_t MaxValueOfNeighbors(std::int16_t x, std::int16_t y, std::int16_t z, const std::array<CChunk*, 27>& neighbors);
