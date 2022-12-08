@@ -19,16 +19,16 @@ int CChunkLightComponent::getIndex(std::int16_t x, std::int16_t y, std::int16_t 
 std::int16_t CChunkLightComponent::MaxValueOfNeighbors(std::int16_t x, std::int16_t y, std::int16_t z, const std::array<CChunk*, 27>& neighbors)
 {
     std::int16_t maxValue = 0;
-    for(std::int16_t xx = -1; xx <= 1; ++xx)
+
+    std::int64_t table = 0b010111010100011101010001110101000101;
+
+    for(int i = 0; i < 6; ++i)
     {
-        for(std::int16_t zz = -1; zz <= 1; ++zz)
-        {
-            for(std::int16_t yy = -1; yy <= 1; ++yy)
-            {
-                if(!xx && !yy && !zz) continue;
-                maxValue = std::max(getData(x + xx, y + yy, z + zz, &neighbors).SunValue, maxValue);
-            }
-        }
+        std::int8_t offseted_z = z + (table & 3)-1;
+        std::int8_t offseted_y = y + ((table >>= 2) & 3)-1;
+        std::int8_t offseted_x = x + ((table >>= 2) & 3)-1;
+        table >>= 2;
+        maxValue = std::max(getData(offseted_z, offseted_y, offseted_x, &neighbors).SunValue, maxValue);
     }
     return maxValue;
 }
@@ -42,9 +42,6 @@ void CChunkLightComponent::PrepareLightLevels(const std::array<CChunk*, 27>& nei
     {
         for(std::int16_t z = 0; z < CHUNK_SIZE; ++z)
         {
-            //int16_t maxY = HeightMap->getValue(x, z)-CHUNK_SIZE*m_parent->getChunkPosition().y;
-            //if(maxY <= 0) maxY = CHUNK_SIZE;
-            //std::cerr << maxY << " ";
             for(std::int16_t y = 0; y < CHUNK_SIZE; ++y)
             {
                 int gy = m_parent->getChunkPosition().y * CHUNK_SIZE + y;

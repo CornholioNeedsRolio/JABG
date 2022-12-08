@@ -5,8 +5,8 @@
 /Binary
 /build
 /.idea
-/cmake-build-debug
 /out
+/cmake-build-debug
 CMakeCache.txt
 jabg.exe
 jabg.out
